@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "predeploy": "tsc", 
-  "deploy": "gh-pages -d dist"
-    
+    "predeploy": "tsc",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
