@@ -1,28 +1,5 @@
-@font-face {
-  font-family: 'Rocher';
-  src: url(https://assets.codepen.io/9632/RocherColorGX.woff2);
-}
-
-@font-palette-values --header {
-  font-family: Rocher;
-  base-palette: 4;
-
-}@font-palette-values --days {
-  font-family: Rocher;
-  base-palette: 2;
-
-}
-
-@font-palette-values --padding {
-  font-family: Rocher;
-  base-palette: 5;
-
-}
 
 * {
-  font-family: Rocher;
-  font-palette: 8;
-
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -31,41 +8,21 @@
   background-color: antiquewhite;
   width: 100vw;
   height: 100vh;
-  display: grid;
-  grid:
-    "header header header" 0.1fr
-    "aside calendarDisplay ." 1fr
-    "footer footer footer" auto
-    / 20% 1fr auto;
-  gap: 8px;
 }
 
-.header {
-  grid-area: header;
-  display: flex;
-  width: 100wv;
-  height: 200 rem;
-
-  background-color: blue;
-}
-.aside {
-  grid-area: aside;
-  background-color: brown;
-}
 .calendarContainer {
-  grid-area: calendarDisplay;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 
 .calendar {
-padding: 5%;
-  width: 75%;
-  height: 85%;
+  padding: 5%;
+  width: 100%;
+  height: 100%;
 }
-.calendarHeader {svgafbf
-  font-palette: --header;
+.calendarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -79,20 +36,16 @@ padding: 5%;
   list-style: none;
   padding:3% 3% 0 3%;
   background-color: transparent;
-  grid-template-rows: repeat(1, 1fr);
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
-
-  
 }
 
 .weekDays li{
   font-size: 2em;
   display: flex;
-   align-items: center;
-justify-content: center;
-/* pointer-events: none; */
-user-select: none;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
 
 }
 .calendarDisplay {
@@ -102,22 +55,21 @@ user-select: none;
   height: 78%;
   list-style: none;
 
-  grid-template-rows: repeat(6, auto);
+  grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
 }
 
-.calendarDisplay li { font-palette: --days;display: flex; background-color: hsl(0, 0%, 50%, 0.5);
-  align-items: center;
-justify-content: center;
-font-size: 3em;user-select: none;}
+.calendarDisplay p { 
+  text-align: center;
+  background-color: hsl(0, 0%, 50%, 0.5);
+  font-size: 1em;
+  user-select: none;
+}
+
 .today {
   border: red 3px solid;
 }
 .paddingDay {
   opacity: 0.7;
-  font-palette: --padding !important;
-}
-.footer {
-  grid-area: footer;
 }
