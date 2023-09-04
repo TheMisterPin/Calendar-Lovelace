@@ -6,28 +6,26 @@ const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText
 
 
 export interface Event {
-    newEventTitle: string;
-    newEventDate: string;
-    newEventTxt: string;
+    title: string;
+    date: string;
+    txt: string;
 }
-export function saveEventToLocalStorage(event: Event): void {
+function saveEventToLocalStorage(event: Event): void {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     localEvents.push(event);
     localStorage.setItem('events', JSON.stringify(localEvents));
 }
 
 
-export function newEventHandler(): { newEventTitle: string, newEventDate: string, newEventTxt: string } {
-    const newEventTitle = newEventTitleInput.value;
-    const newEventTxt = newEventTxtInput.value;
-    const newEventDate = newEventDateInput.value;
+export function newEventHandler(): { title: string, date: string, txt: string } {
+    const title = newEventTitleInput.value;
+    const txt = newEventTxtInput.value;
+    const date = newEventDateInput.value;
     
    const newEvent: Event = {
-        newEventTitle,
-        newEventDate,
-        newEventTxt,
-
- 
+        title,
+        date,
+        txt,
     }
     saveEventToLocalStorage(newEvent);
 return newEvent
