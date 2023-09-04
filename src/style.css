@@ -64,7 +64,7 @@ padding: 5%;
   width: 75%;
   height: 85%;
 }
-.calendarHeader {
+.calendarHeader {svgafbf
   font-palette: --header;
   display: flex;
   justify-content: space-between;

@@ -22,7 +22,9 @@
   <body>
     <div class="app">
       <header class="header">header</header>
-      <aside class="aside"><button class="newTask Btn">NEW TASK</button></aside>
+      <aside class="aside"><button  id="newEventBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      </button></aside>
+        Launch static backdrop modal
       <div class="calendarContainer">
       <div class="calendar">
         <div class="calendarHeader"> <i class="fas fa-angle-left" id="prev"></i> <div class="date">
@@ -40,6 +42,25 @@
 
         </ul>
       </div></div>
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+    <input type="datetime-local" id="newEventDate">
+    <input type="text" id="newEventTitle">
+    <input type="text" id="newEventText">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button id="saveBtn" class="btn btn-primary">save</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <footer class="footer"></footer>
     </div>
     <script
