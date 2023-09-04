@@ -5,5 +5,4 @@ const newEventBtn = document.querySelector('#saveBtn');
 newEventBtn.addEventListener('click', () => {
     newEventHandler();
     const eventObject = newEventHandler();
-    console.log(eventObject);
 });
