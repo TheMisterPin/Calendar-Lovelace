@@ -24,10 +24,10 @@ export interface DateInfo {
 
 function formatDateToStr(date: Date): string {
     const dayName = days[(date.getDay() + 6) % 7]; 
-    const monthName = months[date.getMonth()];
+    const monthName = months[date.getMonth()].name;
     const dayOfMonth = date.getDate();
-    
     return `${dayName}, ${monthName} ${dayOfMonth}${getOrdinalSuffix(dayOfMonth)}.`;
+    
 }
 
 export function getDateInfo(date: Date): DateInfo {
