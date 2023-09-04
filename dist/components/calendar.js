@@ -1,66 +1,65 @@
-export const date = new Date();
-export const daysDisplay = document.querySelector(".calendarDisplay");
-export const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-export const monthLenght = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-export const firstDay = firstDayOfMonth.getDay() === 0 ? 7 : firstDayOfMonth.getDay();
-export const lastDayOfWeek = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
-export const nextDays = 7 - lastDayOfWeek;
-export const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-export const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-];
+import { months } from '../utils/constants.js';
+import { getDateInfo } from '../utils/dateInfo.js';
+let currentDate = new Date();
 export function populateCalendar() {
-    if (daysDisplay) {
-        // Clear previous days
-        daysDisplay.innerHTML = '';
-        // Previous month padding days
-        for (let x = firstDay - 1; x > 0; x--) {
-            const day = document.createElement("li");
-            day.innerText = `${prevLastDay - x + 1}`;
-            day.classList.add(`paddingDay`);
-            daysDisplay.appendChild(day);
+    const currentMonthInfo = months[currentDate.getMonth()];
+    const daysDisplay = document.querySelector(".calendarDisplay");
+    const calendarElement = document.querySelector(".calendar");
+    const { firstDay, lastDayOfWeek, monthLength, prevLastDay, formattedDate } = getDateInfo(currentDate);
+    daysDisplay.innerHTML = '';
+    // Previous month padding days
+    for (let x = firstDay - 1; x > 0; x--) {
+        const day = document.createElement("li");
+        day.innerText = `${prevLastDay - x + 1}`;
+        day.classList.add(`paddingDay`);
+        daysDisplay.appendChild(day);
+    }
+    // Current month days
+    for (let i = 1; i <= monthLength; i++) {
+        const day = document.createElement("li");
+        if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
+            day.classList.add(`today`);
         }
-        // Current month
-        for (let i = 1; i <= monthLenght; i++) {
-            const day = document.createElement("li");
-            if (i === new Date().getDate() &&
-                date.getMonth() === new Date().getMonth()) {
-                day.classList.add(`today`);
-            }
-            day.innerText = `${i}`;
-            daysDisplay.appendChild(day);
-        }
-        // Next month padding days
-        for (let y = 1; y <= 7 - lastDayOfWeek; y++) { // Notice I changed the '<' to '<=' here
-            const day = document.createElement("li");
-            day.innerText = `${y}`;
-            day.classList.add(`paddingDay`);
-            daysDisplay.appendChild(day);
-            document.querySelector("#prev").addEventListener("click", () => {
-                daysDisplay.innerHTML = '';
-                date.setMonth(date.getMonth() - 1);
-                document.querySelector(".calendarHeader h1").innerHTML = months[date.getMonth()];
-                document.querySelector(".calendarHeader h3").innerHTML = date.toDateString();
-                populateCalendar();
-            });
-            document.querySelector("#next").addEventListener("click", () => {
-                daysDisplay.innerHTML = '';
-                date.setMonth(date.getMonth() + 1);
-                document.querySelector(".calendarHeader h1").innerHTML = months[date.getMonth()];
-                document.querySelector(".calendarHeader h3").innerHTML = date.toDateString();
-                populateCalendar();
-            });
-        }
+        day.innerText = `${i}`;
+        daysDisplay.appendChild(day);
+    }
+    // Next month padding days
+    for (let y = 1; y <= 7 - lastDayOfWeek; y++) {
+        const day = document.createElement("li");
+        day.innerText = `${y}`;
+        day.classList.add(`paddingDay`);
+        daysDisplay.appendChild(day);
+    }
+    const monthHeader = document.querySelector(".calendarHeader h1");
+    if (monthHeader) {
+        monthHeader.innerHTML = currentMonthInfo.name;
+    }
+    const dateHeader = document.querySelector(".calendarHeader h5");
+    if (dateHeader) {
+        dateHeader.innerHTML = formattedDate;
+    }
+    if (calendarElement) {
+        console.log(`Setting background to: ${currentMonthInfo.background}`);
+        calendarElement.style.backgroundImage = currentMonthInfo.background;
+        calendarElement.style.backgroundSize = 'contain';
+        calendarElement.style.backgroundRepeat = 'no-repeat';
+        calendarElement.style.backgroundPosition = 'center center';
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    populateCalendar();
+    const prevButton = document.querySelector("#prev");
+    const nextButton = document.querySelector("#next");
+    if (prevButton) {
+        prevButton.addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            populateCalendar();
+        });
+    }
+    if (nextButton) {
+        nextButton.addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            populateCalendar();
+        });
+    }
+});

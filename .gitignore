@@ -493,3 +493,4 @@ node_modules/bootstrap/scss/mixins/_utilities.scss
 node_modules/bootstrap/scss/mixins/_visually-hidden.scss
 node_modules/bootstrap/scss/utilities/_api.scss
 node_modules/bootstrap/scss/vendor/_rfs.scss
+src/appOld.ts
