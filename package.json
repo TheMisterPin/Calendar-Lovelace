@@ -11,11 +11,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jquery": "^3.5.18",
     "gh-pages": "^6.0.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@types/bootstrap": "^5.2.6",
-    "bootstrap": "^5.3.1"
+    "bootstrap": "^5.3.1",
+    "jquery": "^3.7.1",
+    "popper.js": "^1.16.1"
   }
 }

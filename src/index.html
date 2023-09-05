@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link
@@ -17,81 +17,151 @@
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="app">
-      <button  id="newEventBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-      </button>
+      <button
+        id="newEventBtn"
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+      ></button>
+
       <div class="calendarContainer">
-      <div class="calendar">
-        <div class="calendarHeader"> <i class="fas fa-angle-left" id="prev"></i> <div class="date">
-        <h1>February</h1><h5> lunes </h5> </div> <i class="fa fa-angle-right" id="next"></i></div>
-        <ul class="weekDays">
-          <li>Mon</li>
-          <li>Tue</li>
-          <li>Wed</li>
-          <li>Thu</li>
-          <li>Fri</li>
-          <li>Sat</li>
-          <li>Sun</li> 
-        </ul>
-        <section class="calendarDisplay">
+        <button
+          type="button"
+          class="btn btn-lg btn-danger"
+          data-toggle="popover"
+          title="Popover title"
+          data-content="And here's some amazing content. It's very engaging. Right?"
+        >
+          Click to toggle popover
+        </button>
 
-        </section>
-      </div></div>
-
+        <div class="calendar">
+          <div class="calendarHeader">
+            <i class="fas fa-angle-left" id="prev"></i>
+            <div class="date">
+              <h1>February</h1>
+              <h5>lunes</h5>
+            </div>
+            <i class="fa fa-angle-right" id="next"></i>
+          </div>
+          <ul class="weekDays">
+            <li>Mon</li>
+            <li>Tue</li>
+            <li>Wed</li>
+            <li>Thu</li>
+            <li>Fri</li>
+            <li>Sat</li>
+            <li>Sun</li>
+          </ul>
+          <section class="calendarDisplay"></section>
+        </div>
+      </div>
 
       <!-- NEW EVENT MODAL -->
-      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">New Event</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="newEventDate" class="form-label">Date:</label>
-                        <input type="date" class="form-control" id="newEventDate">
-                    </div>
-                    <div class="mb-3">
-                        <label for="newEventTime" class="form-label">Time:</label>
-                        <input type="time" class="form-control" id="newEventTime">
-                    </div>
-                    <div class="mb-3">
-                      <label for="hasEndDate">Has End Date</label>
-                      <input type="checkbox" id="hasEndDate">                      
-                      <input type="date" class="form-control" id="newEventEndDate" style="display: none;">
-                  </div>
-                    <div class="mb-3">
-                        <label for="newEventTitle" class="form-label">Title:</label>
-                        <input type="text" class="form-control" id="newEventTitle" placeholder="Enter event title">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="newEventText" class="form-label">Description:</label>
-                        <input type="text" class="form-control" id="newEventText" placeholder="Enter event description">
-                    </div>
-                    <div class="mb-3">
-                        <label for="eventLabel" class="form-label">Label:</label>
-                        <select class="form-select" id="eventLabel">
-                            <option value="work">Work</option>
-                            <option value="home">Home</option>
-                            <option value="hobby">Hobby</option>
-                            <option value="addNew">Add New Label</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="saveBtn" class="btn btn-primary">Save</button>
-                </div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                New Event
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="newEventDate" class="form-label">Date:</label>
+                <input type="date" class="form-control" id="newEventDate" />
+              </div>
+              <div class="mb-3">
+                <label for="newEventTime" class="form-label">Time:</label>
+                <input type="time" class="form-control" id="newEventTime" />
+              </div>
+              <div class="mb-3">
+                <label for="hasEndDate">Has End Date</label>
+                <input type="checkbox" id="hasEndDate" />
+                <input
+                  type="date"
+                  class="form-control"
+                  id="newEventEndDate"
+                  style="display: none"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="newEventTitle" class="form-label">Title:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="newEventTitle"
+                  placeholder="Enter event title"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="newEventText" class="form-label"
+                  >Description:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="newEventText"
+                  placeholder="Enter event description"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="hasReminder">REMIND ME</label>
+                <input type="checkbox" id="hasReminder" />
+              <select class="form-select" id="newEventReminder"  style="display: none">
+                <option value="5min">"5min"</option>
+                <option value="10min">"10min"</option>
+                <option value="15min">"15min"</option>
+                <option value="20min">"20min"</option>
+              </select>
+              </div>
+              <div class="mb-3">
+                <label for="eventLabel" class="form-label">Label:</label>
+                <select class="form-select" id="eventLabel">
+                  <option value="work">Work</option>
+                  <option value="home">Home</option>
+                  <option value="hobby">Hobby</option>
+                  <option value="addNew">Add New Label</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button id="saveBtn" class="btn btn-primary">Save</button>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
       <footer class="footer"></footer>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -105,3 +175,8 @@
     <script type="module" src="../dist/app.js"></script>
   </body>
 </html>
+
+
+
+
+
