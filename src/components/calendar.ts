@@ -10,8 +10,6 @@ export function populateCalendar(): void {
   const currentMonthInfo = months[currentDate.getMonth()];
   const daysDisplay: HTMLElement= document.querySelector(".calendarDisplay")!;
   const calendarElement = document.querySelector(".calendar") as HTMLElement;
-
-  
   const { firstDay, lastDayOfWeek, monthLength, prevLastDay, formattedDate } = getDateInfo(currentDate);
   daysDisplay.innerHTML = ''
 
@@ -25,7 +23,7 @@ export function populateCalendar(): void {
     daysDisplay.appendChild(day);
   }
 
-  // Get events
+
   
 
   // Current month days
@@ -52,6 +50,7 @@ export function populateCalendar(): void {
         renderDayEvents(dayEvents, dayEventsEl, day)  
       }
     }
+
     daysDisplay.appendChild(day);
   }
 
