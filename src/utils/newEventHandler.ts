@@ -7,6 +7,7 @@ const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDat
 const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!;
 const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText')!; 
 const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTime')!;
+const newEventReminder: HTMLInputElement = document.querySelector('#newEventReminder')!;
 const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
 
 export interface Event {
@@ -16,6 +17,7 @@ export interface Event {
     time: string;
     label: string;
     endDate?: string; 
+    reminder?: string;
 
 }
 function saveEventToLocalStorage(event: Event): void {
@@ -31,6 +33,7 @@ export function newEventHandler(): Event {
     const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;    
     const label = labelSelector.value;
+    const reminder = newEventReminder.value;
     const hasEndDateCheckbox: HTMLInputElement = document.querySelector('#hasEndDate')!;
     let endDate: string | undefined = undefined;
 
@@ -45,7 +48,8 @@ export function newEventHandler(): Event {
         time,
         txt,
         label,
-        endDate
+        endDate,
+        reminder,
     }
 
     saveEventToLocalStorage(newEvent);
