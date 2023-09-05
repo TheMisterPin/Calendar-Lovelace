@@ -1,3 +1,4 @@
+import { formatDate } from "./formatDate.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
 const newEventTxtInput = document.querySelector('#newEventText');
@@ -8,8 +9,10 @@ function saveEventToLocalStorage(event) {
 }
 export function newEventHandler() {
     const title = newEventTitleInput.value;
+    const date = formatDate(newEventDateInput.value);
+    const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;
-    const date = newEventDateInput.value;
+    const label = labelSelector.value;
     const newEvent = {
         title,
         date,

@@ -4,6 +4,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+p{
+  margin-bottom: 0;
+}
+
 .app {
   background-color: antiquewhite;
   width: 100vw;
@@ -60,9 +65,14 @@
   gap: 8px;
 }
 
+
+
+.day{
+  background-color: hsl(0, 0%, 50%, 0.5);
+}
+
 .calendarDisplay p { 
   text-align: center;
-  background-color: hsl(0, 0%, 50%, 0.5);
   font-size: 1em;
   user-select: none;
 }

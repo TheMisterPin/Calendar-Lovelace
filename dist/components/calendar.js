@@ -1,5 +1,6 @@
 import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
+import { formatDate } from '../utils/formatDate.js';
 let currentDate = new Date();
 export function populateCalendar() {
     const currentMonthInfo = months[currentDate.getMonth()];
@@ -14,13 +15,44 @@ export function populateCalendar() {
         day.classList.add(`paddingDay`);
         daysDisplay.appendChild(day);
     }
+    // Get events
+    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     // Current month days
     for (let i = 1; i <= monthLength; i++) {
-        const day = document.createElement("p");
+        const day = document.createElement('div');
+        day.classList.add('day');
+        const dayNumber = document.createElement("p");
+        dayNumber.innerText = `${i}`;
+        dayNumber.classList.add('day__number');
+        day.appendChild(dayNumber);
         if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
             day.classList.add(`today`);
         }
-        day.innerText = `${i}`;
+        // Add events to days 
+        if (localEvents) {
+            const currentMonth = currentDate.getMonth() + 1;
+            const currentYear = currentDate.getFullYear();
+            const currentDay = i;
+            const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`);
+            const dayEvents = localEvents.filter(event => event.date === fullDate); // Add event interface
+            console.log(dayEvents);
+            if (dayEvents) {
+                const eventsToRender = dayEvents.length > 3 ? dayEvents.toSpliced(3) : dayEvents;
+                eventsToRender.forEach(event => {
+                    const eventNameEl = document.createElement('p');
+                    eventNameEl.classList.add('event');
+                    eventNameEl.innerText = `${event.time} ${event.title}`;
+                    day.appendChild(eventNameEl);
+                });
+                if (dayEvents.length > 3) {
+                    const viewDayEventsBtn = document.createElement('button');
+                    viewDayEventsBtn.textContent = `${dayEvents.length - 3} more`;
+                    viewDayEventsBtn.classList.add('view_more_btn');
+                    viewDayEventsBtn.addEventListener('click', () => console.log('More Events Here'));
+                    day.appendChild(viewDayEventsBtn);
+                }
+            }
+        }
         daysDisplay.appendChild(day);
     }
     // Next month padding days
@@ -39,7 +71,6 @@ export function populateCalendar() {
         dateHeader.innerHTML = formattedDate;
     }
     if (calendarElement) {
-        // console.log(`Setting background to: ${currentMonthInfo.background}`);
         // calendarElement.style.backgroundImage = currentMonthInfo.background;
         calendarElement.style.backgroundSize = 'contain';
         calendarElement.style.backgroundRepeat = 'no-repeat';
@@ -47,7 +78,6 @@ export function populateCalendar() {
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    populateCalendar();
     const prevButton = document.querySelector("#prev");
     const nextButton = document.querySelector("#next");
     if (prevButton) {
