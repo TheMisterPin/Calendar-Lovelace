@@ -48,7 +48,6 @@ export function populateCalendar(): void {
 
     if(localEvents){
       const dayEvents = getDayEvents(localEvents, i, currentDate)
-      
       if(dayEvents){
         renderDayEvents(dayEvents, dayEventsEl, day)  
       }

@@ -4,6 +4,7 @@ const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
 const newEventTxtInput = document.querySelector('#newEventText');
 const newEventTimeInput = document.querySelector('#newEventTime');
+const newEventReminder = document.querySelector('#newEventReminder');
 const labelSelector = document.querySelector('#eventLabel');
 function saveEventToLocalStorage(event) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
@@ -16,6 +17,7 @@ export function newEventHandler() {
     const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;
     const label = labelSelector.value;
+    const reminder = newEventReminder.value;
     const hasEndDateCheckbox = document.querySelector('#hasEndDate');
     let endDate = undefined;
     if (hasEndDateCheckbox.checked) {
@@ -28,7 +30,8 @@ export function newEventHandler() {
         time,
         txt,
         label,
-        endDate
+        endDate,
+        reminder,
     };
     saveEventToLocalStorage(newEvent);
     populateCalendar();
