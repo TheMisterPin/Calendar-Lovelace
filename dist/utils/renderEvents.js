@@ -4,11 +4,11 @@ export function getDayEvents(eventsArray, day, currentDate) {
     const currentYear = currentDate.getFullYear();
     const currentDay = day;
     const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`);
-    return eventsArray.filter(event => event.date === fullDate);
+    return eventsArray.filter((event) => event.date === fullDate);
 }
 export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
     const eventsToRender = dayEvents.length > 3 ? dayEvents.toSpliced(3) : dayEvents;
-    eventsToRender.forEach(event => {
+    eventsToRender.forEach((event) => {
         const eventNameEl = document.createElement('p');
         eventNameEl.classList.add('event', event.label);
         eventNameEl.innerText = `${event.time} ${event.title}`;
