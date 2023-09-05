@@ -1,7 +1,9 @@
 import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
+import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 let currentDate = new Date();
 export function populateCalendar() {
+    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     const currentMonthInfo = months[currentDate.getMonth()];
     const daysDisplay = document.querySelector(".calendarDisplay");
     const calendarElement = document.querySelector(".calendar");
@@ -14,13 +16,27 @@ export function populateCalendar() {
         day.classList.add(`paddingDay`);
         daysDisplay.appendChild(day);
     }
+    // Get events
     // Current month days
     for (let i = 1; i <= monthLength; i++) {
-        const day = document.createElement("p");
+        const day = document.createElement('div');
+        day.classList.add('day');
+        const dayNumber = document.createElement("p");
+        dayNumber.innerText = `${i}`;
+        dayNumber.classList.add('day__number');
+        const dayEventsEl = document.createElement('ul');
+        dayEventsEl.classList.add('day__events-list');
+        day.append(dayNumber, dayEventsEl);
         if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
             day.classList.add(`today`);
         }
-        day.innerText = `${i}`;
+        // Add events to days 
+        if (localEvents) {
+            const dayEvents = getDayEvents(localEvents, i, currentDate);
+            if (dayEvents) {
+                renderDayEvents(dayEvents, dayEventsEl, day);
+            }
+        }
         daysDisplay.appendChild(day);
     }
     // Next month padding days
@@ -39,7 +55,6 @@ export function populateCalendar() {
         dateHeader.innerHTML = formattedDate;
     }
     if (calendarElement) {
-        // console.log(`Setting background to: ${currentMonthInfo.background}`);
         // calendarElement.style.backgroundImage = currentMonthInfo.background;
         calendarElement.style.backgroundSize = 'contain';
         calendarElement.style.backgroundRepeat = 'no-repeat';
@@ -47,7 +62,6 @@ export function populateCalendar() {
     }
 }
 document.addEventListener("DOMContentLoaded", () => {
-    populateCalendar();
     const prevButton = document.querySelector("#prev");
     const nextButton = document.querySelector("#next");
     if (prevButton) {
