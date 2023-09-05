@@ -23,6 +23,9 @@
     <div class="app">
       <button  id="newEventBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       </button>
+
+      <button  id="detailsBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsModal">
+      </button>
       <div class="calendarContainer">
       <div class="calendar">
         <div class="calendarHeader"> <i class="fas fa-angle-left" id="prev"></i> <div class="date">
@@ -51,36 +54,38 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="newEventDate" class="form-label">Date:</label>
-                        <input type="date" class="form-control" id="newEventDate">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" id="newEventDate">
+                      <label for="newEventDate" class="form-label">Date:</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="newEventTime" class="form-label">Time:</label>
-                        <input type="time" class="form-control" id="newEventTime">
+                    <div class="form-floating mb-3">
+                      <input type="time" class="form-control" id="newEventTime">
+                      <label for="newEventTime" class="form-label">Time:</label>
                     </div>
-                    <div class="mb-3">
-                      <label for="hasEndDate">Has End Date</label>
+                    <div class=" mb-3"><label for="hasEndDate">Has End Date</label>
                       <input type="checkbox" id="hasEndDate">                      
                       <input type="date" class="form-control" id="newEventEndDate" style="display: none;">
+                      
                   </div>
-                    <div class="mb-3">
-                        <label for="newEventTitle" class="form-label">Title:</label>
-                        <input type="text" class="form-control" id="newEventTitle" placeholder="Enter event title">
+                    <div class="form-floating mb-3">                    
+                     
+                      <input type="text" class="form-control" id="newEventTitle" placeholder="Enter event title">
+                      <label for="newEventTitle" class="form-label">Title:</label>
                     </div>
                     
-                    <div class="mb-3">
-                        <label for="newEventText" class="form-label">Description:</label>
-                        <input type="text" class="form-control" id="newEventText" placeholder="Enter event description">
+                    <div class="form-floating mb-3">
+                         <input type="text" class="form-control" id="newEventText" placeholder="Enter event description">
+                         <label for="newEventText" class="form-label">Description:</label>
+                       
                     </div>
-                    <div class="mb-3">
-                        <label for="eventLabel" class="form-label">Label:</label>
-                        <select class="form-select" id="eventLabel">
-                            <option value="work">Work</option>
-                            <option value="home">Home</option>
-                            <option value="hobby">Hobby</option>
-                            <option value="addNew">Add New Label</option>
-                        </select>
+                    <div class="form-floating mb-3">
+                      <select class="form-select" id="eventLabel">
+                        <option value="work">Work</option>
+                        <option value="home">Home</option>
+                        <option value="hobby">Hobby</option>
+                        <!-- <option value="addNew">Add New Label</option> -->
+                      </select>
+                      <label for="eventLabel" class="form-label">Type</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -88,7 +93,50 @@
                     <button id="saveBtn" class="btn btn-primary">Save</button>
                 </div>
             </div>
-        </div>
+        </div>  </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div class="modal fade" id="detailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="detailsBackdropLabel" id="detailsEventTitle">Event Title</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-floating mb-3">
+                          <label for="newEventDate" class="form-label" id="detailsEventDate">Date</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                          <label for="newEventTime" class="form-label" id="detailsEventTime">Time</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                          <label for="newEventText" class="form-label" id="detailsEventText">Description</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                          <label for="eventLabel" class="form-label" id="detailsEventLabel">Event Type</label>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" id="deleteModalBtn" class="btn btn-secondary" data-bs-dismiss="modal">Delete Event</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <footer class="footer"></footer>
+    
+
+
     </div>
       <footer class="footer"></footer>
     </div>
