@@ -60,9 +60,15 @@
                         <input type="time" class="form-control" id="newEventTime">
                     </div>
                     <div class="mb-3">
+                      <label for="hasEndDate">Has End Date</label>
+                      <input type="checkbox" id="hasEndDate">                      
+                      <input type="date" class="form-control" id="newEventEndDate" style="display: none;">
+                  </div>
+                    <div class="mb-3">
                         <label for="newEventTitle" class="form-label">Title:</label>
                         <input type="text" class="form-control" id="newEventTitle" placeholder="Enter event title">
                     </div>
+                    
                     <div class="mb-3">
                         <label for="newEventText" class="form-label">Description:</label>
                         <input type="text" class="form-control" id="newEventText" placeholder="Enter event description">

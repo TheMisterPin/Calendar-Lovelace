@@ -1,3 +1,6 @@
+// declare module 'bootstrap/js/dist/modal'
+// import Modal from 'bootstrap/js/dist/modal.js';
+import { populateCalendar } from "../components/calendar.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
 const newEventTxtInput = document.querySelector('#newEventText');
@@ -14,13 +17,24 @@ export function newEventHandler() {
     const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;
     const label = labelSelector.value;
+    const hasEndDateCheckbox = document.querySelector('#hasEndDate');
+    let endDate = undefined;
+    if (hasEndDateCheckbox.checked) {
+        const newEventEndDateInput = document.querySelector('#newEventEndDate');
+        endDate = newEventEndDateInput.value;
+    }
     const newEvent = {
         title,
         date,
         time,
         txt,
         label,
+        endDate
     };
     saveEventToLocalStorage(newEvent);
+    populateCalendar();
+    const modalElement = document.getElementById('staticBackdrop');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
     return newEvent;
 }
