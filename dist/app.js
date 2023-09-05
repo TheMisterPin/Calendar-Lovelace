@@ -14,6 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 endDateInput.style.display = 'none';
                 endDateInput.value = '';
             }
+            document.querySelectorAll('[data-bs-toggle="popover"]')
+                .forEach(popover => {
+                new bootstrap.Popover(popover);
+            });
         }
         populateCalendar();
     }

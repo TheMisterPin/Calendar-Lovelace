@@ -1,5 +1,3 @@
-// declare module 'bootstrap/js/dist/modal'
-// import Modal from 'bootstrap/js/dist/modal.js';
 import { populateCalendar } from "../components/calendar.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
