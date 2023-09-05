@@ -21,7 +21,8 @@
   </head>
   <body>
     <div class="app">
-      <button  id="newEventBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button  id="newEventBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button  id="detailsEventBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
       </button>
       <div class="calendarContainer">
       <div class="calendar">
@@ -40,9 +41,7 @@
 
         </section>
       </div></div>
-
-
-      <!-- NEW EVENT MODAL -->
+        <!-- NEW EVENT MODAL -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -70,6 +69,49 @@
                     <div class="mb-3">
                         <label for="eventLabel" class="form-label">Label:</label>
                         <select class="form-select" id="eventLabel">
+                            <option value="work">Work</option>
+                            <option value="home">Home</option>
+                            <option value="hobby">Hobby</option>
+                            <option value="addNew">Add New Label</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="saveBtn" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETAILS EVENT MODAL -->
+    <div class="modal fade" id="detailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="detailsBackdropLabel">Details Event</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="newEventDate" class="form-label">Date:</label>
+                        <input type="date" class="form-control" id="detailsEventDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newEventTime" class="form-label">Time:</label>
+                        <input type="time" class="form-control" id="detailsEventTime">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newEventTitle" class="form-label">Title:</label>
+                        <input type="text" class="form-control" id="detailsEventTitle" placeholder="Detail title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newEventText" class="form-label">Description:</label>
+                        <input type="text" class="form-control" id="detailsEventText" placeholder="Event Description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="eventLabel" class="form-label">Label:</label>
+                        <select class="form-select" id="eventDetailsLabel">
                             <option value="work">Work</option>
                             <option value="home">Home</option>
                             <option value="hobby">Hobby</option>

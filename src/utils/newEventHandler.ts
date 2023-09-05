@@ -1,5 +1,4 @@
 
-
 const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!;
 const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!;
 const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText')!; 

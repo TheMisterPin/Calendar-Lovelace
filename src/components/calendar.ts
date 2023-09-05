@@ -12,7 +12,6 @@ export function populateCalendar(): void {
   const { firstDay, lastDayOfWeek, monthLength, prevLastDay, formattedDate } = getDateInfo(currentDate);
   daysDisplay.innerHTML = ''
 
-
   // Previous month padding days
   for (let x = firstDay - 1; x > 0; x--) {
     const day: HTMLParagraphElement = document.createElement("p");
