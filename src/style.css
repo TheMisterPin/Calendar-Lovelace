@@ -102,3 +102,16 @@ p{
   background-color: #ef6c00;
 }
 
+.home::before{
+  background-color: #007b83;
+}
+
+.home::before{
+  background-color: #039be5;
+}
+
+.hobby::before{
+  background-color: #9e69af;
+}
+
+
