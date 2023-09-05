@@ -17,8 +17,7 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     if (dayEvents.length > 3){
         eventsToRender.splice(3)
     }
-  eventsToRender.forEach((event:Event)=>{   // Add event interface
-
+  eventsToRender.forEach((event:Event)=>{   
     const eventNameEl = document.createElement('p')
     eventNameEl.classList.add('event', event.label)
     eventNameEl.innerText = `${event.time} ${event.title}`
@@ -27,8 +26,38 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
   if(dayEvents.length > 3){
     const viewDayEventsBtn = document.createElement('button')
     viewDayEventsBtn.textContent = `${dayEvents.length - 3} more`
-    viewDayEventsBtn.classList.add('view_more_btn')
-    viewDayEventsBtn.addEventListener('click', ()=> console.log('More Events Here'))
+    viewDayEventsBtn.classList.add('view_more_btn', 'btn')
+    viewDayEventsBtn.dataset.bsToggle = "popover"
+    viewDayEventsBtn.dataset.bsTitle = "Popover Title"
+    viewDayEventsBtn.dataset.bsContent = "And here's some amazing content. It's very engaging. Right?"
+    viewDayEventsBtn.dataset.bsPlacement = "left"
+    /* Add Offset */  
+    
     dayContainer.appendChild(viewDayEventsBtn)
+    
+    setTimeout(()=>{
+        const popoverTriggerEl= document.querySelector('[data-bs-toggle="popover"]:not(.trigger)')
+        popoverTriggerEl?.classList.add('trigger')
+        const popover = new bootstrap.Popover(popoverTriggerEl, {
+            html: true
+        })
+        
+
+        popoverTriggerEl?.addEventListener('show.bs.popover', ()=> renderDayEventsPopover(dayEvents, popover))
+
+    },2000)  // Test changing the timeout with async await
 }
+}
+
+function renderDayEventsPopover(dayEvents:Event[], popover){
+    let popoverTemplate = ""
+    dayEvents.forEach(event => {
+        popoverTemplate += `<p class="event ${event.label}">${event.time} ${event.title}</p>`
+    })
+    popover.setContent({
+        '.popover-header':dayEvents[0].date,
+        '.popover-body': popoverTemplate
+    })
+    const eventTitle = document.createElement('h3')
+    eventTitle.classList.add('event__title')
 }

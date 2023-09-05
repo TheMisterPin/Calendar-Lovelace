@@ -1,8 +1,5 @@
 import { populateCalendar } from './components/calendar.js';
 import { newEventHandler } from './utils/newEventHandler.js';
-$(function () {
-    $('[data-toggle="popover"]').popover();
-});
 document.addEventListener("DOMContentLoaded", () => {
     const checkbox = document.querySelector('#hasEndDate');
     if (checkbox) {
@@ -17,31 +14,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 endDateInput.style.display = 'none';
                 endDateInput.value = '';
             }
-            document.querySelectorAll('[data-bs-toggle="popover"]')
-                .forEach(popover => {
-                new bootstrap.Popover(popover);
-            });
+            populateCalendar();
         }
-        populateCalendar();
-    }
-    const reminderCheckbox = document.querySelector('#hasReminder');
-    if (reminderCheckbox) {
-        reminderCheckbox.addEventListener('change', toggleEndDateSelector);
-        function toggleEndDateSelector() {
-            const reminderCheckbox = document.querySelector('#hasReminder');
-            const newEventReminder = document.querySelector('#newEventReminder');
-            if (reminderCheckbox && reminderCheckbox.checked) {
-                newEventReminder.style.display = 'block';
+        const reminderCheckbox = document.querySelector('#hasReminder');
+        if (reminderCheckbox) {
+            reminderCheckbox.addEventListener('change', toggleEndDateSelector);
+            function toggleEndDateSelector() {
+                const reminderCheckbox = document.querySelector('#hasReminder');
+                const newEventReminder = document.querySelector('#newEventReminder');
+                if (reminderCheckbox && reminderCheckbox.checked) {
+                    newEventReminder.style.display = 'block';
+                }
+                else {
+                    newEventReminder.style.display = 'none';
+                    newEventReminder.value = '';
+                }
             }
-            else {
-                newEventReminder.style.display = 'none';
-                newEventReminder.value = '';
-            }
+            populateCalendar();
         }
-        populateCalendar();
     }
-});
-const newEventBtn = document.querySelector('#saveBtn');
-newEventBtn.addEventListener('click', () => {
-    const eventObject = newEventHandler();
+    ;
+    const newEventBtn = document.querySelector('#saveBtn');
+    newEventBtn.addEventListener('click', () => {
+        const eventObject = newEventHandler();
+    });
 });
