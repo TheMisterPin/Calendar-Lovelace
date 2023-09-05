@@ -4,8 +4,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+ul{
+  padding: 0;
+}
+p{
+  margin-bottom: 0;
+}
+
 .app {
-  background-color: antiquewhite;
   width: 100vw;
   height: 100vh;
 }
@@ -32,7 +38,6 @@
 
 .calendarHeader h1{font-size: 5em;  }
 .weekDays {
-  background-color: hsl(0, 0%, 50%, 0.5);
   display: grid;
   list-style: none;
   padding:3% 3% 0 3%;
@@ -57,12 +62,14 @@
   list-style: none;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+}
+
+.day, .paddingDay{
+  outline: 1px solid gray;
+  padding-inline: 1em;
 }
 
 .calendarDisplay p { 
-  text-align: center;
-  background-color: hsl(0, 0%, 50%, 0.5);
   font-size: 1em;
   user-select: none;
 }
@@ -74,9 +81,24 @@
   opacity: 0.7;
 }
 
+/* Events */
+.event{
+  position: relative;
+  padding-left: 15px;
+}
 
+.event::before{
+  content: '';
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
-
-
-
+.work::before{
+  background-color: #ef6c00;
+}
 

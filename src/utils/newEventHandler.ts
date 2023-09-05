@@ -1,13 +1,13 @@
+import { formatDate } from "./formatDate.js"
 
 
 import { populateCalendar } from "../components/calendar.js";
 
-
-const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!;
-const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!;
-const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText')!; 
-const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTime')!;
-const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
+const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!
+const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!
+const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText')! 
+const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTime')!
+const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!
 
 export interface Event {
     title: string;
@@ -19,9 +19,9 @@ export interface Event {
 
 }
 function saveEventToLocalStorage(event: Event): void {
-    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
-    localEvents.push(event);
-    localStorage.setItem('events', JSON.stringify(localEvents));
+    const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
+    localEvents.push(event)
+    localStorage.setItem('events', JSON.stringify(localEvents))
 }
 
 
