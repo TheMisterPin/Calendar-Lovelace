@@ -52,7 +52,7 @@ export function newEventHandler(): Event {
     populateCalendar();
     
     const modalElement = document.getElementById('staticBackdrop')!;
-const modal = bootstrap.Modal.getInstance(modalElement)!;
+    const modal = bootstrap.Modal.getInstance(modalElement)!;
     modal.hide()
     return newEvent;
 }

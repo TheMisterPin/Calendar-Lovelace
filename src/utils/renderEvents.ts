@@ -11,7 +11,10 @@ export function getDayEvents(eventsArray: Event[], day:number, currentDate:Date)
 }
 
 export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, dayContainer:HTMLElement){ 
-  const eventsToRender = dayEvents.length > 3 ? dayEvents.toSpliced(3) : dayEvents
+    const eventsToRender = [...dayEvents]
+    if (dayEvents.length > 3){
+        eventsToRender.splice(3)
+    }
   eventsToRender.forEach((event:Event)=>{   // Add event interface
     const eventNameEl = document.createElement('p')
     eventNameEl.classList.add('event', event.label)

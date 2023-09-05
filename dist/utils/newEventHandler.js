@@ -1,6 +1,3 @@
-import { formatDate } from "./formatDate.js";
-// declare module 'bootstrap/js/dist/modal'
-// import Modal from 'bootstrap/js/dist/modal.js';
 import { populateCalendar } from "../components/calendar.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
@@ -14,7 +11,7 @@ function saveEventToLocalStorage(event) {
 }
 export function newEventHandler() {
     const title = newEventTitleInput.value;
-    const date = formatDate(newEventDateInput.value);
+    const date = newEventDateInput.value;
     const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;
     const label = labelSelector.value;

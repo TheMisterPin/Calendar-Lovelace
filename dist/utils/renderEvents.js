@@ -7,7 +7,10 @@ export function getDayEvents(eventsArray, day, currentDate) {
     return eventsArray.filter((event) => event.date === fullDate);
 }
 export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
-    const eventsToRender = dayEvents.length > 3 ? dayEvents.toSpliced(3) : dayEvents;
+    const eventsToRender = [...dayEvents];
+    if (dayEvents.length > 3) {
+        eventsToRender.splice(3);
+    }
     eventsToRender.forEach((event) => {
         const eventNameEl = document.createElement('p');
         eventNameEl.classList.add('event', event.label);
