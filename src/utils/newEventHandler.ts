@@ -16,8 +16,8 @@ export interface Event {
     time: string;
     label: string;
     endDate?: string; 
-
 }
+
 function saveEventToLocalStorage(event: Event): void {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
     localEvents.push(event)
@@ -27,7 +27,7 @@ function saveEventToLocalStorage(event: Event): void {
 
 export function newEventHandler(): Event {
     const title = newEventTitleInput.value;
-    const date = newEventDateInput.value;
+    const date = formatDate(newEventDateInput.value);
     const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;    
     const label = labelSelector.value;

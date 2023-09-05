@@ -4,6 +4,7 @@ export function getDayEvents(eventsArray, day, currentDate) {
     const currentYear = currentDate.getFullYear();
     const currentDay = day;
     const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`);
+    console.log(currentYear);
     return eventsArray.filter((event) => event.date === fullDate);
 }
 export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {

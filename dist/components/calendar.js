@@ -33,6 +33,7 @@ export function populateCalendar() {
         // Add events to days 
         if (localEvents) {
             const dayEvents = getDayEvents(localEvents, i, currentDate);
+            console.log(dayEvents);
             if (dayEvents) {
                 renderDayEvents(dayEvents, dayEventsEl, day);
             }

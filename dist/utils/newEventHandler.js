@@ -1,3 +1,4 @@
+import { formatDate } from "./formatDate.js";
 import { populateCalendar } from "../components/calendar.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
@@ -11,7 +12,7 @@ function saveEventToLocalStorage(event) {
 }
 export function newEventHandler() {
     const title = newEventTitleInput.value;
-    const date = newEventDateInput.value;
+    const date = formatDate(newEventDateInput.value);
     const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;
     const label = labelSelector.value;
