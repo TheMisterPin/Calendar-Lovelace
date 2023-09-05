@@ -1,10 +1,12 @@
 import { months } from '../utils/constants.js';
 import { getDateInfo, DateInfo } from '../utils/dateInfo.js';
-import { formatDate } from '../utils/formatDate.js';
+import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
+
 
 let currentDate: Date = new Date();
 
 export function populateCalendar(): void {
+  const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
   const currentMonthInfo = months[currentDate.getMonth()];
   const daysDisplay: HTMLElement= document.querySelector(".calendarDisplay")!;
   const calendarElement = document.querySelector(".calendar") as HTMLElement;
@@ -24,7 +26,7 @@ export function populateCalendar(): void {
   }
 
   // Get events
-  const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
+  
 
   // Current month days
   for (let i = 1; i <= monthLength; i++) {
@@ -33,41 +35,27 @@ export function populateCalendar(): void {
     const dayNumber: HTMLParagraphElement = document.createElement("p");
     dayNumber.innerText = `${i}`;
     dayNumber.classList.add('day__number')
-    day.appendChild(dayNumber)
+
+    const dayEventsEl = document.createElement('ul')
+    dayEventsEl.classList.add('day__events-list')
+
+
+    day.append(dayNumber, dayEventsEl)
     if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
       day.classList.add(`today`);
     }
     // Add events to days 
+
     if(localEvents){
-      const currentMonth = currentDate.getMonth()+1
-      const currentYear = currentDate.getFullYear()
-      const currentDay = i
-      
-      const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`)  
-      const dayEvents = localEvents.filter(event => event.date === fullDate)  // Add event interface
-      console.log(dayEvents)
+      const dayEvents = getDayEvents(localEvents, i, currentDate)
       if(dayEvents){
-        const eventsToRender = dayEvents.length > 3 ? dayEvents.toSpliced(3) : dayEvents
-        eventsToRender.forEach(event=>{   // Add event interface
-          const eventNameEl = document.createElement('p')
-          eventNameEl.classList.add('event')
-          eventNameEl.innerText = `${event.time} ${event.title}`
-          day.appendChild(eventNameEl)
-        })
-        if(dayEvents.length > 3){
-          const viewDayEventsBtn = document.createElement('button')
-          viewDayEventsBtn.textContent = `${dayEvents.length - 3} more`
-          viewDayEventsBtn.classList.add('view_more_btn')
-          viewDayEventsBtn.addEventListener('click', ()=> console.log('More Events Here'))
-          day.appendChild(viewDayEventsBtn)
-      }
-        
+        renderDayEvents(dayEvents, dayEventsEl, day)  
       }
     }
-    
-    
     daysDisplay.appendChild(day);
   }
+
+  
 
   // Next month padding days
   for (let y = 1; y <= 7 - lastDayOfWeek; y++) {
@@ -94,6 +82,8 @@ export function populateCalendar(): void {
     calendarElement.style.backgroundPosition = 'center center';
 }
 }
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -12,7 +12,6 @@ export interface Event {
     txt: string
     time: string
     label: string
-
 }
 function saveEventToLocalStorage(event: Event): void {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
