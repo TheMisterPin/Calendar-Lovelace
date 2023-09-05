@@ -3,7 +3,6 @@ import { formatDate } from "./formatDate.js"
 
 import { populateCalendar } from "../components/calendar.js";
 
-<<<<<<< HEAD
 
 const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!;
 const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!;
@@ -11,13 +10,8 @@ const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText
 const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTime')!;
 const newEventReminder: HTMLInputElement = document.querySelector('#newEventReminder')!;
 const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
-=======
-const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!
-const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!
-const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText')! 
-const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTime')!
-const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!
->>>>>>> 4f5a2ad289f9ed86d61d34b4f45313498c275ea5
+
+
 
 export interface Event {
     title: string;
@@ -38,7 +32,7 @@ function saveEventToLocalStorage(event: Event): void {
 
 export function newEventHandler(): Event {
     const title = newEventTitleInput.value;
-    const date = newEventDateInput.value;
+    const date = formatDate(newEventDateInput.value);
     const time = newEventTimeInput.value;
     const txt = newEventTxtInput.value;    
     const label = labelSelector.value;
