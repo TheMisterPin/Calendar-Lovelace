@@ -1,3 +1,4 @@
+var _a, _b;
 import { formatDate } from "./formatDate.js";
 import { populateCalendar } from "../components/calendar.js";
 const newEventDateInput = document.querySelector('#newEventDate');
@@ -7,8 +8,12 @@ const newEventTimeInput = document.querySelector('#newEventTime');
 const newEventReminder = document.querySelector('#newEventReminder');
 const labelSelector = document.querySelector('#eventLabel');
 const saveBtn = document.querySelector('#saveBtn');
-const dateError = document.querySelector('#date-error');
-const titleError = document.querySelector('#title-error');
+const dateError = document.createElement('div');
+const titleError = document.createElement('div');
+dateError.className = 'error-message';
+titleError.className = 'error-message';
+(_a = newEventDateInput.parentElement) === null || _a === void 0 ? void 0 : _a.append(dateError);
+(_b = newEventTitleInput.parentElement) === null || _b === void 0 ? void 0 : _b.append(titleError);
 function saveEventToLocalStorage(event) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     localEvents.push(event);
@@ -28,7 +33,7 @@ function validateDateInput() {
 function validateTitleInput() {
     const titleValue = newEventTitleInput.value;
     if (!titleValue) {
-        titleError.textContent = 'Please enter a title.';
+        titleError.textContent = 'Please enter an event title.';
         newEventTitleInput.classList.add('is-invalid');
         return false;
     }

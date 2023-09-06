@@ -9,8 +9,13 @@ const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTim
 const newEventReminder: HTMLInputElement = document.querySelector('#newEventReminder')!;
 const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
 const saveBtn: HTMLButtonElement = document.querySelector('#saveBtn')!;
-const dateError: HTMLDivElement = document.querySelector('#date-error')!;
-const titleError: HTMLDivElement = document.querySelector('#title-error')!;
+const dateError: HTMLDivElement = document.createElement('div')!;
+const titleError: HTMLDivElement = document.createElement('div')!;
+
+dateError.className = 'error-message';
+titleError.className = 'error-message';
+newEventDateInput.parentElement?.append(dateError);
+newEventTitleInput.parentElement?.append(titleError);
 
 export interface Event {
     title: string;
@@ -43,7 +48,7 @@ function validateDateInput(): boolean {
 function validateTitleInput(): boolean {
     const titleValue = newEventTitleInput.value;
     if (!titleValue) {
-        titleError.textContent = 'Please enter a title task.';
+        titleError.textContent = 'Please enter an event title.';
         newEventTitleInput.classList.add('is-invalid');
         return false;
     }
