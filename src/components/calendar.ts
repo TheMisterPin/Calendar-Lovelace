@@ -80,7 +80,23 @@ export function populateCalendar(): void {
 }
 }
 
-
+function processHolidays(holidays: HolidayInfo[]): void {
+  for (const holiday of holidays) {
+    const holidayDate = new Date(holiday.date);
+    if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
+      const day = holidayDate.getDate() + 4;
+      const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
+      if (dayHolidayEventsEl) {
+        const holidayEvent = document.createElement('li')
+        holidayEvent.classList.add('holiday')
+        holidayEvent.textContent = holiday.name
+        dayHolidayEventsEl.appendChild(holidayEvent)
+        console.log(holidayEvent)
+      }
+    }
+  }
+}
+loadHolidaysAsync(currentDate.getFullYear());
 
 
 
