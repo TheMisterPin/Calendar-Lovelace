@@ -8,7 +8,6 @@ export function getDayEvents(eventsArray: Event[], day:number, currentDate:Date)
     const currentDay = day
       
     const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`) 
-    console.log()
     return eventsArray.filter((event:Event) => event.date === fullDate)
 }
 
@@ -18,7 +17,7 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
         eventsToRender.splice(3)
     }
   eventsToRender.forEach((event:Event)=>{   
-    const eventNameEl = document.createElement('p')
+    const eventNameEl = document.createElement('li')
     eventNameEl.classList.add('event', event.label)
     eventNameEl.innerText = `${event.time} ${event.title}`
     eventsContainer.appendChild(eventNameEl)
@@ -44,20 +43,23 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
         
 
         popoverTriggerEl?.addEventListener('show.bs.popover', ()=> renderDayEventsPopover(dayEvents, popover))
-console.log("popoverTriggerEl")
-    },2000)  // Test changing the timeout with async await
+
+    },2000)  // Test changing the timeout with async await with promise
 }
 }
 
-function renderDayEventsPopover(dayEvents:Event[], popover: bootstrap.Popover){
-    let popoverTemplate = ""
+function renderDayEventsPopover(dayEvents:Event[], popover){
+    let popoverTemplate = "<ul>templateInner</ul>"
+    let popoverTemplateInner = ""
     dayEvents.forEach(event => {
-        popoverTemplate += `<p class="event ${event.label}">${event.time} ${event.title}</p>`
+        popoverTemplateInner += `<li class="event ${event.label}">${event.time} ${event.title}</li>`
+        
     })
+    popoverTemplate = popoverTemplate.replace('templateInner', popoverTemplateInner)
+
     popover.setContent({
         '.popover-header':dayEvents[0].date,
         '.popover-body': popoverTemplate
     })
-    const eventTitle = document.createElement('h3')
-    eventTitle.classList.add('event__title')
+
 }
