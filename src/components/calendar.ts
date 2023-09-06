@@ -99,6 +99,7 @@ function processHolidays(holidays: HolidayInfo[]): void {
         holidayEvent.classList.add('holiday')
         holidayEvent.textContent = holiday.name
         dayHolidayEventsEl.appendChild(holidayEvent)
+        console.log(holidayEvent)
       }
     }
   }
