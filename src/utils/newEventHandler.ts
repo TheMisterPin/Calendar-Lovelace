@@ -150,7 +150,6 @@ export function newEventHandler(): Event {
         reminder
     }
 
-    populateCalendar();
     
     return newEvent;
 }

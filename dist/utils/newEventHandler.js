@@ -1,6 +1,5 @@
 var _a, _b, _c;
 import { formatDate } from "./formatDate.js";
-import { populateCalendar } from "../components/calendar.js";
 import { uuidv4 } from "./uuidv4.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
@@ -120,6 +119,5 @@ export function newEventHandler() {
         endDate,
         reminder
     };
-    populateCalendar();
     return newEvent;
 }

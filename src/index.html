@@ -21,13 +21,7 @@
   </head>
   <body>
     <div class="app">
-      <button
-        id="newEventBtn"
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop"
-      ></button>
+    
 
       <div class="calendarContainer">
       
@@ -35,8 +29,14 @@
           <div class="calendarHeader">
             <i class="fas fa-angle-left" id="prev"></i>
             <div class="date">
-              <h1>February</h1>
-              <h5>lunes</h5>
+              <h3></h3>
+              <button
+              id="newEventBtn"
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >Create New Event</button>
             </div>
             <i class="fa fa-angle-right" id="next"></i>
           </div>
@@ -63,6 +63,11 @@
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
+
+
+
+
+
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -142,9 +147,8 @@
               <button
                 type="button"
                 class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              
-              </button>
+                data-bs-dismiss="modal">cancel</button>
+             
               <button id="saveBtn" class="btn btn-primary">Save</button>
             </div>
           </div>

@@ -3,24 +3,45 @@ import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 let currentDate = new Date();
-export function populateCalendar() {
-    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
-    const currentMonthInfo = months[currentDate.getMonth()];
+export function clearCalendar() {
     const daysDisplay = document.querySelector(".calendarDisplay");
-    const { firstDay, lastDayOfWeek, monthLength, prevLastDay, } = getDateInfo(currentDate);
     daysDisplay.innerHTML = '';
-    // Previous month padding days
-    for (let x = firstDay - 1; x > 0; x--) {
-        const day = document.createElement("p");
-        day.innerText = `${prevLastDay - x + 1}`;
-        day.classList.add(`paddingDay`);
-        daysDisplay.appendChild(day);
+}
+export function updateMonthHeader(currentDate) {
+    const currentMonthInfo = months[currentDate.getMonth()];
+    const monthHeader = document.querySelector(".calendarHeader h3");
+    if (monthHeader) {
+        monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
     }
-    // Get events
-    // Current month days
+}
+function populateDays(currentDate) {
+    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+    const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
+    const daysDisplay = document.querySelector(".calendarDisplay");
+    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
+    const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
+    appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
+    appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
+    appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
+}
+function appendPaddingDays(count, start, container, isPrevMonth) {
+    let value = isPrevMonth ? (start - count + 1) : 1;
+    for (let i = 0; i < count; i++) {
+        const day = document.createElement("p");
+        day.innerText = `${value++}`;
+        day.classList.add('paddingDay');
+        container.appendChild(day);
+    }
+}
+function appendCurrentMonthDays(localEvents, currentDate, monthLength, container) {
     for (let i = 1; i <= monthLength; i++) {
         const day = document.createElement('div');
         day.classList.add('day');
+        day.setAttribute('data-day-number', i.toString());
+        day.addEventListener('click', (event) => {
+            const clickedDay = event.currentTarget;
+            console.log(clickedDay.getAttribute('data-day-number'));
+        });
         const dayNumber = document.createElement("p");
         dayNumber.innerText = `${i}`;
         dayNumber.classList.add('day__number');
@@ -28,70 +49,46 @@ export function populateCalendar() {
         dayEventsEl.classList.add('day__events-list');
         day.append(dayNumber, dayEventsEl);
         if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
-            day.classList.add(`today`);
+            day.classList.add('today');
         }
-        // Add events to days 
         if (localEvents) {
             const dayEvents = getDayEvents(localEvents, i, currentDate);
             if (dayEvents) {
                 renderDayEvents(dayEvents, dayEventsEl, day);
             }
         }
-        daysDisplay.appendChild(day);
+        container.appendChild(day);
     }
-    // Next month padding days
-    for (let y = 1; y <= 7 - lastDayOfWeek; y++) {
-        const day = document.createElement("p");
-        day.innerText = `${y}`;
-        day.classList.add(`paddingDay`);
-        daysDisplay.appendChild(day);
-    }
-    const monthHeader = document.querySelector(".calendarHeader h1");
-    if (monthHeader) {
-        monthHeader.innerHTML = currentMonthInfo.name + " " + currentDate.getFullYear();
-    }
-    async function loadHolidaysAsync(year) {
-        try {
-            const holidays = await loadHolidays(year);
-            if (holidays) {
-                processHolidays(holidays);
-            }
-        }
-        catch (error) {
-            console.error('Error fetching holidays:', error);
+}
+async function loadHolidaysAsync(year) {
+    try {
+        const holidays = await loadHolidays(year);
+        if (holidays) {
+            processHolidays(holidays);
         }
     }
-    function processHolidays(holidays) {
-        for (const holiday of holidays) {
-            const holidayDate = new Date(holiday.date);
-            if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
-                const day = holidayDate.getDate() + 4;
-                const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
-                if (dayHolidayEventsEl) {
-                    const holidayEvent = document.createElement('li');
-                    holidayEvent.classList.add('holiday');
-                    holidayEvent.textContent = holiday.name;
-                    dayHolidayEventsEl.prepend(holidayEvent);
-                    console.log(holidayEvent);
-                }
+    catch (error) {
+        console.error('Error fetching holidays:', error);
+    }
+}
+function processHolidays(holidays) {
+    for (const holiday of holidays) {
+        const holidayDate = new Date(holiday.date);
+        if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
+            const day = holidayDate.getDate() + 4;
+            const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
+            if (dayHolidayEventsEl) {
+                const holidayEvent = document.createElement('li');
+                holidayEvent.classList.add('holiday');
+                holidayEvent.textContent = holiday.name;
+                dayHolidayEventsEl.prepend(holidayEvent);
             }
         }
     }
+}
+export function populateCalendar(currentDate) {
+    clearCalendar();
+    updateMonthHeader(currentDate);
+    populateDays(currentDate);
     loadHolidaysAsync(currentDate.getFullYear());
 }
-document.addEventListener("DOMContentLoaded", () => {
-    const prevButton = document.querySelector("#prev");
-    const nextButton = document.querySelector("#next");
-    if (prevButton) {
-        prevButton.addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            populateCalendar();
-        });
-    }
-    if (nextButton) {
-        nextButton.addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            populateCalendar();
-        });
-    }
-});
