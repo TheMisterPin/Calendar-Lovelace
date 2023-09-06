@@ -38,8 +38,7 @@ if (reminderCheckbox && reminderCheckbox.checked) {
 }
 populateCalendar()
 }
-};
-
+}
 
 
 
@@ -49,6 +48,7 @@ newEventBtn.addEventListener('click', () =>{
 const eventObject = newEventHandler();
 });
 
+})
 
 
 

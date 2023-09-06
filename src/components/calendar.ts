@@ -46,6 +46,8 @@ export function populateCalendar(): void {
     }
     // Add events to days 
 
+
+
     if(localEvents){
       const dayEvents = getDayEvents(localEvents, i, currentDate)
       if(dayEvents){
@@ -81,8 +83,8 @@ export function populateCalendar(): void {
     calendarElement.style.backgroundRepeat = 'no-repeat'; 
     calendarElement.style.backgroundPosition = 'center center';
 }
+  
 }
-
 
 
 
