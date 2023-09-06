@@ -35,6 +35,7 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
                 html: true
             });
             popoverTriggerEl === null || popoverTriggerEl === void 0 ? void 0 : popoverTriggerEl.addEventListener('show.bs.popover', () => renderDayEventsPopover(dayEvents, popover));
+            console.log("popoverTriggerEl");
         }, 2000); // Test changing the timeout with async await
     }
 }

@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     ;
-    const newEventBtn = document.querySelector('#saveBtn');
-    newEventBtn.addEventListener('click', () => {
-        const eventObject = newEventHandler();
-    });
+});
+const newEventBtn = document.querySelector('#saveBtn');
+newEventBtn.addEventListener('click', () => {
+    const eventObject = newEventHandler();
 });

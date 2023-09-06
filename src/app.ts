@@ -38,7 +38,7 @@ if (reminderCheckbox && reminderCheckbox.checked) {
 }
 populateCalendar()
 }
-};
+};});
 
 
 

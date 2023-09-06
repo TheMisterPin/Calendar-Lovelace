@@ -78,63 +78,63 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="newEventDate" class="form-label">Date:</label>
+              <div class=" mb-3 form-floating">
                 <input type="date" class="form-control" id="newEventDate" />
+                <label for="newEventDate" class="form-label">Date:</label>
               </div>
-              <div class="mb-3">
-                <label for="newEventTime" class="form-label">Time:</label>
+              <div class=" mb-3 form-floating">
                 <input type="time" class="form-control" id="newEventTime" />
+                <label for="newEventTime" class="form-label">Time:</label>
               </div>
-              <div class="mb-3">
-                <label for="hasEndDate">Has End Date</label>
-                <input type="checkbox" id="hasEndDate" />
+              <div class=" mb-3 form-floating"><label class="form-check-label"  for="hasEndDate">Has End Date</label>
+                <input  class="form-check-input"  type="checkbox" id="hasEndDate" />
+                
                 <input
-                  type="date"
-                  class="form-control"
-                  id="newEventEndDate"
-                  style="display: none"
+                type="date"
+                class="form-control"
+                id="newEventEndDate"
+                style="display: none"
                 />
               </div>
-              <div class="mb-3">
+              <div class=" mb-3 form-floating">
+                <input
+                type="text"
+                class="form-control"
+                id="newEventTitle"
+                placeholder="Enter event title"
+                />
                 <label for="newEventTitle" class="form-label">Title:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="newEventTitle"
-                  placeholder="Enter event title"
-                />
               </div>
 
-              <div class="mb-3">
-                <label for="newEventText" class="form-label"
-                  >Description:</label
-                >
+              <div class=" mb-3 form-floating">
+                
                 <input
-                  type="text"
-                  class="form-control"
-                  id="newEventText"
-                  placeholder="Enter event description"
+                type="text"
+                class="form-control"
+                id="newEventText"
+                placeholder="Enter event title"
                 />
+                <label for="newEventText" class="form-label"
+                  >Description:</label>
               </div>
-              <div class="mb-3">
-                <label for="hasReminder">REMIND ME</label>
-                <input type="checkbox" id="hasReminder" />
-              <select class="form-select" id="newEventReminder"  style="display: none">
-                <option value="5min">"5min"</option>
-                <option value="10min">"10min"</option>
-                <option value="15min">"15min"</option>
-                <option value="20min">"20min"</option>
-              </select>
+              <div class=" mb-3 form-floating"><label  class="form-check-label" for="hasReminder">REMIND ME</label>
+                <input type="checkbox"  class="form-check-input" id="hasReminder" />
+                <select class="form-select" id="newEventReminder"  style="display: none">
+                  <option value="5min">5min</option>
+                  <option value="10min">10min</option>
+                  <option value="15min">15min</option>
+                  <option value="20min">20min</option>
+                </select>
+                
               </div>
-              <div class="mb-3">
-                <label for="eventLabel" class="form-label">Label:</label>
+              <div class=" mb-3 form-floating">
                 <select class="form-select" id="eventLabel">
                   <option value="work">Work</option>
                   <option value="home">Home</option>
                   <option value="hobby">Hobby</option>
                   <option value="addNew">Add New Label</option>
                 </select>
+                <label for="eventLabel" class="form-label">Label:</label>
               </div>
             </div>
             <div class="modal-footer">

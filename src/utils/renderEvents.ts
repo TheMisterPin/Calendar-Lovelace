@@ -36,7 +36,7 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     dayContainer.appendChild(viewDayEventsBtn)
     
     setTimeout(()=>{
-        const popoverTriggerEl= document.querySelector('[data-bs-toggle="popover"]:not(.trigger)')
+        const popoverTriggerEl= document.querySelector('[data-bs-toggle="popover"]:not(.trigger)')!
         popoverTriggerEl?.classList.add('trigger')
         const popover = new bootstrap.Popover(popoverTriggerEl, {
             html: true
@@ -44,12 +44,12 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
         
 
         popoverTriggerEl?.addEventListener('show.bs.popover', ()=> renderDayEventsPopover(dayEvents, popover))
-
+console.log("popoverTriggerEl")
     },2000)  // Test changing the timeout with async await
 }
 }
 
-function renderDayEventsPopover(dayEvents:Event[], popover){
+function renderDayEventsPopover(dayEvents:Event[], popover: bootstrap.Popover){
     let popoverTemplate = ""
     dayEvents.forEach(event => {
         popoverTemplate += `<p class="event ${event.label}">${event.time} ${event.title}</p>`
