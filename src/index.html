@@ -122,7 +122,7 @@
               <div class="mb-3">
                   <label for="hasReminder">REMIND ME</label>
                   <input type="checkbox" id="hasReminder" />
-                  <select class="form-select" id="newEventReminder"  style="display: none">
+                  <select class="form-select" id="newEventReminder" style="display: none">
                       <option value="5min">"5min"</option>
                       <option value="10min">"10min"</option>
                       <option value="15min">"15min"</option>
@@ -130,8 +130,9 @@
                   </select>
               </div>
               <div class="mb-3">
-                  <label for="eventLabel" class="form-label">Label:</label>
+                  <label for="eventLabel" class="form-label">Type of event:</label>
                   <select class="form-select" id="eventLabel" required>
+                      <option value="">...</option>
                       <option value="work">Work</option>
                       <option value="home">Home</option>
                       <option value="hobby">Hobby</option>

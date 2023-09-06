@@ -1,4 +1,4 @@
-var _a, _b;
+var _a, _b, _c;
 import { formatDate } from "./formatDate.js";
 import { populateCalendar } from "../components/calendar.js";
 const newEventDateInput = document.querySelector('#newEventDate');
@@ -10,10 +10,10 @@ const labelSelector = document.querySelector('#eventLabel');
 const saveBtn = document.querySelector('#saveBtn');
 const dateError = document.createElement('div');
 const titleError = document.createElement('div');
-dateError.className = 'error-message';
-titleError.className = 'error-message';
+const labelError = document.createElement('div');
 (_a = newEventDateInput.parentElement) === null || _a === void 0 ? void 0 : _a.append(dateError);
 (_b = newEventTitleInput.parentElement) === null || _b === void 0 ? void 0 : _b.append(titleError);
+(_c = labelSelector.parentElement) === null || _c === void 0 ? void 0 : _c.append(labelError);
 function saveEventToLocalStorage(event) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     localEvents.push(event);
@@ -22,23 +22,40 @@ function saveEventToLocalStorage(event) {
 function validateDateInput() {
     const dateValue = newEventDateInput.value;
     if (!dateValue) {
-        dateError.textContent = 'Please enter a valid date.';
+        dateError.textContent = 'Please, enter a valid date.';
         newEventDateInput.classList.add('is-invalid');
+        dateError.classList.add('error-message');
         return false;
     }
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
+    dateError.classList.remove('error-message');
     return true;
 }
 function validateTitleInput() {
     const titleValue = newEventTitleInput.value;
     if (!titleValue) {
-        titleError.textContent = 'Please enter an event title.';
+        titleError.textContent = 'Please, enter an event title.';
         newEventTitleInput.classList.add('is-invalid');
+        titleError.classList.add('error-message');
         return false;
     }
     titleError.textContent = '';
     newEventTitleInput.classList.remove('is-invalid');
+    titleError.classList.remove('error-message');
+    return true;
+}
+function validateEventLabel() {
+    const eventValue = labelSelector.value;
+    if (!eventValue) {
+        labelError.textContent = ' Please, select a label.';
+        labelSelector.classList.add('is-invalid');
+        labelError.classList.add('error-message');
+        return false;
+    }
+    labelError.textContent = '';
+    labelSelector.classList.remove('is-invalid');
+    labelError.classList.remove('error-message');
     return true;
 }
 newEventDateInput.addEventListener('blur', () => {
@@ -47,17 +64,28 @@ newEventDateInput.addEventListener('blur', () => {
 newEventTitleInput.addEventListener('blur', () => {
     validateTitleInput();
 });
+labelSelector.addEventListener('blur', () => {
+    validateEventLabel();
+});
 newEventDateInput.addEventListener('focus', () => {
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
+    dateError.classList.remove('error-message');
 });
 newEventTitleInput.addEventListener('focus', () => {
     titleError.textContent = '';
     newEventTitleInput.classList.remove('is-invalid');
+    titleError.classList.remove('error-message');
+});
+labelSelector.addEventListener('focus', () => {
+    labelError.textContent = '';
+    labelSelector.classList.remove('is-invalid');
+    labelError.classList.remove('error-message');
 });
 saveBtn.addEventListener('click', () => {
-    if (validateDateInput() && validateTitleInput()) {
-        newEventHandler();
+    if (validateDateInput() && validateTitleInput() && validateEventLabel()) {
+        const newEvent = newEventHandler();
+        saveEventToLocalStorage(newEvent);
         const modalElement = document.getElementById('staticBackdrop');
         const modal = bootstrap.Modal.getInstance(modalElement);
         modal.hide();
@@ -85,7 +113,6 @@ export function newEventHandler() {
         endDate,
         reminder,
     };
-    saveEventToLocalStorage(newEvent);
     populateCalendar();
     return newEvent;
 }

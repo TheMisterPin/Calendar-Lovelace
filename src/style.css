@@ -130,10 +130,22 @@ p{
 }
 
 .error-message {
-  color: purple;
+  color: rgb(154, 1, 1);
   font-size: 14px;
   margin-top: 5px;
   display: flex;
+  animation: bounce 1s ease-in;
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+  }
+  40% {
+      transform: translateY(-8px);
+  }
+  60% {
+      transform: translateY(-5px);
+  }
 }
 
 .is-invalid {

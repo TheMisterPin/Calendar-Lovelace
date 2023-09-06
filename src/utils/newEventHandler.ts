@@ -11,11 +11,11 @@ const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
 const saveBtn: HTMLButtonElement = document.querySelector('#saveBtn')!;
 const dateError: HTMLDivElement = document.createElement('div')!;
 const titleError: HTMLDivElement = document.createElement('div')!;
+const labelError: HTMLDivElement = document.createElement('div')!;
 
-dateError.className = 'error-message';
-titleError.className = 'error-message';
 newEventDateInput.parentElement?.append(dateError);
 newEventTitleInput.parentElement?.append(titleError);
+labelSelector.parentElement?.append(labelError);
 
 export interface Event {
     title: string;
@@ -36,24 +36,42 @@ function saveEventToLocalStorage(event: Event): void {
 function validateDateInput(): boolean {
     const dateValue = newEventDateInput.value;
     if (!dateValue) {
-        dateError.textContent = 'Please enter a valid date.';
+        dateError.textContent = 'Please, enter a valid date.';
         newEventDateInput.classList.add('is-invalid');
+        dateError.classList.add('error-message');
         return false;
     }
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
+    dateError.classList.remove('error-message');
     return true;
 }
 
 function validateTitleInput(): boolean {
     const titleValue = newEventTitleInput.value;
     if (!titleValue) {
-        titleError.textContent = 'Please enter an event title.';
+        titleError.textContent = 'Please, enter an event title.';
         newEventTitleInput.classList.add('is-invalid');
+        titleError.classList.add('error-message');
         return false;
     }
     titleError.textContent = '';
     newEventTitleInput.classList.remove('is-invalid');
+    titleError.classList.remove('error-message');
+    return true;
+}
+
+function validateEventLabel(): boolean {
+    const eventValue = labelSelector.value;
+    if (!eventValue) {
+        labelError.textContent = ' Please, select a label.';
+        labelSelector.classList.add('is-invalid');
+        labelError.classList.add('error-message');
+        return false;   
+    }
+    labelError.textContent = '';
+    labelSelector.classList.remove('is-invalid');
+    labelError.classList.remove('error-message');
     return true;
 }
 
@@ -65,19 +83,32 @@ newEventTitleInput.addEventListener('blur', () => {
     validateTitleInput();
 });
 
+labelSelector.addEventListener('blur', () => {
+    validateEventLabel();
+})
+
 newEventDateInput.addEventListener('focus', () => {
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
+    dateError.classList.remove('error-message');
 });
 
 newEventTitleInput.addEventListener('focus', () => {
     titleError.textContent = '';
     newEventTitleInput.classList.remove('is-invalid');
+    titleError.classList.remove('error-message');
 });
 
+labelSelector.addEventListener('focus', () => {
+    labelError.textContent = '';
+    labelSelector.classList.remove('is-invalid');
+    labelError.classList.remove('error-message');
+})
+
 saveBtn.addEventListener('click', () => {
-    if (validateDateInput() && validateTitleInput()) {
-        newEventHandler();
+    if (validateDateInput() && validateTitleInput() && validateEventLabel()) {
+        const newEvent = newEventHandler();
+        saveEventToLocalStorage(newEvent);
         const modalElement = document.getElementById('staticBackdrop')!;
         const modal = bootstrap.Modal.getInstance(modalElement)!;
         modal.hide()
@@ -109,7 +140,6 @@ export function newEventHandler(): Event {
         reminder,
     }
 
-    saveEventToLocalStorage(newEvent);
     populateCalendar();
     
     return newEvent;
