@@ -1,5 +1,5 @@
 import { months } from '../utils/constants.js';
-import { getDateInfo, DateInfo } from '../utils/dateInfo.js';
+import { getDateInfo} from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
 
@@ -10,8 +10,7 @@ export function populateCalendar(): void {
   const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
   const currentMonthInfo = months[currentDate.getMonth()];
   const daysDisplay: HTMLElement= document.querySelector(".calendarDisplay")!;
-  const calendarElement = document.querySelector(".calendar") as HTMLElement;
-  const { firstDay, lastDayOfWeek, monthLength, prevLastDay, formattedDate } = getDateInfo(currentDate);
+  const { firstDay, lastDayOfWeek, monthLength, prevLastDay,} = getDateInfo(currentDate);
   daysDisplay.innerHTML = ''
 
   // Previous month padding days
@@ -62,20 +61,9 @@ export function populateCalendar(): void {
 
   const monthHeader = document.querySelector(".calendarHeader h1") as HTMLElement;
   if (monthHeader) {
-      monthHeader.innerHTML = currentMonthInfo.name;
+      monthHeader.innerHTML = currentMonthInfo.name+" " + currentDate.getFullYear()
   }
   
-  const dateHeader = document.querySelector(".calendarHeader h5") as HTMLElement;
-  if (dateHeader) {
-      dateHeader.innerHTML = formattedDate;
-  }
-
-  if (calendarElement) {
-    // calendarElement.style.backgroundImage = currentMonthInfo.background;
-    calendarElement.style.backgroundSize = 'contain'; 
-    calendarElement.style.backgroundRepeat = 'no-repeat'; 
-    calendarElement.style.backgroundPosition = 'center center';
-}
 
 async function loadHolidaysAsync(year: number): Promise<void> {
   try {

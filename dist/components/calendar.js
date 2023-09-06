@@ -7,8 +7,7 @@ export function populateCalendar() {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     const currentMonthInfo = months[currentDate.getMonth()];
     const daysDisplay = document.querySelector(".calendarDisplay");
-    const calendarElement = document.querySelector(".calendar");
-    const { firstDay, lastDayOfWeek, monthLength, prevLastDay, formattedDate } = getDateInfo(currentDate);
+    const { firstDay, lastDayOfWeek, monthLength, prevLastDay, } = getDateInfo(currentDate);
     daysDisplay.innerHTML = '';
     // Previous month padding days
     for (let x = firstDay - 1; x > 0; x--) {
@@ -49,17 +48,7 @@ export function populateCalendar() {
     }
     const monthHeader = document.querySelector(".calendarHeader h1");
     if (monthHeader) {
-        monthHeader.innerHTML = currentMonthInfo.name;
-    }
-    const dateHeader = document.querySelector(".calendarHeader h5");
-    if (dateHeader) {
-        dateHeader.innerHTML = formattedDate;
-    }
-    if (calendarElement) {
-        // calendarElement.style.backgroundImage = currentMonthInfo.background;
-        calendarElement.style.backgroundSize = 'contain';
-        calendarElement.style.backgroundRepeat = 'no-repeat';
-        calendarElement.style.backgroundPosition = 'center center';
+        monthHeader.innerHTML = currentMonthInfo.name + " " + currentDate.getFullYear();
     }
     async function loadHolidaysAsync(year) {
         try {
