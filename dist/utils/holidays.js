@@ -1,5 +1,5 @@
 export async function loadHolidays(year) {
-    const apiUrl = ` https://date.nager.at/api/v3/PublicHolidays/${year}/ES`;
+    const apiUrl = `https://date.nager.at/api/v3/PublicHolidays/${year}/ES`;
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) {

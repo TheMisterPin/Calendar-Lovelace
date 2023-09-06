@@ -1,7 +1,6 @@
 import { formatDate } from "./formatDate.js"
-
-
 import { populateCalendar } from "../components/calendar.js";
+import { uuidv4 } from "./uuidv4.js";
 
 
 const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!;
@@ -14,6 +13,7 @@ const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
 
 
 export interface Event {
+    id: string;
     title: string;
     date: string;
     txt: string;
@@ -21,7 +21,6 @@ export interface Event {
     label: string;
     endDate?: string; 
     reminder?: string;
-
 }
 
 function saveEventToLocalStorage(event: Event): void {
@@ -32,6 +31,7 @@ function saveEventToLocalStorage(event: Event): void {
 
 
 export function newEventHandler(): Event {
+    const id = uuidv4()
     const title = newEventTitleInput.value;
     const date = formatDate(newEventDateInput.value);
     const time = newEventTimeInput.value;
@@ -47,13 +47,14 @@ export function newEventHandler(): Event {
     }
 
     const newEvent: Event = {
+        id,
         title,
         date,
         time,
         txt,
         label,
         endDate,
-        reminder,
+        reminder
     }
 
     saveEventToLocalStorage(newEvent);
