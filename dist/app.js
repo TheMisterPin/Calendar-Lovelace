@@ -31,16 +31,8 @@ if (checkbox) {
         }
         populateCalendar();
     }
-<<<<<<< HEAD
-    const newEventBtn = document.querySelector('#saveBtn');
-    newEventBtn.addEventListener('click', () => {
-        const eventObject = newEventHandler();
-    });
-=======
 }
-;
 const newEventBtn = document.querySelector('#saveBtn');
 newEventBtn.addEventListener('click', () => {
     const eventObject = newEventHandler();
->>>>>>> de9fec5de0de4c03729a94e3739c9dc5596e1dd0
 });

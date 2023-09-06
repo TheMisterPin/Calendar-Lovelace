@@ -82,7 +82,8 @@ export function populateCalendar() {
                     const holidayEvent = document.createElement('li');
                     holidayEvent.classList.add('holiday');
                     holidayEvent.textContent = holiday.name;
-                    dayHolidayEventsEl.appendChild(holidayEvent);
+                    dayHolidayEventsEl.prepend(holidayEvent);
+                    console.log(holidayEvent);
                 }
             }
         }
@@ -105,4 +106,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-localStorage.clear();

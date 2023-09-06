@@ -43,8 +43,6 @@ export function populateCalendar(): void {
     }
     // Add events to days 
 
-
-
     if(localEvents){
       const dayEvents = getDayEvents(localEvents, i, currentDate)
       if(dayEvents){
@@ -78,6 +76,16 @@ export function populateCalendar(): void {
     calendarElement.style.backgroundRepeat = 'no-repeat'; 
     calendarElement.style.backgroundPosition = 'center center';
 }
+
+async function loadHolidaysAsync(year: number): Promise<void> {
+  try {
+     const holidays = await loadHolidays(year);
+    if (holidays) {
+      processHolidays(holidays);
+    }
+  } catch (error) {
+    console.error('Error fetching holidays:', error);
+  }
 }
 
 function processHolidays(holidays: HolidayInfo[]): void {
@@ -90,15 +98,14 @@ function processHolidays(holidays: HolidayInfo[]): void {
         const holidayEvent = document.createElement('li')
         holidayEvent.classList.add('holiday')
         holidayEvent.textContent = holiday.name
-        dayHolidayEventsEl.appendChild(holidayEvent)
+        dayHolidayEventsEl.prepend(holidayEvent)
         console.log(holidayEvent)
       }
     }
   }
 }
 loadHolidaysAsync(currentDate.getFullYear());
-
-
+}
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -110,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
       currentDate.setMonth(currentDate.getMonth() - 1);
       populateCalendar();
     });
-    
   }
 
   if (nextButton) {
@@ -121,4 +127,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-localStorage.clear()

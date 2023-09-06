@@ -4,9 +4,10 @@ export interface HolidayInfo {
     localName:string;
   }
 
-const apiUrl = "https://date.nager.at/api/v3/PublicHolidays/2023/ES";
   
   export async function loadHolidays(year: number): Promise<HolidayInfo[]> {
+    const apiUrl =`https://date.nager.at/api/v3/PublicHolidays/${year}/ES` 
+
     try {
       const response = await fetch(apiUrl);
   
