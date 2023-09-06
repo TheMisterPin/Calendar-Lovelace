@@ -1,4 +1,4 @@
-var _a, _b, _c;
+var _a, _b, _c, _d;
 import { formatDate } from "./formatDate.js";
 import { populateCalendar } from "../components/calendar.js";
 import { uuidv4 } from "./uuidv4.js";
@@ -10,11 +10,13 @@ const newEventReminder = document.querySelector('#newEventReminder');
 const labelSelector = document.querySelector('#eventLabel');
 const saveBtn = document.querySelector('#saveBtn');
 const dateError = document.createElement('div');
+const timeError = document.createElement('div');
 const titleError = document.createElement('div');
 const labelError = document.createElement('div');
 (_a = newEventDateInput.parentElement) === null || _a === void 0 ? void 0 : _a.append(dateError);
-(_b = newEventTitleInput.parentElement) === null || _b === void 0 ? void 0 : _b.append(titleError);
-(_c = labelSelector.parentElement) === null || _c === void 0 ? void 0 : _c.append(labelError);
+(_b = newEventTimeInput.parentElement) === null || _b === void 0 ? void 0 : _b.append(timeError);
+(_c = newEventTitleInput.parentElement) === null || _c === void 0 ? void 0 : _c.append(titleError);
+(_d = labelSelector.parentElement) === null || _d === void 0 ? void 0 : _d.append(labelError);
 function saveEventToLocalStorage(event) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     localEvents.push(event);
@@ -22,7 +24,9 @@ function saveEventToLocalStorage(event) {
 }
 function validateDateInput() {
     const dateValue = newEventDateInput.value;
-    if (!dateValue) {
+    const currentDate = new Date();
+    const selectedDate = new Date(dateValue);
+    if (!dateValue || selectedDate < currentDate) {
         dateError.textContent = 'Please, enter a valid date.';
         newEventDateInput.classList.add('is-invalid');
         dateError.classList.add('error-message');
@@ -31,6 +35,19 @@ function validateDateInput() {
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
     dateError.classList.remove('error-message');
+    return true;
+}
+function validateTimeInput() {
+    const timeValue = newEventTimeInput.value;
+    if (!timeValue) {
+        timeError.textContent = 'Please, enter a valid time.';
+        newEventTimeInput.classList.add('is-invalid');
+        timeError.classList.add('error-message');
+        return false;
+    }
+    timeError.textContent = '';
+    newEventTimeInput.classList.remove('is-invalid');
+    timeError.classList.remove('error-message');
     return true;
 }
 function validateTitleInput() {
@@ -49,7 +66,7 @@ function validateTitleInput() {
 function validateEventLabel() {
     const eventValue = labelSelector.value;
     if (!eventValue) {
-        labelError.textContent = ' Please, select a label.';
+        labelError.textContent = 'Please, select a label.';
         labelSelector.classList.add('is-invalid');
         labelError.classList.add('error-message');
         return false;
@@ -62,6 +79,9 @@ function validateEventLabel() {
 newEventDateInput.addEventListener('blur', () => {
     validateDateInput();
 });
+newEventTimeInput.addEventListener('blur', () => {
+    validateTimeInput();
+});
 newEventTitleInput.addEventListener('blur', () => {
     validateTitleInput();
 });
@@ -72,6 +92,11 @@ newEventDateInput.addEventListener('focus', () => {
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
     dateError.classList.remove('error-message');
+});
+newEventTimeInput.addEventListener('focus', () => {
+    timeError.textContent = '';
+    newEventTimeInput.classList.remove('is-invalid');
+    timeError.classList.remove('error-message');
 });
 newEventTitleInput.addEventListener('focus', () => {
     titleError.textContent = '';
@@ -84,7 +109,7 @@ labelSelector.addEventListener('focus', () => {
     labelError.classList.remove('error-message');
 });
 saveBtn.addEventListener('click', () => {
-    if (validateDateInput() && validateTitleInput() && validateEventLabel()) {
+    if (validateDateInput() && validateTitleInput() && validateEventLabel() && validateTimeInput()) {
         const newEvent = newEventHandler();
         saveEventToLocalStorage(newEvent);
         const modalElement = document.getElementById('staticBackdrop');
