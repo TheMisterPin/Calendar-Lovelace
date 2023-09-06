@@ -14,6 +14,12 @@ const dateError: HTMLDivElement = document.createElement('div')!;
 const titleError: HTMLDivElement = document.createElement('div')!;
 const labelError: HTMLDivElement = document.createElement('div')!;
 
+const today = new Date().toISOString().slice(0, 10);
+newEventDateInput.value=(today);
+
+const currentTime = new Date().toISOString().slice(11,16)
+newEventTimeInput.value=(currentTime);
+
 newEventDateInput.parentElement?.append(dateError);
 newEventTitleInput.parentElement?.append(titleError);
 labelSelector.parentElement?.append(labelError);
