@@ -12,7 +12,7 @@ export function getDayEvents(eventsArray: Event[], day:number, currentDate:Date)
     return eventsArray.filter((event:Event) => event.date === fullDate)
 }
 
-export function renderDayEvents(dayEvents:Event[],ev:Event, eventsContainer:HTMLElement, dayContainer:HTMLElement){ 
+export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, dayContainer:HTMLElement){ 
     const eventsToRender = [...dayEvents]
     if (dayEvents.length > 3){
         eventsToRender.splice(3)

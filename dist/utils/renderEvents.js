@@ -6,7 +6,7 @@ export function getDayEvents(eventsArray, day, currentDate) {
     const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`);
     return eventsArray.filter((event) => event.date === fullDate);
 }
-export function renderDayEvents(dayEvents, ev, eventsContainer, dayContainer) {
+export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
     const eventsToRender = [...dayEvents];
     if (dayEvents.length > 3) {
         eventsToRender.splice(3);
