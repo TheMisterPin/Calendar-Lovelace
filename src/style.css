@@ -12,6 +12,7 @@ p{
   margin-bottom: 0;
 }
 
+
 .app {
   width: 100vw;
   height: 100vh;
@@ -113,6 +114,10 @@ p{
 
 .hobby::before{
   background-color: #9e69af;
+}
+
+.holiday {
+  background-color: #039be5;
 }
 
 

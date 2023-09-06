@@ -1,9 +1,6 @@
 import { populateCalendar } from './components/calendar.js';
 import { newEventHandler } from './utils/newEventHandler.js';
 
-    
-document.addEventListener("DOMContentLoaded", () => {
-    
     const checkbox = document.querySelector<HTMLInputElement>('#hasEndDate');
     if (checkbox) {
         checkbox.addEventListener('change', toggleEndDateSelector);
@@ -46,8 +43,6 @@ const newEventBtn = document.querySelector('#saveBtn')!;
 
 newEventBtn.addEventListener('click', () =>{
 const eventObject = newEventHandler();
-});
-
 })
 
 

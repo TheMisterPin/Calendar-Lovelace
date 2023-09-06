@@ -1,6 +1,7 @@
 import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
+import { loadHolidays } from '../utils/holidays.js';
 let currentDate = new Date();
 export function populateCalendar() {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
@@ -60,6 +61,33 @@ export function populateCalendar() {
         calendarElement.style.backgroundRepeat = 'no-repeat';
         calendarElement.style.backgroundPosition = 'center center';
     }
+    async function loadHolidaysAsync(year) {
+        try {
+            const holidays = await loadHolidays(year);
+            if (holidays) {
+                processHolidays(holidays);
+            }
+        }
+        catch (error) {
+            console.error('Error fetching holidays:', error);
+        }
+    }
+    function processHolidays(holidays) {
+        for (const holiday of holidays) {
+            const holidayDate = new Date(holiday.date);
+            if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
+                const day = holidayDate.getDate() + 4;
+                const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
+                if (dayHolidayEventsEl) {
+                    const holidayEvent = document.createElement('li');
+                    holidayEvent.classList.add('holiday');
+                    holidayEvent.textContent = holiday.name;
+                    dayHolidayEventsEl.appendChild(holidayEvent);
+                }
+            }
+        }
+    }
+    loadHolidaysAsync(currentDate.getFullYear());
 }
 document.addEventListener("DOMContentLoaded", () => {
     const prevButton = document.querySelector("#prev");
@@ -77,3 +105,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+localStorage.clear();
