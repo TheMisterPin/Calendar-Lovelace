@@ -23,6 +23,7 @@ export interface Event {
     reminder?: string;
 
 }
+
 function saveEventToLocalStorage(event: Event): void {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
     localEvents.push(event)

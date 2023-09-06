@@ -111,3 +111,16 @@ p{
   border-color: rgb(47, 255, 0);
   background-color: #ffe6e6;
 }
+.home::before{
+  background-color: #007b83;
+}
+
+.home::before{
+  background-color: #039be5;
+}
+
+.hobby::before{
+  background-color: #9e69af;
+}
+
+

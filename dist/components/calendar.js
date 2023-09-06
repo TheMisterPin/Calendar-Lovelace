@@ -16,6 +16,7 @@ export function populateCalendar() {
         day.classList.add(`paddingDay`);
         daysDisplay.appendChild(day);
     }
+    // Get events
     // Current month days
     for (let i = 1; i <= monthLength; i++) {
         const day = document.createElement('div');

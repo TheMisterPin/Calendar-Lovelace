@@ -1,9 +1,7 @@
 import { populateCalendar } from './components/calendar.js';
 import { newEventHandler } from './utils/newEventHandler.js';
 
-$(function () {
-        $('[data-toggle="popover"]').popover();
-      });
+    
 document.addEventListener("DOMContentLoaded", () => {
     
     const checkbox = document.querySelector<HTMLInputElement>('#hasEndDate');
@@ -20,11 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         endDateInput!.value = '';
 }
 
-document.querySelectorAll('[data-bs-toggle="popover"]')
-    .forEach(popover => {
-      new bootstrap.Popover(popover)
-    })
-}
 populateCalendar()
     }
 
@@ -45,7 +38,7 @@ if (reminderCheckbox && reminderCheckbox.checked) {
 }
 populateCalendar()
 }
-});
+};
 
 
 
