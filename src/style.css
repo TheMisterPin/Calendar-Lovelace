@@ -6,10 +6,12 @@
 }
 ul{
   padding: 0;
+  list-style: none;
 }
 p{
   margin-bottom: 0;
 }
+
 
 .app {
   width: 100vw;
@@ -121,6 +123,10 @@ p{
 
 .hobby::before{
   background-color: #9e69af;
+}
+
+.holiday {
+  background-color: #039be5;
 }
 
 
