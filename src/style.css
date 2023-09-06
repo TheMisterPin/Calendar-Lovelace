@@ -102,3 +102,12 @@ p{
   background-color: #ef6c00;
 }
 
+.invalid-feedback {
+  color: rgb(51, 255, 0); 
+  font-size: 12px; 
+}
+
+.is-invalid {
+  border-color: rgb(47, 255, 0);
+  background-color: #ffe6e6;
+}

@@ -17,7 +17,7 @@
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" type="text/css"/>
   </head>
   <body>
     <div class="app">
@@ -86,64 +86,67 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="newEventDate" class="form-label">Date:</label>
-                <input type="date" class="form-control" id="newEventDate" />
-              </div>
-              <div class="mb-3">
-                <label for="newEventTime" class="form-label">Time:</label>
-                <input type="time" class="form-control" id="newEventTime" />
-              </div>
-              <div class="mb-3">
-                <label for="hasEndDate">Has End Date</label>
-                <input type="checkbox" id="hasEndDate" />
-                <input
-                  type="date"
-                  class="form-control"
-                  id="newEventEndDate"
-                  style="display: none"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="newEventTitle" class="form-label">Title:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="newEventTitle"
-                  placeholder="Enter event title"
-                />
-              </div>
+                <form action="" class="needs-validation" novalidate="">
+                    <div class="mb-3">
+                        <label for="newEventDate" class="form-label">Date:</label>
+                        <input type="date" class="form-control" id="newEventDate" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newEventTime" class="form-label">Time:</label>
+                        <input type="time" class="form-control" id="newEventTime" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="hasEndDate">Has End Date</label>
+                        <input type="checkbox" id="hasEndDate" />
+                        <input
+                        type="date"
+                        class="form-control"
+                        id="newEventEndDate"
+                        style="display: none"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="newEventTitle" class="form-label">Title:</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="newEventTitle"
+                        placeholder="Enter event title"
+                        required
+                        />
+                    </div>
 
-              <div class="mb-3">
-                <label for="newEventText" class="form-label"
-                  >Description:</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="newEventText"
-                  placeholder="Enter event description"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="hasReminder">REMIND ME</label>
-                <input type="checkbox" id="hasReminder" />
-              <select class="form-select" id="newEventReminder"  style="display: none">
-                <option value="5min">"5min"</option>
-                <option value="10min">"10min"</option>
-                <option value="15min">"15min"</option>
-                <option value="20min">"20min"</option>
-              </select>
-              </div>
-              <div class="mb-3">
-                <label for="eventLabel" class="form-label">Label:</label>
-                <select class="form-select" id="eventLabel">
-                  <option value="work">Work</option>
-                  <option value="home">Home</option>
-                  <option value="hobby">Hobby</option>
-                  <option value="addNew">Add New Label</option>
-                </select>
-              </div>
+                    <div class="mb-3">
+                        <label for="newEventText" class="form-label"
+                        >Description:</label
+                        >
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="newEventText"
+                        placeholder="Enter event description"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="hasReminder">REMIND ME</label>
+                        <input type="checkbox" id="hasReminder" />
+                        <select class="form-select" id="newEventReminder"  style="display: none">
+                            <option value="5min">"5min"</option>
+                            <option value="10min">"10min"</option>
+                            <option value="15min">"15min"</option>
+                            <option value="20min">"20min"</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="eventLabel" class="form-label">Label:</label>
+                        <select class="form-select" id="eventLabel" required>
+                            <option value="work">Work</option>
+                            <option value="home">Home</option>
+                            <option value="hobby">Hobby</option>
+                            <option value="addNew">Add New Label</option>
+                        </select>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
               <button
@@ -153,7 +156,7 @@
               >
                 Close
               </button>
-              <button id="saveBtn" class="btn btn-primary">Save</button>
+              <button id="saveBtn" class="btn btn-primary" disabled>Save</button>
             </div>
           </div>
         </div>

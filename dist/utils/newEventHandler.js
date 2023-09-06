@@ -18,11 +18,48 @@ export function newEventHandler() {
     const txt = newEventTxtInput.value;
     const label = labelSelector.value;
     const reminder = newEventReminder.value;
+    const saveBtn = document.querySelector('#saveBtn');
     const hasEndDateCheckbox = document.querySelector('#hasEndDate');
     let endDate = undefined;
     if (hasEndDateCheckbox.checked) {
         const newEventEndDateInput = document.querySelector('#newEventEndDate');
         endDate = newEventEndDateInput.value;
+    }
+    newEventDateInput.addEventListener('focusout', validateDateInput);
+    newEventTitleInput.addEventListener('focusout', validateTitleInput);
+    function validateDateInput() {
+        const dateValue = newEventDateInput.value;
+        if (!dateValue) {
+            showError(newEventDateInput, 'Date is required');
+        }
+        else {
+            clearError(newEventDateInput);
+            saveBtn === null || saveBtn === void 0 ? void 0 : saveBtn.setAttribute('enabled', '');
+        }
+    }
+    function validateTitleInput() {
+        const titleValue = newEventTitleInput.value;
+        if (!titleValue) {
+            showError(newEventTitleInput, 'Title is required');
+        }
+        else {
+            clearError(newEventTitleInput);
+            saveBtn === null || saveBtn === void 0 ? void 0 : saveBtn.setAttribute('enabled', '');
+        }
+    }
+    function showError(inputElement, errorMessage) {
+        const errorContainer = inputElement.parentElement.querySelector('.invalid-feedback');
+        if (errorContainer) {
+            errorContainer.textContent = errorMessage;
+        }
+        inputElement.classList.add('is-invalid');
+    }
+    function clearError(inputElement) {
+        const errorContainer = inputElement.parentElement.querySelector('.invalid-feedback');
+        if (errorContainer) {
+            errorContainer.textContent = '';
+        }
+        inputElement.classList.remove('is-invalid');
     }
     const newEvent = {
         title,
