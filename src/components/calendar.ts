@@ -98,15 +98,13 @@ function processHolidays(holidays: HolidayInfo[]): void {
         const holidayEvent = document.createElement('li')
         holidayEvent.classList.add('holiday')
         holidayEvent.textContent = holiday.name
-        dayHolidayEventsEl.appendChild(holidayEvent)
+        dayHolidayEventsEl.prepend(holidayEvent)
         console.log(holidayEvent)
       }
     }
   }
 }
 loadHolidaysAsync(currentDate.getFullYear());
-
-
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -119,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
       currentDate.setMonth(currentDate.getMonth() - 1);
       populateCalendar();
     });
-    
   }
 
   if (nextButton) {
@@ -129,3 +126,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+

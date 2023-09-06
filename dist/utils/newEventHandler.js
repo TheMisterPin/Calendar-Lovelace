@@ -1,6 +1,7 @@
 var _a, _b, _c;
 import { formatDate } from "./formatDate.js";
 import { populateCalendar } from "../components/calendar.js";
+import { uuidv4 } from "./uuidv4.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
 const newEventTxtInput = document.querySelector('#newEventText');
@@ -92,6 +93,7 @@ saveBtn.addEventListener('click', () => {
     }
 });
 export function newEventHandler() {
+    const id = uuidv4();
     const title = newEventTitleInput.value;
     const date = formatDate(newEventDateInput.value);
     const time = newEventTimeInput.value;
@@ -105,13 +107,14 @@ export function newEventHandler() {
         endDate = newEventEndDateInput.value;
     }
     const newEvent = {
+        id,
         title,
         date,
         time,
         txt,
         label,
         endDate,
-        reminder,
+        reminder
     };
     populateCalendar();
     return newEvent;

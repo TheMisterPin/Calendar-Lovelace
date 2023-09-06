@@ -32,7 +32,6 @@ if (checkbox) {
         populateCalendar();
     }
 }
-;
 const newEventBtn = document.querySelector('#saveBtn');
 newEventBtn.addEventListener('click', () => {
     const eventObject = newEventHandler();
