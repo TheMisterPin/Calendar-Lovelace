@@ -48,7 +48,7 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
 }
 }
 
-function renderDayEventsPopover(dayEvents:Event[], popover){
+function renderDayEventsPopover(dayEvents:Event[], popover: bootstrap.Popover) {
     let popoverTemplate = "<ul>templateInner</ul>"
     let popoverTemplateInner = ""
     dayEvents.forEach(event => {
