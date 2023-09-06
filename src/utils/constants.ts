@@ -2,7 +2,11 @@ interface MonthInfo {
   name: string;
 
 }
-
+export interface DataAttributeHTMLElement extends HTMLElement {
+  dataset: {
+      [key: string]: string;
+  };
+}
 export const months: MonthInfo[] = [
   {
     name: "January"
