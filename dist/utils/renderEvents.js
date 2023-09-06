@@ -4,7 +4,6 @@ export function getDayEvents(eventsArray, day, currentDate) {
     const currentYear = currentDate.getFullYear();
     const currentDay = day;
     const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`);
-    console.log();
     return eventsArray.filter((event) => event.date === fullDate);
 }
 export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
@@ -13,7 +12,7 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
         eventsToRender.splice(3);
     }
     eventsToRender.forEach((event) => {
-        const eventNameEl = document.createElement('p');
+        const eventNameEl = document.createElement('li');
         eventNameEl.classList.add('event', event.label);
         eventNameEl.innerText = `${event.time} ${event.title}`;
         eventsContainer.appendChild(eventNameEl);
@@ -35,18 +34,18 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
                 html: true
             });
             popoverTriggerEl === null || popoverTriggerEl === void 0 ? void 0 : popoverTriggerEl.addEventListener('show.bs.popover', () => renderDayEventsPopover(dayEvents, popover));
-        }, 2000); // Test changing the timeout with async await
+        }, 2000); // Test changing the timeout with async await with promise
     }
 }
 function renderDayEventsPopover(dayEvents, popover) {
-    let popoverTemplate = "";
+    let popoverTemplate = "<ul>templateInner</ul>";
+    let popoverTemplateInner = "";
     dayEvents.forEach(event => {
-        popoverTemplate += `<p class="event ${event.label}">${event.time} ${event.title}</p>`;
+        popoverTemplateInner += `<li class="event ${event.label}">${event.time} ${event.title}</li>`;
     });
+    popoverTemplate = popoverTemplate.replace('templateInner', popoverTemplateInner);
     popover.setContent({
         '.popover-header': dayEvents[0].date,
         '.popover-body': popoverTemplate
     });
-    const eventTitle = document.createElement('h3');
-    eventTitle.classList.add('event__title');
 }

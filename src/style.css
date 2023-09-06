@@ -129,4 +129,13 @@ p{
   background-color: #039be5;
 }
 
+.error-message {
+  color: purple;
+  font-size: 14px;
+  margin-top: 5px;
+  display: flex;
+}
 
+.is-invalid {
+  border-color: red;
+}

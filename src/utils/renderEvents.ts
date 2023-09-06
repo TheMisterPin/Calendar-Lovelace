@@ -6,7 +6,7 @@ export function getDayEvents(eventsArray: Event[], day:number, currentDate:Date)
     const currentMonth = currentDate.getMonth()+1
     const currentYear = currentDate.getFullYear()
     const currentDay = day
-      
+    
     const fullDate = formatDate(`${currentMonth} ${currentDay}, ${currentYear}`) 
     return eventsArray.filter((event:Event) => event.date === fullDate)
 }
@@ -16,13 +16,13 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     if (dayEvents.length > 3){
         eventsToRender.splice(3)
     }
-  eventsToRender.forEach((event:Event)=>{   
+    eventsToRender.forEach((event:Event)=>{   
     const eventNameEl = document.createElement('li')
     eventNameEl.classList.add('event', event.label)
     eventNameEl.innerText = `${event.time} ${event.title}`
     eventsContainer.appendChild(eventNameEl)
-  })
-  if(dayEvents.length > 3){
+    })
+    if(dayEvents.length > 3){
     const viewDayEventsBtn = document.createElement('button')
     viewDayEventsBtn.textContent = `${dayEvents.length - 3} more`
     viewDayEventsBtn.classList.add('view_more_btn', 'btn')
@@ -35,7 +35,7 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     dayContainer.appendChild(viewDayEventsBtn)
     
     setTimeout(()=>{
-        const popoverTriggerEl= document.querySelector('[data-bs-toggle="popover"]:not(.trigger)')
+        const popoverTriggerEl = document.querySelector('[data-bs-toggle="popover"]:not(.trigger)')
         popoverTriggerEl?.classList.add('trigger')
         const popover = new bootstrap.Popover(popoverTriggerEl, {
             html: true

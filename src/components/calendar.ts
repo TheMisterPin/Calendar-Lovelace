@@ -79,7 +79,7 @@ export function populateCalendar(): void {
 
 async function loadHolidaysAsync(year: number): Promise<void> {
   try {
-     const holidays = await loadHolidays(year);
+    const holidays = await loadHolidays(year);
     if (holidays) {
       processHolidays(holidays);
     }
@@ -129,5 +129,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-localStorage.clear()

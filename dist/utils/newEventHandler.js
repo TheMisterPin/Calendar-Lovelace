@@ -6,11 +6,58 @@ const newEventTxtInput = document.querySelector('#newEventText');
 const newEventTimeInput = document.querySelector('#newEventTime');
 const newEventReminder = document.querySelector('#newEventReminder');
 const labelSelector = document.querySelector('#eventLabel');
+const saveBtn = document.querySelector('#saveBtn');
+const dateError = document.querySelector('#date-error');
+const titleError = document.querySelector('#title-error');
 function saveEventToLocalStorage(event) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     localEvents.push(event);
     localStorage.setItem('events', JSON.stringify(localEvents));
 }
+function validateDateInput() {
+    const dateValue = newEventDateInput.value;
+    if (!dateValue) {
+        dateError.textContent = 'Please enter a valid date.';
+        newEventDateInput.classList.add('is-invalid');
+        return false;
+    }
+    dateError.textContent = '';
+    newEventDateInput.classList.remove('is-invalid');
+    return true;
+}
+function validateTitleInput() {
+    const titleValue = newEventTitleInput.value;
+    if (!titleValue) {
+        titleError.textContent = 'Please enter a title.';
+        newEventTitleInput.classList.add('is-invalid');
+        return false;
+    }
+    titleError.textContent = '';
+    newEventTitleInput.classList.remove('is-invalid');
+    return true;
+}
+newEventDateInput.addEventListener('blur', () => {
+    validateDateInput();
+});
+newEventTitleInput.addEventListener('blur', () => {
+    validateTitleInput();
+});
+newEventDateInput.addEventListener('focus', () => {
+    dateError.textContent = '';
+    newEventDateInput.classList.remove('is-invalid');
+});
+newEventTitleInput.addEventListener('focus', () => {
+    titleError.textContent = '';
+    newEventTitleInput.classList.remove('is-invalid');
+});
+saveBtn.addEventListener('click', () => {
+    if (validateDateInput() && validateTitleInput()) {
+        newEventHandler();
+        const modalElement = document.getElementById('staticBackdrop');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+    }
+});
 export function newEventHandler() {
     const title = newEventTitleInput.value;
     const date = formatDate(newEventDateInput.value);
@@ -18,48 +65,11 @@ export function newEventHandler() {
     const txt = newEventTxtInput.value;
     const label = labelSelector.value;
     const reminder = newEventReminder.value;
-    const saveBtn = document.querySelector('#saveBtn');
     const hasEndDateCheckbox = document.querySelector('#hasEndDate');
     let endDate = undefined;
     if (hasEndDateCheckbox.checked) {
         const newEventEndDateInput = document.querySelector('#newEventEndDate');
         endDate = newEventEndDateInput.value;
-    }
-    newEventDateInput.addEventListener('focusout', validateDateInput);
-    newEventTitleInput.addEventListener('focusout', validateTitleInput);
-    function validateDateInput() {
-        const dateValue = newEventDateInput.value;
-        if (!dateValue) {
-            showError(newEventDateInput, 'Date is required');
-        }
-        else {
-            clearError(newEventDateInput);
-            saveBtn === null || saveBtn === void 0 ? void 0 : saveBtn.setAttribute('enabled', '');
-        }
-    }
-    function validateTitleInput() {
-        const titleValue = newEventTitleInput.value;
-        if (!titleValue) {
-            showError(newEventTitleInput, 'Title is required');
-        }
-        else {
-            clearError(newEventTitleInput);
-            saveBtn === null || saveBtn === void 0 ? void 0 : saveBtn.setAttribute('enabled', '');
-        }
-    }
-    function showError(inputElement, errorMessage) {
-        const errorContainer = inputElement.parentElement.querySelector('.invalid-feedback');
-        if (errorContainer) {
-            errorContainer.textContent = errorMessage;
-        }
-        inputElement.classList.add('is-invalid');
-    }
-    function clearError(inputElement) {
-        const errorContainer = inputElement.parentElement.querySelector('.invalid-feedback');
-        if (errorContainer) {
-            errorContainer.textContent = '';
-        }
-        inputElement.classList.remove('is-invalid');
     }
     const newEvent = {
         title,
@@ -72,8 +82,5 @@ export function newEventHandler() {
     };
     saveEventToLocalStorage(newEvent);
     populateCalendar();
-    const modalElement = document.getElementById('staticBackdrop');
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
     return newEvent;
 }
