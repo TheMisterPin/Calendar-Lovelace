@@ -19,5 +19,5 @@ export function eventsExpired() {
                 }
             }
         });
-    }, 100000);
+    }, 3000);
 }

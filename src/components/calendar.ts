@@ -2,6 +2,8 @@ import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
+import { eventsExpired } from '../utils/expiration.js';
+
 let currentDate: Date = new Date();
 export function clearCalendar(): void {
     const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
@@ -103,6 +105,7 @@ export function populateCalendar(currentDate: Date): void {
   updateMonthHeader(currentDate);
   populateDays(currentDate);
   loadHolidaysAsync(currentDate.getFullYear());
+  eventsExpired()
 }
 
 
