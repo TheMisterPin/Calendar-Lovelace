@@ -1,81 +1,75 @@
 import { months } from '../utils/constants.js';
-import { getDateInfo, DateInfo } from '../utils/dateInfo.js';
+import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
-
-
 let currentDate: Date = new Date();
-
-export function populateCalendar(): void {
-  const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
-  const currentMonthInfo = months[currentDate.getMonth()];
-  const daysDisplay: HTMLElement= document.querySelector(".calendarDisplay")!;
-  const calendarElement = document.querySelector(".calendar") as HTMLElement;
-  const { firstDay, lastDayOfWeek, monthLength, prevLastDay, formattedDate } = getDateInfo(currentDate);
-  daysDisplay.innerHTML = ''
-
-  // Previous month padding days
-  for (let x = firstDay - 1; x > 0; x--) {
-    const day: HTMLParagraphElement = document.createElement("p");
-    day.innerText = `${prevLastDay - x + 1}`;
-    day.classList.add(`paddingDay`);
-    daysDisplay.appendChild(day);
-  }
-
-  // Get events
-  
-
-  // Current month days
-  for (let i = 1; i <= monthLength; i++) {
-    const day:HTMLDivElement = document.createElement('div')
-    day.classList.add('day')
-    const dayNumber: HTMLParagraphElement = document.createElement("p");
-    dayNumber.innerText = `${i}`;
-    dayNumber.classList.add('day__number')
-
-    const dayEventsEl = document.createElement('ul')
-    dayEventsEl.classList.add('day__events-list')
-
-
-    day.append(dayNumber, dayEventsEl)
-    if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
-      day.classList.add(`today`);
-    }
-    // Add events to days 
-
-    if(localEvents){
-      const dayEvents = getDayEvents(localEvents, i, currentDate)
-      if(dayEvents){
-        renderDayEvents(dayEvents, dayEventsEl, day)  
-      }
-    }
-    daysDisplay.appendChild(day);
-  }
-
-  // Next month padding days
-  for (let y = 1; y <= 7 - lastDayOfWeek; y++) {
-    const day: HTMLParagraphElement = document.createElement("p");
-    day.innerText = `${y}`;
-    day.classList.add(`paddingDay`);
-    daysDisplay.appendChild(day);
-  }
-
-  const monthHeader = document.querySelector(".calendarHeader h1") as HTMLElement;
-  if (monthHeader) {
-      monthHeader.innerHTML = currentMonthInfo.name;
-  }
-  
-  const dateHeader = document.querySelector(".calendarHeader h5") as HTMLElement;
-  if (dateHeader) {
-      dateHeader.innerHTML = formattedDate;
-  }
-
-  if (calendarElement) {
-    // calendarElement.style.backgroundImage = currentMonthInfo.background;
-    calendarElement.style.backgroundSize = 'contain'; 
-    calendarElement.style.backgroundRepeat = 'no-repeat'; 
-    calendarElement.style.backgroundPosition = 'center center';
+export function clearCalendar(): void {
+    const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
+    daysDisplay.innerHTML = '';
 }
+
+export function updateMonthHeader(currentDate: Date): void {
+    const currentMonthInfo = months[currentDate.getMonth()];
+    const monthHeader = document.querySelector(".calendarHeader h3") as HTMLElement;
+    if (monthHeader) {
+        monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
+    }
+}
+
+function populateDays(currentDate: Date): void {
+  const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+  const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
+  const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
+
+  const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
+  const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
+
+  appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
+  appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
+  appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
+}
+
+function appendPaddingDays(count: number, start: number, container: HTMLElement, isPrevMonth: boolean) {
+  let value = isPrevMonth ? (start - count + 1) : 1;
+  for (let i = 0; i < count; i++) {
+      const day: HTMLParagraphElement = document.createElement("p");
+      day.innerText = `${value++}`;
+      day.classList.add('paddingDay');
+      container.appendChild(day);
+  }
+}
+
+function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement) {
+    for (let i = 1; i <= monthLength; i++) {
+        const day: HTMLDivElement = document.createElement('div');
+        day.classList.add('day');
+        day.setAttribute('data-day-number', i.toString());
+        day.addEventListener('click', (event) => {
+            const clickedDay = event.currentTarget as HTMLElement;
+            console.log(clickedDay.getAttribute('data-day-number'));
+        });
+
+        const dayNumber: HTMLParagraphElement = document.createElement("p");
+        dayNumber.innerText = `${i}`;
+        dayNumber.classList.add('day__number');
+
+        const dayEventsEl = document.createElement('ul');
+        dayEventsEl.classList.add('day__events-list');
+        day.append(dayNumber, dayEventsEl);
+
+        if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
+          dayNumber.classList.add('today');
+        }
+        if (localEvents) {
+            const dayEvents = getDayEvents(localEvents, i, currentDate);
+            if (dayEvents) {
+                renderDayEvents(dayEvents, dayEventsEl, day);
+            }
+        }
+        container.appendChild(day);
+    }
+}
+  
 
 async function loadHolidaysAsync(year: number): Promise<void> {
   try {
@@ -99,31 +93,16 @@ function processHolidays(holidays: HolidayInfo[]): void {
         holidayEvent.classList.add('holiday')
         holidayEvent.textContent = holiday.name
         dayHolidayEventsEl.prepend(holidayEvent)
-        console.log(holidayEvent)
       }
     }
   }
 }
-loadHolidaysAsync(currentDate.getFullYear());
+
+export function populateCalendar(currentDate: Date): void {
+  clearCalendar();
+  updateMonthHeader(currentDate);
+  populateDays(currentDate);
+  loadHolidaysAsync(currentDate.getFullYear());
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-
-  const prevButton: HTMLElement | null = document.querySelector("#prev");
-  const nextButton: HTMLElement | null = document.querySelector("#next");
-
-  if (prevButton) {
-    prevButton.addEventListener("click", () => {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-      populateCalendar();
-    });
-  }
-
-  if (nextButton) {
-    nextButton.addEventListener("click", () => {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-      populateCalendar();
-    });
-  }
-});
 

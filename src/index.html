@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head> 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
@@ -21,13 +21,7 @@
   </head>
   <body>
     <div class="app">
-      <button
-        id="newEventBtn"
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#staticBackdrop"
-      ></button>
+    
 
       <div class="calendarContainer">
       
@@ -35,11 +29,18 @@
           <div class="calendarHeader">
             <i class="fas fa-angle-left" id="prev"></i>
             <div class="date">
-              <h1>February</h1>
-              <h5>lunes</h5>
+              <h3></h3>
+              <button
+              id="newEventBtn"
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >Create New Event</button>
             </div>
             <i class="fa fa-angle-right" id="next"></i>
           </div>
+          
           <ul class="weekDays">
             <li>Mon</li>
             <li>Tue</li>
@@ -50,6 +51,7 @@
             <li>Sun</li>
           </ul>
           <section class="calendarDisplay"></section>
+          
         </div>
       </div>
 
@@ -63,6 +65,11 @@
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
+
+
+
+
+
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -128,13 +135,15 @@
               </div>
               <div class=" mb-3 form-floating">
                 <select class="form-select" id="eventLabel">
+                  <option value="">...</option>
                   <option value="work">Work</option>
                   <option value="home">Home</option>
                   <option value="hobby">Hobby</option>
-                  <option value="addNew">Add New Label</option>
+                  <option value="addNew" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" data-bs-content='<div class="d-flex flex-column"><input type="text" id="newLabelInput" maxlength="20" placeholder="New Label" /><input type="color" id="newLabelColor" /></div>'>Add New Label</option>
+
                 </select>
                 <label for="eventLabel" class="form-label">Label:</label>
->>>>>>> tooltips
+
               </div>
                 
             </div>
@@ -142,15 +151,14 @@
               <button
                 type="button"
                 class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
+                data-bs-dismiss="modal">cancel</button>
+             
               <button id="saveBtn" class="btn btn-primary">Save</button>
             </div>
           </div>
         </div>
       </div>
+      
       <footer class="footer"></footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
