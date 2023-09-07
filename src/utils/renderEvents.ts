@@ -24,12 +24,13 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     eventNameEl.dataset.eventId = ev.id
     eventsContainer.appendChild(eventNameEl)
     
-    if(dayEvents.length > 3){
+    if(dayEvents.length > 3){ 
 
     const eventDetailsTemplateOutter = 
         `<div class="eventDetails">innerTemplate</div>`
     let eventDetailsInnerTemplate = 
-        `<p>Date: ${ev.date}</p>
+        ` 
+        <p>Date: ${ev.date}</p>
         <p>Time: ${ev.time}</p>
         <p>Details: ${ev.txt}</p>
         <p>Label: ${ev.label}</p>`

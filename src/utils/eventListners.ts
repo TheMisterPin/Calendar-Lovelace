@@ -16,3 +16,14 @@ export function setupNavigationListeners(currentDate: Date, callback: (date: Dat
         });
     }
 }
+
+export function loadLabelsFromLocalStorage() {
+    const labels = JSON.parse(localStorage.getItem('eventLabels') || '[]');
+    const eventLabelSelect = document.querySelector<HTMLSelectElement>('#eventLabel');
+    labels.forEach((label: { name: string, color: string }) => {
+        const option = document.createElement('option');
+        option.value = label.name;
+        option.textContent = label.name;
+        option.style.color = label.color;
+        eventLabelSelect!.appendChild(option);
+    });}

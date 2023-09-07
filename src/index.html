@@ -40,6 +40,7 @@
             </div>
             <i class="fa fa-angle-right" id="next"></i>
           </div>
+          
           <ul class="weekDays">
             <li>Mon</li>
             <li>Tue</li>
@@ -50,6 +51,7 @@
             <li>Sun</li>
           </ul>
           <section class="calendarDisplay"></section>
+          
         </div>
       </div>
 
@@ -136,7 +138,8 @@
                   <option value="work">Work</option>
                   <option value="home">Home</option>
                   <option value="hobby">Hobby</option>
-                  <option value="addNew">Add New Label</option>
+                  <option value="addNew" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-html="true" data-bs-content='<div class="d-flex flex-column"><input type="text" id="newLabelInput" maxlength="20" placeholder="New Label" /><input type="color" id="newLabelColor" /></div>'>Add New Label</option>
+
                 </select>
                 <label for="eventLabel" class="form-label">Label:</label>
 
@@ -154,6 +157,7 @@
           </div>
         </div>
       </div>
+      
       <footer class="footer"></footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

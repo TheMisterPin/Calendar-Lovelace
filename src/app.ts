@@ -1,6 +1,6 @@
 import { newEventHandler } from './utils/newEventHandler.js';
 import { populateCalendar} from './components/calendar.js';
-import { setupNavigationListeners } from './utils/eventListners.js';
+import { loadLabelsFromLocalStorage, setupNavigationListeners } from './utils/eventListners.js';
 import { initializeModalLogic } from './components/modal.js';
 
 
@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     populateCalendar(currentDate);
     setupNavigationListeners(currentDate, populateCalendar);
     initializeModalLogic();
-});
+    loadLabelsFromLocalStorage();
+
+
+})
 
 
 

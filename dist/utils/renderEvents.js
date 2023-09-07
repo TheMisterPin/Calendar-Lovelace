@@ -19,7 +19,8 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
         eventsContainer.appendChild(eventNameEl);
         if (dayEvents.length > 3) {
             const eventDetailsTemplateOutter = `<div class="eventDetails">innerTemplate</div>`;
-            let eventDetailsInnerTemplate = `<p>Date: ${ev.date}</p>
+            let eventDetailsInnerTemplate = ` 
+        <p>Date: ${ev.date}</p>
         <p>Time: ${ev.time}</p>
         <p>Details: ${ev.txt}</p>
         <p>Label: ${ev.label}</p>`;
