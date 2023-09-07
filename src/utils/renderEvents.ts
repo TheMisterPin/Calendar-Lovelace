@@ -38,9 +38,11 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     
     const eventDetailsPopover = new bootstrap.Popover(eventNameEl, {
         html: true,
-        title: event.title,
+        title: `<h3 class="event popover__title ${event.label}">${event.title}</h3>`,
         content: eventDetailsTemplate,
-        placement: "left"
+        customClass: "eventPopover",
+        placement: "left",
+        trigger: 'hover focus'
     })
 
   })
@@ -66,19 +68,29 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     popoverTemplate = popoverTemplate.replace('templateInner', popoverTemplateInner)
         const dayEventsPopover = new bootstrap.Popover(popoverTriggerEl, {
             html: true,
-            title: dayEvents[0].date,
+            title: `${dayEvents[0].date}`,
             content: popoverTemplate,
-            placement: "left"
+            placement: "left",
+            customClass: "dayPopover"
         })
         
-        popoverTriggerEl?.addEventListener('inserted.bs.popover', ()=> setPopoverEventsIds(dayEvents))
+        popoverTriggerEl?.addEventListener('inserted.bs.popover', ()=> {
+            setPopoverEventsIds(dayEvents)
+            addClosePopoverBtn(popoverTriggerEl)
+        })
         
 
     },500)  // Test changing the timeout with async await promise
 }
 }
 
-
+function addClosePopoverBtn(popoverTriggerEl:HTMLElement){
+    const popoverHeader = document.querySelector('.popover-header')
+    const popoverCloseBtn = document.createElement('button')
+    popoverCloseBtn.textContent = "X"
+    popoverHeader?.append(popoverCloseBtn)
+    popoverCloseBtn.addEventListener('click', () => popoverTriggerEl.click())
+}
 
 function setPopoverEventsIds(dayEvents:Event[]){
     const popoverEventsElArray:NodeListOf<HTMLLIElement> = document.querySelectorAll('.popover-body .event')
@@ -107,8 +119,10 @@ function addEventDetailsPopover(event:Event){
     
     const eventDetailsPopover = new bootstrap.Popover(popoverTriggerEl, {
         html: true,
-        title: event.title,
+        title: `<h3 class="event popover__title ${event.label}">${event.title}</h3>`,
         content: eventDetailsTemplate,
-        placement: "left"
+        customClass: "eventPopover",
+        placement: "left",
+        trigger: 'hover focus'
     })
 }

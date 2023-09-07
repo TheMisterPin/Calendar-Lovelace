@@ -30,6 +30,8 @@ function validateDateInput() {
     const dateValue = newEventDateInput.value;
     const currentDate = new Date();
     const selectedDate = new Date(dateValue);
+    currentDate.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
     if (!dateValue || selectedDate < currentDate) {
         dateError.textContent = 'Please, enter a valid date.';
         newEventDateInput.classList.add('is-invalid');

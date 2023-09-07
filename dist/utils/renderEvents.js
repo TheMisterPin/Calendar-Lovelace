@@ -29,9 +29,11 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
         const eventDetailsTemplate = eventDetailsTemplateOutter.replace('innerTemplate', eventDetailsInnerTemplate);
         const eventDetailsPopover = new bootstrap.Popover(eventNameEl, {
             html: true,
-            title: event.title,
+            title: `<h3 class="event popover__title ${event.label}">${event.title}</h3>`,
             content: eventDetailsTemplate,
-            placement: "left"
+            customClass: "eventPopover",
+            placement: "left",
+            trigger: 'hover focus'
         });
     });
     if (dayEvents.length > 3) {
@@ -52,13 +54,24 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
             popoverTemplate = popoverTemplate.replace('templateInner', popoverTemplateInner);
             const dayEventsPopover = new bootstrap.Popover(popoverTriggerEl, {
                 html: true,
-                title: dayEvents[0].date,
+                title: `${dayEvents[0].date}`,
                 content: popoverTemplate,
-                placement: "left"
+                placement: "left",
+                customClass: "dayPopover"
             });
-            popoverTriggerEl === null || popoverTriggerEl === void 0 ? void 0 : popoverTriggerEl.addEventListener('inserted.bs.popover', () => setPopoverEventsIds(dayEvents));
+            popoverTriggerEl === null || popoverTriggerEl === void 0 ? void 0 : popoverTriggerEl.addEventListener('inserted.bs.popover', () => {
+                setPopoverEventsIds(dayEvents);
+                addClosePopoverBtn(popoverTriggerEl);
+            });
         }, 500); // Test changing the timeout with async await promise
     }
+}
+function addClosePopoverBtn(popoverTriggerEl) {
+    const popoverHeader = document.querySelector('.popover-header');
+    const popoverCloseBtn = document.createElement('button');
+    popoverCloseBtn.textContent = "X";
+    popoverHeader === null || popoverHeader === void 0 ? void 0 : popoverHeader.append(popoverCloseBtn);
+    popoverCloseBtn.addEventListener('click', () => popoverTriggerEl.click());
 }
 function setPopoverEventsIds(dayEvents) {
     const popoverEventsElArray = document.querySelectorAll('.popover-body .event');
@@ -82,8 +95,10 @@ function addEventDetailsPopover(event) {
     const eventDetailsTemplate = eventDetailsTemplateOutter.replace('innerTemplate', eventDetailsInnerTemplate);
     const eventDetailsPopover = new bootstrap.Popover(popoverTriggerEl, {
         html: true,
-        title: event.title,
+        title: `<h3 class="event popover__title ${event.label}">${event.title}</h3>`,
         content: eventDetailsTemplate,
-        placement: "left"
+        customClass: "eventPopover",
+        placement: "left",
+        trigger: 'hover focus'
     });
 }
