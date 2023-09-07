@@ -1,9 +1,11 @@
+import { newEventHandler } from '../utils/newEventHandler.js';
 export function initializeModalLogic() {
     setupCheckboxLogic('#hasEndDate', '#newEventEndDate');
     setupCheckboxLogic('#hasReminder', '#newEventReminder');
     const newEventBtn = document.querySelector('#saveBtn');
     newEventBtn.addEventListener('click', () => {
         clearFields();
+        newEventHandler();
     });
     const toastEl = new bootstrap.Toast(document.getElementById('eventToast'));
     toastEl.show();
