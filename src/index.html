@@ -21,40 +21,52 @@
   </head>
   <body>
     <div class="app">
-    
-
-      <div class="calendarContainer">
-      
-        <div class="calendar">
-          <div class="calendarHeader">
-            <i class="fas fa-angle-left" id="prev"></i>
-            <div class="date">
-              <h3></h3>
-              <button
-              id="newEventBtn"
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
-            >Create New Event</button>
+      <div class="container-fluid">
+        <div class="row">
+          <aside class="col-lg-3 mini-calendar">
+            <div class="mini-calendar-header">
+              <i class="fas fa-angle-left" id="mini-prev"></i>
+              <span class="mini-calendar-month-year"></span>
+              <i class="fas fa-angle-right" id="mini-next"></i>
             </div>
-            <i class="fa fa-angle-right" id="next"></i>
+            <ul class="mini-calendar-body">
+              <!-- Add list items for each day -->
+            </ul>
+          </aside>
+        
+          <div class="col-lg-9 calendarContainer">
+          
+            <div class="calendar">
+              <div class="calendarHeader">
+                <i class="fas fa-angle-left" id="prev"></i>
+                <div class="date">
+                  <h3></h3>
+                  <button
+                  id="newEventBtn"
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                >Create New Event</button>
+                </div>
+                <i class="fa fa-angle-right" id="next"></i>
+              </div>
+              
+              <ul class="weekDays">
+                <li>Mon</li>
+                <li>Tue</li>
+                <li>Wed</li>
+                <li>Thu</li>
+                <li>Fri</li>
+                <li>Sat</li>
+                <li>Sun</li>
+              </ul>
+              <section class="calendarDisplay"></section>
+              
+            </div>
           </div>
-          
-          <ul class="weekDays">
-            <li>Mon</li>
-            <li>Tue</li>
-            <li>Wed</li>
-            <li>Thu</li>
-            <li>Fri</li>
-            <li>Sat</li>
-            <li>Sun</li>
-          </ul>
-          <section class="calendarDisplay"></section>
-          
-        </div>
+        </div>  
       </div>
-
       <!-- NEW EVENT MODAL -->
       <div
         class="modal fade"

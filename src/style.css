@@ -75,9 +75,6 @@ p{
   user-select: none;
 }
 
-.today {
-  
-}
 .paddingDay {
   opacity: 0.7;
 }
@@ -157,3 +154,57 @@ p{
   color: red;
 }
 
+/* Mini Calendar Styles */
+.mini-calendar {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.mini-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mini-calendar-body {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  background-color: transparent;
+}
+
+.mini-calendar-day {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background-color: #f5f5f5;
+}
+
+.mini-calendar-day:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Add styles for padding days */
+.mini-calendar-padding-day {
+  text-align: center;
+  font-size: 1.2em;
+  color: #ddd; /* Adjust the color as needed */
+  cursor: pointer;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background-color: #f5f5f5;
+}
+
+.mini-calendar-padding-day:hover {
+  background-color: #ddd; /* Adjust the color as needed */
+  color: #000; /* Adjust the color as needed */
+}

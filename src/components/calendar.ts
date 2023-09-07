@@ -72,7 +72,6 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
     }
 }
   
-
 async function loadHolidaysAsync(year: number): Promise<void> {
   try {
     const holidays = await loadHolidays(year);
@@ -108,4 +107,73 @@ export function populateCalendar(currentDate: Date): void {
   eventsExpired()
 }
 
+const miniCalendarBody = document.querySelector('.mini-calendar-body')!;
+const miniCalendarMonthYear = document.querySelector('.mini-calendar-month-year');
+const miniPrevBtn = document.getElementById('mini-prev');
+const miniNextBtn = document.getElementById('mini-next');
 
+let miniCalendarDate: Date = new Date(currentDate);
+
+function updateMiniCalendar(date: Date): void {
+  if (miniCalendarMonthYear) {
+    miniCalendarMonthYear.textContent = `${months[date.getMonth()].name} ${date.getFullYear()}`;
+  }
+  if (miniCalendarBody) {
+    miniCalendarBody.innerHTML = '';
+  }
+
+  const mainCalendarFirstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  const startDay = (mainCalendarFirstDay.getDay() + 6) % 7;
+
+  const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  const daysInMonth = lastDayOfMonth.getDate();
+
+  const prevMonthLastDay = new Date(date.getFullYear(), date.getMonth(), 0);
+  const daysFromPrevMonth = startDay;
+
+  const numRowsNeeded = Math.ceil((daysFromPrevMonth + daysInMonth) / 7);
+
+  const daysToFillRows = numRowsNeeded * 7 - (daysFromPrevMonth + daysInMonth);
+
+  for (let i = 1; i <= daysFromPrevMonth; i++) {
+    const prevMonthDay = prevMonthLastDay.getDate() - (daysFromPrevMonth - i);
+    const listItem: HTMLLIElement = document.createElement('li');
+    listItem.textContent = `${prevMonthDay}`;
+    listItem.classList.add('mini-calendar-padding-day');
+    miniCalendarBody.appendChild(listItem);
+  }
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    const day: number = i;
+    const listItem: HTMLLIElement = document.createElement('li');
+    listItem.textContent = `${day}`;
+    listItem.classList.add('mini-calendar-day');
+    
+    listItem.addEventListener('click', () => {
+      currentDate = new Date(date.getFullYear(), date.getMonth(), day);
+      populateCalendar(currentDate);
+    });
+
+    miniCalendarBody.appendChild(listItem);
+  }
+
+  for (let i = 1; i <= daysToFillRows; i++) {
+    const listItem: HTMLLIElement = document.createElement('li');
+    listItem.textContent = `${i}`;
+    listItem.classList.add('mini-calendar-padding-day');
+    miniCalendarBody.appendChild(listItem);
+  }
+}
+
+  miniPrevBtn!.addEventListener('click', () => {
+    miniCalendarDate.setMonth(miniCalendarDate.getMonth() - 1);
+    updateMiniCalendar(miniCalendarDate);
+  });
+
+  miniNextBtn!.addEventListener('click', () => {
+    miniCalendarDate.setMonth(miniCalendarDate.getMonth() + 1);
+    updateMiniCalendar(miniCalendarDate);
+  });
+
+
+updateMiniCalendar(miniCalendarDate);
