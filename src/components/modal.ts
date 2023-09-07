@@ -5,7 +5,7 @@ export function initializeModalLogic() {
     setupCheckboxLogic('#hasReminder', '#newEventReminder');
     const newEventBtn = document.querySelector('#saveBtn')!;
     newEventBtn.addEventListener('click', () => {  
-      clearFields();
+      clearFields(); newEventHandler();
       
     });
     
