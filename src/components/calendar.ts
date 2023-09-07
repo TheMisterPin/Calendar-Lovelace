@@ -107,10 +107,12 @@ export function populateCalendar(currentDate: Date): void {
   eventsExpired()
 }
 
+/*----------------------------MINI CALENDAR------------------------------*/
+
 const miniCalendarBody = document.querySelector('.mini-calendar-body')!;
 const miniCalendarMonthYear = document.querySelector('.mini-calendar-month-year');
-const miniPrevBtn = document.getElementById('mini-prev');
-const miniNextBtn = document.getElementById('mini-next');
+const miniPrevBtn = document.querySelector('#miniPrev');
+const miniNextBtn = document.querySelector('#miniNext');
 
 let miniCalendarDate: Date = new Date(currentDate);
 
@@ -119,7 +121,7 @@ function updateMiniCalendar(date: Date): void {
     miniCalendarMonthYear.textContent = `${months[date.getMonth()].name} ${date.getFullYear()}`;
   }
   if (miniCalendarBody) {
-    miniCalendarBody.innerHTML = '';
+    miniCalendarBody.replaceChildren();
   }
 
   const mainCalendarFirstDay = new Date(date.getFullYear(), date.getMonth(), 1);

@@ -94,17 +94,18 @@ export function populateCalendar(currentDate) {
     loadHolidaysAsync(currentDate.getFullYear());
     eventsExpired();
 }
+/*----------------------------MINI CALENDAR------------------------------*/
 const miniCalendarBody = document.querySelector('.mini-calendar-body');
 const miniCalendarMonthYear = document.querySelector('.mini-calendar-month-year');
-const miniPrevBtn = document.getElementById('mini-prev');
-const miniNextBtn = document.getElementById('mini-next');
+const miniPrevBtn = document.querySelector('#miniPrev');
+const miniNextBtn = document.querySelector('#miniNext');
 let miniCalendarDate = new Date(currentDate);
 function updateMiniCalendar(date) {
     if (miniCalendarMonthYear) {
         miniCalendarMonthYear.textContent = `${months[date.getMonth()].name} ${date.getFullYear()}`;
     }
     if (miniCalendarBody) {
-        miniCalendarBody.innerHTML = '';
+        miniCalendarBody.replaceChildren();
     }
     const mainCalendarFirstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const startDay = (mainCalendarFirstDay.getDay() + 6) % 7;
