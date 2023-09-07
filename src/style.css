@@ -18,7 +18,8 @@ p{
   height: 100vh;
 }
 
-.calendar .container {
+.calendar .container {width: 100vw;
+  height: 100vh;
   display: grid; 
   grid-auto-rows: 1fr; 
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
@@ -39,7 +40,7 @@ p{
 }
 .Header{grid-area: Header; background-color: #9e69af;}
 
-.weekDays {
+.calendar__weekDays{
   margin-bottom: 0;
   
   display: grid;
@@ -52,13 +53,13 @@ p{
  
 }
 
-.weekDays li{
+.calendar__weekDays li{
   font-size: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
-  border: 1px solid gray;
+  border: 1px solid hsl(0, 0%, 50%);
  
 
 }
