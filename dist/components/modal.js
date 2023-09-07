@@ -43,3 +43,28 @@ function setupCheckboxLogic(checkboxSelector, inputSelector) {
         });
     }
 }
+const eventLabelSelect = document.querySelector('#eventLabel');
+eventLabelSelect.addEventListener('change', (event) => {
+    if (eventLabelSelect.value === 'addNew') {
+        $('#eventLabel').on('hidden.bs.popover', function () {
+            const newLabel = document.querySelector('#newLabelInput').value;
+            const newLabelColor = document.querySelector('#newLabelColor').value;
+            if (newLabel) {
+                saveNewLabelToLocalStorage(newLabel, newLabelColor);
+                addNewLabelToDropdown(newLabel, newLabelColor);
+            }
+        });
+    }
+    function saveNewLabelToLocalStorage(label, color) {
+        const labels = JSON.parse(localStorage.getItem('eventLabels') || '[]');
+        labels.push({ name: label, color: color });
+        localStorage.setItem('eventLabels', JSON.stringify(labels));
+    }
+    function addNewLabelToDropdown(label, color) {
+        const eventLabelSelect = document.querySelector('#eventLabel');
+        const option = document.createElement('option');
+        option.value = label;
+        option.textContent = label;
+        option.style.color = color;
+    }
+});

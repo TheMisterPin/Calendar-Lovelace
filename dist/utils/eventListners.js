@@ -14,3 +14,14 @@ export function setupNavigationListeners(currentDate, callback) {
         });
     }
 }
+export function loadLabelsFromLocalStorage() {
+    const labels = JSON.parse(localStorage.getItem('eventLabels') || '[]');
+    const eventLabelSelect = document.querySelector('#eventLabel');
+    labels.forEach((label) => {
+        const option = document.createElement('option');
+        option.value = label.name;
+        option.textContent = label.name;
+        option.style.color = label.color;
+        eventLabelSelect.appendChild(option);
+    });
+}
