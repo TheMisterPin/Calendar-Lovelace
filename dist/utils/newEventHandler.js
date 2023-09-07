@@ -67,59 +67,61 @@ function validateTitleInput() {
     titleError.classList.remove('error-message');
     return true;
 }
-// function validateEventLabel(): boolean {
-//     const eventValue = labelSelector.value;
-//     if (!eventValue) {
-//         labelError.textContent = 'Please, select a label.';
-//         labelSelector.classList.add('is-invalid');
-//         labelError.classList.add('error-message');
-//         return false;   
-//     }
-//     labelError.textContent = '';
-//     labelSelector.classList.remove('is-invalid');
-//     labelError.classList.remove('error-message');
-//     return true;
-// }
-// newEventDateInput.addEventListener('blur', () => {
-//     validateDateInput();
-// });
-// newEventTimeInput.addEventListener('blur', () => {
-//     validateTimeInput()
-// })
-// newEventTitleInput.addEventListener('blur', () => {
-//     validateTitleInput();
-// });
-// labelSelector.addEventListener('blur', () => {
-//     validateEventLabel();
-// })
-// newEventDateInput.addEventListener('focus', () => {
-//     dateError.textContent = '';
-//     newEventDateInput.classList.remove('is-invalid');
-//     dateError.classList.remove('error-message');
-// });
-// newEventTimeInput.addEventListener('focus', () => {
-//     timeError.textContent = '';
-//     newEventTimeInput.classList.remove('is-invalid');
-//     timeError.classList.remove('error-message');
-// })
-// newEventTitleInput.addEventListener('focus', () => {
-//     titleError.textContent = '';
-//     newEventTitleInput.classList.remove('is-invalid');
-//     titleError.classList.remove('error-message');
-// });
-// labelSelector.addEventListener('focus', () => {
-//     labelError.textContent = '';
-//     labelSelector.classList.remove('is-invalid');
-//     labelError.classList.remove('error-message');
-// })
+function validateEventLabel() {
+    const eventValue = labelSelector.value;
+    if (!eventValue) {
+        labelError.textContent = 'Please, select a label.';
+        labelSelector.classList.add('is-invalid');
+        labelError.classList.add('error-message');
+        return false;
+    }
+    labelError.textContent = '';
+    labelSelector.classList.remove('is-invalid');
+    labelError.classList.remove('error-message');
+    return true;
+}
+newEventDateInput.addEventListener('blur', () => {
+    validateDateInput();
+});
+newEventTimeInput.addEventListener('blur', () => {
+    validateTimeInput();
+});
+newEventTitleInput.addEventListener('blur', () => {
+    validateTitleInput();
+});
+labelSelector.addEventListener('blur', () => {
+    validateEventLabel();
+});
+newEventDateInput.addEventListener('focus', () => {
+    dateError.textContent = '';
+    newEventDateInput.classList.remove('is-invalid');
+    dateError.classList.remove('error-message');
+});
+newEventTimeInput.addEventListener('focus', () => {
+    timeError.textContent = '';
+    newEventTimeInput.classList.remove('is-invalid');
+    timeError.classList.remove('error-message');
+});
+newEventTitleInput.addEventListener('focus', () => {
+    titleError.textContent = '';
+    newEventTitleInput.classList.remove('is-invalid');
+    titleError.classList.remove('error-message');
+});
+labelSelector.addEventListener('focus', () => {
+    labelError.textContent = '';
+    labelSelector.classList.remove('is-invalid');
+    labelError.classList.remove('error-message');
+});
 let currentDate = new Date();
 saveBtn.addEventListener('click', () => {
-    const newEvent = newEventHandler();
-    saveEventToLocalStorage(newEvent);
-    populateCalendar(currentDate);
-    const modalElement = document.getElementById('staticBackdrop');
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
+    if (validateDateInput() && validateTitleInput() && validateEventLabel() && validateTimeInput()) {
+        const newEvent = newEventHandler();
+        saveEventToLocalStorage(newEvent);
+        populateCalendar(currentDate);
+        const modalElement = document.getElementById('staticBackdrop');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+    }
 });
 export function newEventHandler() {
     const id = uuidv4();

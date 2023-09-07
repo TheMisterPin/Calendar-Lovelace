@@ -27,3 +27,16 @@ export function loadLabelsFromLocalStorage() {
         option.style.color = label.color;
         eventLabelSelect!.appendChild(option);
     });}
+
+    export function setupNavigationScroll(currentDate: Date, callback: (date: Date) => void): void {
+    
+    
+        document.addEventListener("mouseup" , () => {console.log("mouseup");});
+        //       currentDate.setMonth(currentDate.getMonth() - 1);
+        // callback(currentDate);})
+    
+        document.addEventListener("mousedown" , () => {console.log("mouseup");});
+        // {  currentDate.setMonth(currentDate.getMonth() + 1);
+        //     callback(currentDate);})
+    }
+    

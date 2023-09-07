@@ -37,12 +37,16 @@ p{
 
 .calendarHeader h1{font-size: 5em;  }
 .weekDays {
+  margin-bottom: 0;
+  
   display: grid;
   list-style: none;
-  padding:3% 3% 0 3%;
+  width: 87%;
+  padding: 3%;
+  padding-bottom: 0%;
   background-color: transparent;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+ 
 }
 
 .weekDays li{
@@ -51,32 +55,40 @@ p{
   align-items: center;
   justify-content: center;
   user-select: none;
+  border: 1px solid gray;
+ 
 
 }
 .calendarDisplay {
-  background-color: transparent;
+  background: #007b83;
+  border:  3px solid gray
+  background-color:yellow;
   display: grid;
   padding: 3%;
   height: 90%;
+  width: 87%;
+  margin-top: 0;
+  padding-top: 0%
   list-style: none;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
 }
 
 .day, .paddingDay{
-  outline: 1px solid gray;
-  padding-inline: 1em;
+
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
   display: grid;
-  justify-content: center;
+
 }
 
-.calendarDisplay p { 
+.calendarDisplay p { text-align: center;
   font-size: 1.5em;
   user-select: none;
 }
-
-.today {
-  
+.day__number{ height: 50%}
+.today  {
+ 
 }
 .paddingDay {
   opacity: 0.7;
@@ -152,4 +164,4 @@ p{
 .is-invalid {
   border-color: red;
 }
-
+.app{overflow-y: hidden;}

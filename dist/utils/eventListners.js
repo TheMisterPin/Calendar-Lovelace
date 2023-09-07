@@ -25,3 +25,11 @@ export function loadLabelsFromLocalStorage() {
         eventLabelSelect.appendChild(option);
     });
 }
+export function setupNavigationScroll(currentDate, callback) {
+    document.addEventListener("mouseup", () => { console.log("mouseup"); });
+    //       currentDate.setMonth(currentDate.getMonth() - 1);
+    // callback(currentDate);})
+    document.addEventListener("mousedown", () => { console.log("mouseup"); });
+    // {  currentDate.setMonth(currentDate.getMonth() + 1);
+    //     callback(currentDate);})
+}
