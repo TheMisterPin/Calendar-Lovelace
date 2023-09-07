@@ -4,9 +4,9 @@ import { initializeModalLogic } from './components/modal.js';
 import { eventsExpired } from './utils/expiration.js';
 let currentDate = new Date();
 document.addEventListener("DOMContentLoaded", () => {
+    eventsExpired();
     populateCalendar(currentDate);
     setupNavigationListeners(currentDate, populateCalendar);
     initializeModalLogic();
     loadLabelsFromLocalStorage();
-    eventsExpired();
 });

@@ -9,11 +9,12 @@ let currentDate: Date = new Date();
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    populateCalendar(currentDate);
+     eventsExpired();
+     populateCalendar(currentDate);
     setupNavigationListeners(currentDate, populateCalendar);
     initializeModalLogic();
     loadLabelsFromLocalStorage();
-    eventsExpired();
+  
 
 
 })

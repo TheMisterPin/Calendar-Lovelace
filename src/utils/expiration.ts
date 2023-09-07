@@ -1,12 +1,11 @@
 
 export function eventsExpired() {
-    console.log('eventsExpired function called');
     setInterval(() => {
         const currentDate = new Date();
         const allEvents = document.querySelectorAll('.day__events-list li') as NodeListOf<HTMLElement>;
 
         allEvents.forEach((event: HTMLElement) => {
-            console.log(allEvents);
+
             const eventDateStr = event.dataset.eventDate;
 
             if (eventDateStr) {
@@ -20,5 +19,5 @@ export function eventsExpired() {
                 }
             }
         });
-    }, 1000);
+    }, 100000);
 }
