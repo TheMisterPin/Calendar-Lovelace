@@ -139,11 +139,12 @@ labelSelector.addEventListener('focus', () => {
     labelSelector.classList.remove('is-invalid');
     labelError.classList.remove('error-message');
 })
-
+let currentDate: Date = new Date();
 saveBtn.addEventListener('click', () => {
     if (validateDateInput() && validateTitleInput() && validateEventLabel() && validateTimeInput()) {
         const newEvent = newEventHandler();
         saveEventToLocalStorage(newEvent);
+        populateCalendar(currentDate)
         const modalElement = document.getElementById('staticBackdrop')!;
         const modal = bootstrap.Modal.getInstance(modalElement)!;
         modal.hide()

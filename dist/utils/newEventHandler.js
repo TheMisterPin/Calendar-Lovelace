@@ -1,5 +1,6 @@
 var _a, _b, _c, _d;
 import { formatDate } from "./formatDate.js";
+import { populateCalendar } from "../components/calendar.js";
 import { uuidv4 } from "./uuidv4.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
@@ -111,10 +112,12 @@ labelSelector.addEventListener('focus', () => {
     labelSelector.classList.remove('is-invalid');
     labelError.classList.remove('error-message');
 });
+let currentDate = new Date();
 saveBtn.addEventListener('click', () => {
     if (validateDateInput() && validateTitleInput() && validateEventLabel() && validateTimeInput()) {
         const newEvent = newEventHandler();
         saveEventToLocalStorage(newEvent);
+        populateCalendar(currentDate);
         const modalElement = document.getElementById('staticBackdrop');
         const modal = bootstrap.Modal.getInstance(modalElement);
         modal.hide();

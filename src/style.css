@@ -84,6 +84,8 @@ p{
 
 /* Events */
 .event{
+  user-select: none;
+  cursor: pointer;
   position: relative;
   padding-left: 15px;
 }
@@ -98,8 +100,8 @@ p{
   top: 50%;
   transform: translateY(-50%);
 }
-
-.work::before{
+.event:hover {background-color: aliceblue;}
+.work::before{ 
   background-color: #ef6c00;
 }
 
@@ -150,3 +152,4 @@ p{
 .is-invalid {
   border-color: red;
 }
+

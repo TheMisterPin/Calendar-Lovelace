@@ -49,7 +49,7 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
         dayEventsEl.classList.add('day__events-list');
         day.append(dayNumber, dayEventsEl);
         if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
-            day.classList.add('today');
+        
         }
         if (localEvents) {
             const dayEvents = getDayEvents(localEvents, i, currentDate);
