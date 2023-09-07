@@ -15,6 +15,8 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer) {
         const eventNameEl = document.createElement('li');
         eventNameEl.classList.add('event', event.label);
         eventNameEl.innerText = `${event.time} ${event.title}`;
+        const eventDateStr = formatDate(`${event.date} ${event.time}`);
+        eventNameEl.dataset.eventDate = eventDateStr;
         eventNameEl.dataset.eventId = event.id;
         eventsContainer.appendChild(eventNameEl);
         const eventDetailsTemplateOutter = `<div class="eventDetails">innerTemplate</div>`;

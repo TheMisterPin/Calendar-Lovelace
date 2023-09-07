@@ -20,6 +20,8 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     const eventNameEl = document.createElement('li')
     eventNameEl.classList.add('event', event.label)
     eventNameEl.innerText = `${event.time} ${event.title}`
+    const eventDateStr = formatDate(`${event.date} ${event.time}`);
+    eventNameEl.dataset.eventDate = eventDateStr;
     eventNameEl.dataset.eventId = event.id
     eventsContainer.appendChild(eventNameEl)
 

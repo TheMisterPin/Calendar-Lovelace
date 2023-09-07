@@ -150,3 +150,7 @@ p{
   border-color: red;
 }
 
+.expired-event {
+  color: red;
+}
+
