@@ -18,24 +18,27 @@ p{
   height: 100vh;
 }
 
-.calendarContainer {
-  height: 100%;
+.calendar .container {
+  display: grid; 
+  grid-auto-rows: 1fr; 
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+  grid-template-rows: 0.4fr 2.8fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "Header Header Header Header Header Header Header Header Header Header Header Header Header Header"
+    "aside aside Main Main Main Main Main Main Main Main Main Main Main Main"; 
 }
+.aside { grid-area: aside; }
 
-.calendar {
-
-  width: 100%;
-  height: 100%;
-}
 .calendarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+  grid-area: Header; 
   background-color: hsl(0, 0%, 50%, 0.5);
 }
+.Header{grid-area: Header; background-color: #9e69af;}
 
-.calendarHeader h1{font-size: 5em;  }
 .weekDays {
   margin-bottom: 0;
   
@@ -61,14 +64,14 @@ p{
 }
 .calendarDisplay {
   background: #007b83;
-  border:  3px solid gray
+  border:  3px solid gray;
   background-color:yellow;
   display: grid;
   padding: 3%;
   height: 90%;
   width: 87%;
   margin-top: 0;
-  padding-top: 0%
+  padding-top: 0%;
   list-style: none;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
@@ -165,3 +168,66 @@ p{
   border-color: red;
 }
 .app{overflow-y: hidden;}
+
+.button {
+  --main-focus: #2d8cf0;
+  --font-color: #323232;
+  --bg-color-sub: #dedede;
+  --bg-color: #eee;
+  --main-color: #323232;
+  position: relative;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.button, .button__icon, .button__text {
+  transition: all 0.3s;
+}
+
+.button .button__text {
+  transform: translateX(22px);
+  color: var(--font-color);
+  font-weight: 600;
+}
+
+.button .button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: var(--bg-color-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button .svg {
+  width: 20px;
+  fill: var(--main-color);
+}
+
+.button:hover {
+  background: var(--bg-color);
+}
+
+.button:hover .button__text {
+  color: transparent;
+}
+
+.button:hover .button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px var(--main-color);
+}

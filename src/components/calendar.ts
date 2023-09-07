@@ -10,7 +10,7 @@ export function clearCalendar(): void {
 
 export function updateMonthHeader(currentDate: Date): void {
     const currentMonthInfo = months[currentDate.getMonth()];
-    const monthHeader = document.querySelector(".calendarHeader h3") as HTMLElement;
+    const monthHeader = document.querySelector(".calendar__month-title") as HTMLElement;
     if (monthHeader) {
         monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
     }

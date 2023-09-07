@@ -26,10 +26,20 @@ export function loadLabelsFromLocalStorage() {
     });
 }
 export function setupNavigationScroll(currentDate, callback) {
-    document.addEventListener("mouseup", () => { console.log("mouseup"); });
-    //       currentDate.setMonth(currentDate.getMonth() - 1);
-    // callback(currentDate);})
-    document.addEventListener("mousedown", () => { console.log("mouseup"); });
-    // {  currentDate.setMonth(currentDate.getMonth() + 1);
-    //     callback(currentDate);})
+    const calendarContainer = document.querySelector("calendarDisplay");
+    const scrollThreshold = 100;
+    let lastScrollTop = 0;
+    calendarContainer.addEventListener("scroll", function (event) {
+        const scrollTop = calendarContainer.scrollTop;
+        if (scrollTop > lastScrollTop + scrollThreshold) {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            callback(currentDate);
+            lastScrollTop = scrollTop;
+        }
+        else if (scrollTop < lastScrollTop - scrollThreshold) {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            callback(currentDate);
+            lastScrollTop = scrollTop;
+        }
+    });
 }
