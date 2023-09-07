@@ -32,8 +32,10 @@ export interface Event {
     txt: string;
     time: string;
     label: string;
+    miliseconds: number; 
     endDate?: string; 
     reminder?: string;
+    
 }
 
 function saveEventToLocalStorage(event: Event): void {
@@ -165,6 +167,7 @@ export function newEventHandler(): Event {
     const reminder = newEventReminder.value;
     const hasEndDateCheckbox: HTMLInputElement = document.querySelector('#hasEndDate')!;
     let endDate: string | undefined = undefined;
+    const miliseconds = getEventTimeArray(date, time)
 
     if (hasEndDateCheckbox.checked) {
         const newEventEndDateInput: HTMLInputElement = document.querySelector('#newEventEndDate')!;
@@ -179,9 +182,25 @@ export function newEventHandler(): Event {
         txt,
         label,
         endDate,
-        reminder
+        reminder,
+        miliseconds
     }
 
-    
     return newEvent;
+}
+
+function getEventTimeArray(date:string, time:string):number{
+    const dateArray = date.split('/')
+    const day = dateArray[0]
+    const month = dateArray[1]
+    const year = dateArray[2]
+
+    const timeArray = time.split(':')
+    const hours = timeArray[0]
+    const mins = timeArray[1]
+
+    const timeString = `${month},${day},${year},${hours}:${mins}`
+
+    const eventDate = new Date(timeString)
+    return eventDate.getTime()
 }

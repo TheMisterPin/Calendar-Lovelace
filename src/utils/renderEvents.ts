@@ -11,17 +11,17 @@ export function getDayEvents(eventsArray: Event[], day:number, currentDate:Date)
     return eventsArray.filter((event:Event) => event.date === fullDate)
 }
 
-export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, dayContainer:HTMLElement){ 
+export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, dayContainer:HTMLElement, miliseconds:number){ 
     const eventsToRender = [...dayEvents]
     if (dayEvents.length > 3){
         eventsToRender.splice(3)
     }
+
   eventsToRender.forEach((event:Event)=>{   
     const eventNameEl = document.createElement('li')
     eventNameEl.classList.add('event', event.label)
     eventNameEl.innerText = `${event.time} ${event.title}`
-    const eventDateStr = formatDate(`${event.date} ${event.time}`);
-    eventNameEl.dataset.eventDate = eventDateStr;
+    if(event.miliseconds < miliseconds) eventNameEl.classList.add('expired-event')
     eventNameEl.dataset.eventId = event.id
     eventsContainer.appendChild(eventNameEl)
 
