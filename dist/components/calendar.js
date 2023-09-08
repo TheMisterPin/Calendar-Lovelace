@@ -3,6 +3,7 @@ import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 import { getEventExpiration } from '../utils/expiration.js';
+import { updateMiniCalendar } from '../utils/minicalendar.js';
 let currentDate = new Date();
 export function clearCalendar() {
     const daysDisplay = document.querySelector(".calendar__days");
@@ -95,3 +96,5 @@ export function populateCalendar(currentDate, label) {
     loadHolidaysAsync(currentDate.getFullYear());
     getEventExpiration();
 }
+let miniCalendarDate = new Date(currentDate);
+updateMiniCalendar(miniCalendarDate);

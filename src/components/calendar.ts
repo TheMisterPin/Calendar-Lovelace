@@ -3,6 +3,7 @@ import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
 import { getEventExpiration } from '../utils/expiration.js';
+import { updateMiniCalendar } from './minicalendar.js';
 
 import { Label } from '../utils/filter';
 let currentDate: Date = new Date();
@@ -72,7 +73,6 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
     }
 }
   
-
 async function loadHolidaysAsync(year: number): Promise<void> {
   try {
     const holidays = await loadHolidays(year);
@@ -108,4 +108,6 @@ export function populateCalendar(currentDate: Date, label?:Label): void {
   getEventExpiration()
 }
 
+let miniCalendarDate: Date = new Date(currentDate);
 
+updateMiniCalendar(miniCalendarDate); 
