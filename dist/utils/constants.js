@@ -1,47 +1,47 @@
 export const months = [
     {
-        name: "January"
+        name: 'January'
     },
     {
-        name: "February",
+        name: 'February',
     },
     {
-        name: "March",
+        name: 'March',
     },
     {
-        name: "April",
+        name: 'April',
     },
     {
-        name: "May",
+        name: 'May',
     },
     {
-        name: "June",
+        name: 'June',
     },
     {
-        name: "July",
+        name: 'July',
     },
     {
-        name: "August",
+        name: 'August',
     },
     {
-        name: "September",
+        name: 'September',
     },
     {
-        name: "October",
+        name: 'October',
     },
     {
-        name: "November",
+        name: 'November',
     },
     {
-        name: "December",
+        name: 'December',
     }
 ];
 export const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
 ];

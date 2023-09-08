@@ -1,16 +1,16 @@
 import { months, days } from './constants.js';
 function getOrdinalSuffix(num) {
     if (num % 10 === 1 && num % 100 !== 11) {
-        return "st";
+        return 'st';
     }
     else if (num % 10 === 2 && num % 100 !== 12) {
-        return "nd";
+        return 'nd';
     }
     else if (num % 10 === 3 && num % 100 !== 13) {
-        return "rd";
+        return 'rd';
     }
     else {
-        return "th";
+        return 'th';
     }
 }
 function formatDateToStr(date) {

@@ -30,14 +30,11 @@ export function setupNavigationListeners(currentDate, callback) {
 export function setupMouseWheelNavigation(currentDate, callback) {
     const calendarContainer = document.querySelector(".calendar__days");
     calendarContainer.addEventListener("wheel", function (event) {
-        // Prevent the default scroll behavior
         event.preventDefault();
         if (event.deltaY > 0) {
-            // Scrolling down, go to next month
             nextMonth(currentDate, callback);
         }
         else if (event.deltaY < 0) {
-            // Scrolling up, go to previous month
             previousMonth(currentDate, callback);
         }
     });
