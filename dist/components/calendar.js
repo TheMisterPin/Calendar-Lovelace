@@ -2,6 +2,7 @@ import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
+import { getEventExpiration } from '../utils/expiration.js';
 let currentDate = new Date();
 export function clearCalendar() {
     const daysDisplay = document.querySelector(".calendar__days");
@@ -54,7 +55,8 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
         if (localEvents) {
             const dayEvents = getDayEvents(localEvents, i, currentDate);
             if (dayEvents) {
-                renderDayEvents(dayEvents, dayEventsEl, day);
+                const currentMiliseconds = Date.now();
+                renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
             }
         }
         container.appendChild(day);
@@ -91,4 +93,5 @@ export function populateCalendar(currentDate) {
     updateMonthHeader(currentDate);
     populateDays(currentDate);
     loadHolidaysAsync(currentDate.getFullYear());
+    getEventExpiration();
 }

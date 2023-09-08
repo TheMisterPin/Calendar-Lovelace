@@ -2,6 +2,8 @@ import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
+import { getEventExpiration } from '../utils/expiration.js';
+
 import { Label } from '../utils/filter';
 let currentDate: Date = new Date();
 export function clearCalendar(): void {
@@ -62,7 +64,8 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
         if (localEvents) {
             const dayEvents = getDayEvents(localEvents, i, currentDate);
             if (dayEvents) {
-                renderDayEvents(dayEvents, dayEventsEl, day);
+                const currentMiliseconds = Date.now()
+                renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
             }
         }
         container.appendChild(day);
@@ -102,6 +105,7 @@ export function populateCalendar(currentDate: Date, label?:Label): void {
   updateMonthHeader(currentDate);
   populateDays(currentDate);
   loadHolidaysAsync(currentDate.getFullYear());
+  getEventExpiration()
 }
 
 

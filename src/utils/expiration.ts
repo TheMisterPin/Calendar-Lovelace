@@ -1,23 +1,35 @@
+export function getEventExpiration() {
+    const allEvents = document.querySelectorAll('.day__events-list li') as NodeListOf<HTMLElement>
+    let nextEventToExpire: HTMLElement | null = null
+    let nearExpirationTime = Infinity
 
-export function eventsExpired() {
-    setInterval(() => {
-        const currentDate = new Date();
-        const allEvents = document.querySelectorAll('.day__events-list li') as NodeListOf<HTMLElement>;
+    const currentDate = new Date();
 
-        allEvents.forEach((event: HTMLElement) => {
+    for (const event of allEvents) {
+        const eventDateStr = event.dataset.eventDate
 
-            const eventDateStr = event.dataset.eventDate;
+        if (eventDateStr) {
+            const eventDate = new Date(eventDateStr)
 
-            if (eventDateStr) {
+            if (eventDate > currentDate) {
                 
-                const eventDate = new Date(eventDateStr);
+                const timeUntilExpiration = eventDate.getTime() - currentDate.getTime()
 
-                if (eventDate.getTime() <= currentDate.getTime()) {
-                    event.classList.add('expired-event');
-                } else {
-                    event.classList.remove('expired-event');
+                if (timeUntilExpiration < nearExpirationTime) {
+                    nearExpirationTime = timeUntilExpiration
+                    nextEventToExpire = event;
                 }
+                
+                setTimeout(() => {
+                    event.classList.add('expired-event')
+                }, timeUntilExpiration)
             }
-        });
-    }, 100000);
+        }
+    }
+
+    if (nextEventToExpire) {
+        console.log('Next event to expire', nextEventToExpire.textContent)
+    } else {
+        console.log('No events close to expiring')
+    }
 }

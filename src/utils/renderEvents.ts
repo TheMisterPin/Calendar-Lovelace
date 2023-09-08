@@ -1,10 +1,6 @@
 import { formatDate } from "./formatDate.js"
 import { Event } from "./newEventHandler.js"
 
-interface PopoverInterface{
-   _getContent(): undefined
-}
-
 export function getDayEvents(eventsArray: Event[], day:number, currentDate:Date){
     
     const currentMonth = currentDate.getMonth()+1
@@ -15,15 +11,17 @@ export function getDayEvents(eventsArray: Event[], day:number, currentDate:Date)
     return eventsArray.filter((event:Event) => event.date === fullDate)
 }
 
-export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, dayContainer:HTMLElement){ 
+export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, dayContainer:HTMLElement, miliseconds:number){ 
     const eventsToRender = [...dayEvents]
     if (dayEvents.length > 3){
         eventsToRender.splice(3)
     }
+
   eventsToRender.forEach((event:Event)=>{   
     const eventNameEl = document.createElement('li')
     eventNameEl.classList.add('event', event.label)
     eventNameEl.innerText = `${event.time} ${event.title}`
+    if(event.miliseconds < miliseconds) eventNameEl.classList.add('expired-event')
     eventNameEl.dataset.eventId = event.id
     eventsContainer.appendChild(eventNameEl)
 
@@ -42,9 +40,11 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     
     const eventDetailsPopover = new bootstrap.Popover(eventNameEl, {
         html: true,
-        title: event.title,
+        title: `<h3 class="event popover__title ${event.label}">${event.title}</h3>`,
         content: eventDetailsTemplate,
-        placement: "left"
+        customClass: "eventPopover",
+        placement: "left",
+        trigger: 'hover focus'
     })
 
   })
@@ -70,19 +70,29 @@ export function renderDayEvents(dayEvents:Event[], eventsContainer:HTMLElement, 
     popoverTemplate = popoverTemplate.replace('templateInner', popoverTemplateInner)
         const dayEventsPopover = new bootstrap.Popover(popoverTriggerEl, {
             html: true,
-            title: dayEvents[0].date,
+            title: `${dayEvents[0].date}`,
             content: popoverTemplate,
-            placement: "left"
+            placement: "left",
+            customClass: "dayPopover"
         })
         
-        popoverTriggerEl?.addEventListener('inserted.bs.popover', ()=> setPopoverEventsIds(dayEvents))
+        popoverTriggerEl?.addEventListener('inserted.bs.popover', ()=> {
+            setPopoverEventsIds(dayEvents)
+            addClosePopoverBtn(popoverTriggerEl)
+        })
         
 
     },500)  // Test changing the timeout with async await promise
 }
 }
 
-
+function addClosePopoverBtn(popoverTriggerEl:HTMLElement){
+    const popoverHeader = document.querySelector('.popover-header')
+    const popoverCloseBtn = document.createElement('button')
+    popoverCloseBtn.textContent = "X"
+    popoverHeader?.append(popoverCloseBtn)
+    popoverCloseBtn.addEventListener('click', () => popoverTriggerEl.click())
+}
 
 function setPopoverEventsIds(dayEvents:Event[]){
     const popoverEventsElArray:NodeListOf<HTMLLIElement> = document.querySelectorAll('.popover-body .event')
@@ -111,8 +121,10 @@ function addEventDetailsPopover(event:Event){
     
     const eventDetailsPopover = new bootstrap.Popover(popoverTriggerEl, {
         html: true,
-        title: event.title,
+        title: `<h3 class="event popover__title ${event.label}">${event.title}</h3>`,
         content: eventDetailsTemplate,
-        placement: "left"
+        customClass: "eventPopover",
+        placement: "left",
+        trigger: 'hover focus'
     })
 }
