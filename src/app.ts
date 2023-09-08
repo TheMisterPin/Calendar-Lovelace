@@ -10,7 +10,7 @@ let currentDate: Date = new Date();
 document.addEventListener("DOMContentLoaded", () => {
     
 
-     populateCalendar(currentDate);
+    populateCalendar(currentDate);
     setupNavigationListeners(currentDate, populateCalendar);
     initializeModalLogic();
     loadLabelsFromLocalStorage();
