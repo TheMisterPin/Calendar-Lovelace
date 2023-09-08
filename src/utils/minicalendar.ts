@@ -10,7 +10,7 @@ let currentDate: Date = new Date();
 
 let miniCalendarDate: Date = new Date(currentDate);
 
-function updateMiniCalendar(date: Date): void {
+export function updateMiniCalendar(date: Date): void {
     if (miniCalendarMonthYear) {
     miniCalendarMonthYear.textContent = `${months[date.getMonth()].name} ${date.getFullYear()}`;
     }
@@ -72,7 +72,3 @@ miniNextBtn!.addEventListener('click', () => {
 });
 
 updateMiniCalendar(miniCalendarDate);
-
-export {
-    updateMiniCalendar,
-};

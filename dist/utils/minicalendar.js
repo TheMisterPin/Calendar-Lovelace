@@ -6,7 +6,7 @@ const miniPrevBtn = document.querySelector('#miniPrev');
 const miniNextBtn = document.querySelector('#miniNext');
 let currentDate = new Date();
 let miniCalendarDate = new Date(currentDate);
-function updateMiniCalendar(date) {
+export function updateMiniCalendar(date) {
     if (miniCalendarMonthYear) {
         miniCalendarMonthYear.textContent = `${months[date.getMonth()].name} ${date.getFullYear()}`;
     }
@@ -55,4 +55,3 @@ miniNextBtn.addEventListener('click', () => {
     updateMiniCalendar(miniCalendarDate);
 });
 updateMiniCalendar(miniCalendarDate);
-export { updateMiniCalendar, };
