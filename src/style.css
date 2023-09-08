@@ -100,11 +100,20 @@ justify-content: center;
 }
 .calendar__days {
   min-height: 100%;
-
   display: grid;
   width: 97%;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
+  /* animation: flipV 1s linear;
+  perspective: 500px; */
+}
+
+@keyframes flipV{
+  50%{
+    transform: rotate(180deg);
+  } to {
+    transform: rotate(360deg);
+  }
 }
 
 .day, .paddingDay{
@@ -169,7 +178,7 @@ border: red 1px solid;
 }
 
 .holiday:hover {
-  width: 50vw;
+  display: flex;
 }
 .holiday {
   background-color: #039be5;
@@ -177,9 +186,9 @@ border: red 1px solid;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  
- 
 }
+
+
 
 
 .error-message {
