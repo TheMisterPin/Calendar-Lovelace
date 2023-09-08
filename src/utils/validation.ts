@@ -38,10 +38,7 @@ export function validateEndDateInput(
         endDateError.textContent = 'Please, enter an end date.';
         newEventEndDateInput.classList.add('is-invalid');
         endDateError.classList.add('error-message');
-
-        // Always restore the checkbox state after showing the error message
         hasEndDateCheckbox.checked = true;
-
         return false;
     }
 
@@ -49,10 +46,7 @@ export function validateEndDateInput(
         endDateError.textContent = 'End date must be older than the start date.';
         newEventEndDateInput.classList.add('is-invalid');
         endDateError.classList.add('error-message');
-
-        // Always restore the checkbox state after showing the error message
         hasEndDateCheckbox.checked = true;
-
         return false;
     }
 
@@ -61,7 +55,6 @@ export function validateEndDateInput(
     endDateError.classList.remove('error-message');
     return true;
 }
-
 
 export function validateTimeInput(newEventTimeInput: HTMLInputElement, timeError: HTMLDivElement): boolean {
     const timeValue = newEventTimeInput.value;
