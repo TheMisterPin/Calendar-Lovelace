@@ -3,7 +3,7 @@ import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
 import { eventsExpired } from '../utils/expiration.js';
-import { updateMiniCalendar } from '../utils/minicalendar.js';
+import { updateMiniCalendar } from './minicalendar.js';
 
 let currentDate: Date = new Date();
 export function clearCalendar(): void {

@@ -1,4 +1,4 @@
-import { populateCalendar } from '../components/calendar.js';
+import { populateCalendar } from './calendar.js';
 import { months } from '../utils/constants.js';
 
 const miniCalendarBody = document.querySelector('.mini-calendar-body')!;
