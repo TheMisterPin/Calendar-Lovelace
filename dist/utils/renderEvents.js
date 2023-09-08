@@ -15,7 +15,6 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer, milise
         const eventNameEl = document.createElement('li');
         eventNameEl.classList.add('event', event.label);
         eventNameEl.innerText = `${event.time} ${event.title}`;
-        console.log(event.miliseconds);
         if (event.miliseconds < miliseconds)
             eventNameEl.classList.add('expired-event');
         eventNameEl.dataset.eventId = event.id;

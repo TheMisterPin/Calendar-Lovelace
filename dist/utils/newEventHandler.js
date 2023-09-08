@@ -162,7 +162,6 @@ function getEventTimeArray(date, time) {
     const hours = timeArray[0];
     const mins = timeArray[1];
     const timeString = `${month},${day},${year},${hours}:${mins}`;
-    console.log(timeString);
     const eventDate = new Date(timeString);
     return eventDate.getTime();
 }

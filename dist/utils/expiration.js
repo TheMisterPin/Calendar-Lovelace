@@ -1,22 +1,3 @@
-export function eventsExpired() {
-    // 14/5/2023 04:47
-    // 1694087355249
-    const currentDate = new Date();
-    const allEvents = document.querySelectorAll('.day__events-list li');
-    allEvents.forEach((event) => {
-        const eventDateStr = event.dataset.eventDate;
-        if (eventDateStr) {
-            const eventDate = new Date(eventDateStr);
-            console.log(eventDate);
-            if (eventDate.getTime() <= currentDate.getTime()) {
-                event.classList.add('expired-event');
-            }
-            else {
-                event.classList.remove('expired-event');
-            }
-        }
-    });
-}
 export function getEventExpiration() {
     const allEvents = document.querySelectorAll('.day__events-list li');
     let nextEventToExpire = null;
