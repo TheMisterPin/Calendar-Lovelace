@@ -1,4 +1,4 @@
-import { populateCalendar } from '../components/calendar';
+import { populateCalendar } from '../components/calendar.js';
 import { months } from '../utils/constants.js';
 const miniCalendarBody = document.querySelector('.mini-calendar-body');
 const miniCalendarMonthYear = document.querySelector('.mini-calendar-month-year');
@@ -55,3 +55,4 @@ miniNextBtn.addEventListener('click', () => {
     updateMiniCalendar(miniCalendarDate);
 });
 updateMiniCalendar(miniCalendarDate);
+export { updateMiniCalendar, };

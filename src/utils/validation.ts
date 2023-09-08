@@ -1,18 +1,4 @@
-import { populateCalendar } from "../components/calendar";
-import { newEventHandler, saveEventToLocalStorage } from "./newEventHandler";
-
-const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!;
-const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!;
-const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTime')!;
-const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
-const saveBtn: HTMLButtonElement = document.querySelector('#saveBtn')!;
-const dateError: HTMLDivElement = document.createElement('div')!;
-const timeError:HTMLDivElement = document.createElement('div')!;
-const titleError: HTMLDivElement = document.createElement('div')!;
-const labelError: HTMLDivElement = document.createElement('div')!;
-
-
-function validateDateInput(): boolean {
+export function validateDateInput(newEventDateInput: HTMLInputElement, dateError: HTMLDivElement): boolean {
     const dateValue = newEventDateInput.value;
     const currentDate = new Date();
     const selectedDate = new Date(dateValue);
@@ -32,7 +18,7 @@ function validateDateInput(): boolean {
     return true;
 }
 
-function validateTimeInput(): boolean {
+export function validateTimeInput(newEventTimeInput: HTMLInputElement, timeError: HTMLDivElement): boolean {
     const timeValue = newEventTimeInput.value;
     if (!timeValue) {
         timeError.textContent = 'Please, enter a valid time.';
@@ -46,7 +32,7 @@ function validateTimeInput(): boolean {
     return true;
 }
 
-function validateTitleInput(): boolean {
+export function validateTitleInput(newEventTitleInput: HTMLInputElement, titleError: HTMLDivElement): boolean {
     const titleValue = newEventTitleInput.value;
     if (!titleValue) {
         titleError.textContent = 'Please, enter an event title.';
@@ -60,7 +46,7 @@ function validateTitleInput(): boolean {
     return true;
 }
 
-function validateEventLabel(): boolean {
+export function validateEventLabel(labelSelector: HTMLSelectElement, labelError: HTMLDivElement): boolean {
     const eventValue = labelSelector.value;
     if (!eventValue) {
         labelError.textContent = 'Please, select a label.';
@@ -72,60 +58,4 @@ function validateEventLabel(): boolean {
     labelSelector.classList.remove('is-invalid');
     labelError.classList.remove('error-message');
     return true;
-}
-
-newEventDateInput.addEventListener('blur', () => {
-    validateDateInput();
-});
-
-newEventTimeInput.addEventListener('blur', () => {
-    validateTimeInput()
-})
-
-newEventTitleInput.addEventListener('blur', () => {
-    validateTitleInput();
-});
-
-labelSelector.addEventListener('blur', () => {
-    validateEventLabel();
-})
-
-newEventDateInput.addEventListener('focus', () => {
-    dateError.textContent = '';
-    newEventDateInput.classList.remove('is-invalid');
-    dateError.classList.remove('error-message');
-});
-
-newEventTimeInput.addEventListener('focus', () => {
-    timeError.textContent = '';
-    newEventTimeInput.classList.remove('is-invalid');
-    timeError.classList.remove('error-message');
-})
-
-newEventTitleInput.addEventListener('focus', () => {
-    titleError.textContent = '';
-    newEventTitleInput.classList.remove('is-invalid');
-    titleError.classList.remove('error-message');
-});
-
-labelSelector.addEventListener('focus', () => {
-    labelError.textContent = '';
-    labelSelector.classList.remove('is-invalid');
-    labelError.classList.remove('error-message');
-})
-
-let currentDate: Date = new Date();
-saveBtn.addEventListener('click', () => {
-    if (validateDateInput() && validateTitleInput() && validateEventLabel() && validateTimeInput()) {
-        const newEvent = newEventHandler();
-        saveEventToLocalStorage(newEvent);
-        populateCalendar(currentDate)
-        const modalElement = document.getElementById('staticBackdrop')!;
-        const modal = bootstrap.Modal.getInstance(modalElement)!;
-        modal.hide()
-    }
-});
-
-function validateEvents() {
-
 }

@@ -1,6 +1,7 @@
 import { formatDate } from "./formatDate.js"
 import { populateCalendar } from "../components/calendar.js";
 import { uuidv4 } from "./uuidv4.js";
+import { validateDateInput, validateTimeInput, validateTitleInput, validateEventLabel } from "./validation.js";
 
 const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!;
 const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!;
@@ -36,88 +37,26 @@ export interface Event {
     reminder?: string;
 }
 
-function saveEventToLocalStorage(event: Event): void {
+export function saveEventToLocalStorage(event: Event): void {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
     localEvents.push(event)
     localStorage.setItem('events', JSON.stringify(localEvents))
 }
 
-function validateDateInput(): boolean {
-    const dateValue = newEventDateInput.value;
-    const currentDate = new Date();
-    const selectedDate = new Date(dateValue);
-
-    currentDate.setHours(0,0,0,0)
-    selectedDate.setHours(0,0,0,0)
-    
-    if (!dateValue || selectedDate < currentDate) {
-        dateError.textContent = 'Please, enter a valid date.';
-        newEventDateInput.classList.add('is-invalid');
-        dateError.classList.add('error-message');
-        return false;
-    }
-    dateError.textContent = '';
-    newEventDateInput.classList.remove('is-invalid');
-    dateError.classList.remove('error-message');
-    return true;
-}
-
-function validateTimeInput(): boolean {
-    const timeValue = newEventTimeInput.value;
-    if (!timeValue) {
-        timeError.textContent = 'Please, enter a valid time.';
-        newEventTimeInput.classList.add('is-invalid');
-        timeError.classList.add('error-message');
-        return false;
-    }
-    timeError.textContent = '';
-    newEventTimeInput.classList.remove('is-invalid');
-    timeError.classList.remove('error-message');
-    return true;
-}
-
-function validateTitleInput(): boolean {
-    const titleValue = newEventTitleInput.value;
-    if (!titleValue) {
-        titleError.textContent = 'Please, enter an event title.';
-        newEventTitleInput.classList.add('is-invalid');
-        titleError.classList.add('error-message');
-        return false;
-    }
-    titleError.textContent = '';
-    newEventTitleInput.classList.remove('is-invalid');
-    titleError.classList.remove('error-message');
-    return true;
-}
-
-function validateEventLabel(): boolean {
-    const eventValue = labelSelector.value;
-    if (!eventValue) {
-        labelError.textContent = 'Please, select a label.';
-        labelSelector.classList.add('is-invalid');
-        labelError.classList.add('error-message');
-        return false;   
-    }
-    labelError.textContent = '';
-    labelSelector.classList.remove('is-invalid');
-    labelError.classList.remove('error-message');
-    return true;
-}
-
 newEventDateInput.addEventListener('blur', () => {
-    validateDateInput();
+    validateDateInput(newEventDateInput, dateError);
 });
 
 newEventTimeInput.addEventListener('blur', () => {
-    validateTimeInput()
+    validateTimeInput(newEventTimeInput, timeError)
 })
 
 newEventTitleInput.addEventListener('blur', () => {
-    validateTitleInput();
+    validateTitleInput(newEventTitleInput, titleError);
 });
 
 labelSelector.addEventListener('blur', () => {
-    validateEventLabel();
+    validateEventLabel(labelSelector, labelError);
 })
 
 newEventDateInput.addEventListener('focus', () => {
@@ -143,9 +82,10 @@ labelSelector.addEventListener('focus', () => {
     labelSelector.classList.remove('is-invalid');
     labelError.classList.remove('error-message');
 })
+
 let currentDate: Date = new Date();
 saveBtn.addEventListener('click', () => {
-    if (validateDateInput() && validateTitleInput() && validateEventLabel() && validateTimeInput()) {
+    if (validateDateInput(newEventDateInput, dateError) && validateTitleInput(newEventTitleInput, titleError) && validateEventLabel(labelSelector, labelError) && validateTimeInput(newEventTimeInput, timeError)) {
         const newEvent = newEventHandler();
         saveEventToLocalStorage(newEvent);
         populateCalendar(currentDate)
@@ -153,9 +93,11 @@ saveBtn.addEventListener('click', () => {
         const modal = bootstrap.Modal.getInstance(modalElement)!;
         modal.hide()
     }
-});
+}); 
 
 export function newEventHandler(): Event {
+
+    
     const id = uuidv4()
     const title = newEventTitleInput.value;
     const date = formatDate(newEventDateInput.value);
@@ -182,6 +124,5 @@ export function newEventHandler(): Event {
         reminder
     }
 
-    
     return newEvent;
 }
