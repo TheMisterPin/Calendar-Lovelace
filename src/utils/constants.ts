@@ -8,58 +8,58 @@ export interface DataAttributeHTMLElement extends HTMLElement {
   };
 }
 export const months: MonthInfo[] = [
-  {
-    name: "January"
-     },
-  {
-    name: "February",
-  },
-  {
-    name: "March",
-  },
-  {
-    name: "April",
+	{
+		name: 'January'
+	},
+	{
+		name: 'February',
+	},
+	{
+		name: 'March',
+	},
+	{
+		name: 'April',
  
-  },
-  {
-    name: "May",
+	},
+	{
+		name: 'May',
  
-  },
-  {
-    name: "June",
+	},
+	{
+		name: 'June',
    
-  },
-  {
-    name: "July",
-  },  
-  {
-    name: "August",
+	},
+	{
+		name: 'July',
+	},  
+	{
+		name: 'August',
  
-  },
-  {
-    name: "September",
+	},
+	{
+		name: 'September',
   
-  },
-  {
-    name: "October",
+	},
+	{
+		name: 'October',
   
-  },
-  {
-    name: "November",
+	},
+	{
+		name: 'November',
   
-  },
-  {
-    name: "December",
+	},
+	{
+		name: 'December',
   
-  }
-];
+	}
+]
 
 export const days: string[]  = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday"
-];
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday',
+	'Sunday'
+]
