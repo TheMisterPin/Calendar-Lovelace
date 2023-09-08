@@ -11,13 +11,7 @@ export function initializeModalLogic() {
     
     
     
-     const toastEl = new bootstrap.Toast(document.getElementById('eventToast')!);
-        toastEl.show();      
-    
-        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-        const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl);
-    });
+   
 
 
     const eventLabelSelect = document.querySelector<HTMLSelectElement>('#eventLabel');
@@ -70,7 +64,7 @@ const eventLabelSelect = document.querySelector<HTMLSelectElement>('#eventLabel'
                 
                 if (newLabel) {
                     saveNewLabelToLocalStorage(newLabel, newLabelColor);
-                    addNewLabelToDropdown(newLabel, newLabelColor);
+                  
                 }
             });
         }
@@ -78,7 +72,9 @@ const eventLabelSelect = document.querySelector<HTMLSelectElement>('#eventLabel'
 function saveNewLabelToLocalStorage(label: string, color: string) {
     const labels = JSON.parse(localStorage.getItem('eventLabels') || '[]');
     labels.push({ name: label, color: color });
-    localStorage.setItem('eventLabels', JSON.stringify(labels));
+    localStorage.setItem('eventLabels', JSON.stringify(labels));    
+    addNewLabelToDropdown(label, color);
+    populateLabelFilter();
 }
 
 function addNewLabelToDropdown(label: string, color: string) {
@@ -88,3 +84,4 @@ function addNewLabelToDropdown(label: string, color: string) {
     option.textContent = label;
     option.style.color = color;
 }})
+

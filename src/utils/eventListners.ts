@@ -1,23 +1,43 @@
-export function setupNavigationListeners(currentDate: Date, callback: (date: Date) => void): void {
-    const prevButton: HTMLElement= document.querySelector("#prev")!;
-    const nextButton: HTMLElement  = document.querySelector("#next")!;
-
-    if (prevButton) {
-        prevButton.addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            callback(currentDate);
-        });
-    }
-
-    if (nextButton) {
-        nextButton.addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            callback(currentDate);
-        });
-    }
+export function nextMonth(currentDate: Date, callback: (date: Date) => void): void {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  callback(new Date(currentDate));
 }
 
-export function loadLabelsFromLocalStorage() {
+export function previousMonth(currentDate: Date, callback: (date: Date) => void): void {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  callback(new Date(currentDate));}
+
+export function setupNavigationListeners(currentDate: Date, callback: (date: Date) => void): void {
+  const prevButton: HTMLElement = document.querySelector("#prev")!;
+  const nextButton: HTMLElement = document.querySelector("#next")!;
+
+  if (prevButton) {
+      prevButton.addEventListener("click", () => previousMonth(currentDate, callback));
+  }
+
+  if (nextButton) {
+      nextButton.addEventListener("click", () => nextMonth(currentDate, callback));
+  }
+}
+
+export function setupMouseWheelNavigation(currentDate: Date, callback: (date: Date) => void): void {
+  const calendarContainer = document.querySelector(".calendar__days")! as HTMLElement;
+
+  calendarContainer.addEventListener("wheel", function (event) {
+      // Prevent the default scroll behavior
+      event.preventDefault();
+
+      if (event.deltaY > 0) {
+          // Scrolling down, go to next month
+          nextMonth(currentDate, callback);
+      } else if (event.deltaY < 0) {
+          // Scrolling up, go to previous month
+          previousMonth(currentDate, callback);
+      }
+  });
+}
+
+      export function loadLabelsFromLocalStorage() {
     const labels = JSON.parse(localStorage.getItem('eventLabels') || '[]');
     const eventLabelSelect = document.querySelector<HTMLSelectElement>('#eventLabel');
     labels.forEach((label: { name: string, color: string }) => {
@@ -27,25 +47,3 @@ export function loadLabelsFromLocalStorage() {
         option.style.color = label.color;
         eventLabelSelect!.appendChild(option);
     });}
-
-
-
-    export function setupNavigationScroll(currentDate: Date, callback: (date: Date) => void): void {
-    const calendarContainer = document.querySelector("calendarDisplay")!;
-    const scrollThreshold = 100;
-     let lastScrollTop = 0;
-    calendarContainer.addEventListener("scroll", function (event) {
-      const scrollTop = calendarContainer.scrollTop;
-      if (scrollTop > lastScrollTop + scrollThreshold) {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-            callback(currentDate);
-        lastScrollTop = scrollTop;
-      }
-    
-      else if (scrollTop < lastScrollTop - scrollThreshold) {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        callback(currentDate);
-        lastScrollTop = scrollTop;
-      }
-    });
-    }

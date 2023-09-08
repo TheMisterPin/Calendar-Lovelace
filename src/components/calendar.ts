@@ -2,28 +2,27 @@ import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
+import { Label } from '../utils/filter';
 let currentDate: Date = new Date();
 export function clearCalendar(): void {
-    const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
+    const daysDisplay: HTMLElement = document.querySelector(".calendar__days")!;
     daysDisplay.innerHTML = '';
 }
 
 export function updateMonthHeader(currentDate: Date): void {
-    const currentMonthInfo = months[currentDate.getMonth()];
-    const monthHeader = document.querySelector(".calendar__month-title") as HTMLElement;
-    if (monthHeader) {
-        monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
-    }
+  const currentMonthInfo = months[currentDate.getMonth()];
+  const monthHeader = document.querySelector(".calendar__month-title") as HTMLElement;
+  if (monthHeader) {
+      monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
+  }
 }
 
 function populateDays(currentDate: Date): void {
   const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
   const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
-  const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
-
-  const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
-  const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
-
+  const daysDisplay: HTMLElement = document.querySelector(".calendar__days")!;
+  const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+  const adjustedLastDayOfWeek = lastDayOfWeek;
   appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
   appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
   appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
@@ -98,7 +97,7 @@ function processHolidays(holidays: HolidayInfo[]): void {
   }
 }
 
-export function populateCalendar(currentDate: Date): void {
+export function populateCalendar(currentDate: Date, label?:Label): void {
   clearCalendar();
   updateMonthHeader(currentDate);
   populateDays(currentDate);

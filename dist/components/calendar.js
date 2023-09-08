@@ -4,7 +4,7 @@ import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 let currentDate = new Date();
 export function clearCalendar() {
-    const daysDisplay = document.querySelector(".calendarDisplay");
+    const daysDisplay = document.querySelector(".calendar__days");
     daysDisplay.innerHTML = '';
 }
 export function updateMonthHeader(currentDate) {
@@ -17,9 +17,9 @@ export function updateMonthHeader(currentDate) {
 function populateDays(currentDate) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
-    const daysDisplay = document.querySelector(".calendarDisplay");
-    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
-    const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
+    const daysDisplay = document.querySelector(".calendar__days");
+    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+    const adjustedLastDayOfWeek = lastDayOfWeek;
     appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
     appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
     appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);

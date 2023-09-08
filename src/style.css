@@ -1,52 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lexend+Mega:wght@600&family=Public+Sans:wght@600&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-ul{
-  padding: 0;
-  list-style: none;
-}
-p{
-  margin-bottom: 0;
-}
+/* FONTS IMPORTED 
+font-family: 'Archivo Black', sans-serif;
+font-family: 'Lexend Mega', sans-serif;
+font-family: 'Public Sans', sans-serif; */
 
+:root {
+  --background-color: hsl(0, 0%, 10%); /* Dark background color */
+  --text-color: hsl(0, 0%, 90%); /* Light text color */
+  --accent-color: hsl(0, 0%, 60%); /* Medium gray for accents */
+  --border-color: hsl(0, 0%, 20%); /* Darker border color */
+  --hover-color: hsl(0, 0%, 30%); /* Slightly lighter color on hover */
+  --lightBlue: #7df9ff; 
+  --green: #2fff2f; 
+  --pink: #ff00f5 ;
+  --purple: #3300ff;
+  --orange: #ff4911 ;
+  --yellow:#ffff00 ;
+
+  /* You can add more variables for different parts of your calendar */
+}
 
 .app {
-  width: 100vw;
-  height: 100vh;
+margin: 0;
+padding: 0;
+height: 100vh;
+width: 100vw;
+}
+.main{
+  grid-area: main;
+   display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+height: 97%;}
+
+
+
+.calendar {
+min-height: 97%;
+max-height: 97%;
+  display: grid;
+  grid:
+    "header header header" 15%
+    "aside main main" 83%
+    / 16% 1fr auto;
+  gap: 8px;
+  
+font-family: 'Archivo Black', sans-serif;
+/* font-family: 'Lexend Mega', sans-serif;
+font-family: 'Public Sans', sans-serif; */
 }
 
-.calendar .container {width: 100vw;
-  height: 100vh;
-  display: grid; 
-  grid-auto-rows: 1fr; 
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-  grid-template-rows: 0.4fr 2.8fr; 
-  gap: 0px 0px; 
-  grid-template-areas: 
-    "Header Header Header Header Header Header Header Header Header Header Header Header Header Header"
-    "aside aside Main Main Main Main Main Main Main Main Main Main Main Main"; 
-}
-.aside { grid-area: aside; }
+.calendar__month-title{
+padding:  0 5%;
+width: 45%;
+  text-align: center;
+  color:#fefefe;
+  font-size: 2.9em;
+  background-color: #039be5;
+  border: var(--border-color) 1px solid;
+  font-family: 'Lexend Mega', sans-serif;
+  text-shadow: rgb(0, 0, 0) 6px -3px 0px, rgb(0, 0, 0) 2.83487px 0.981584px 0px, rgb(0, 0, 0) 2.35766px 1.85511px 0px, rgb(0, 0, 0) 1.62091px 2.52441px 0px, rgb(0, 0, 0) 0.705713px 2.91581px 0px, rgb(0, 0, 0) -0.287171px 2.98622px 0px, rgb(0, 0, 0) -1.24844px 2.72789px 0px, rgb(0, 0, 0) -2.07227px 2.16926px 0px, rgb(0, 0, 0) -2.66798px 1.37182px 0px, rgb(0, 0, 0) -2.96998px 0.42336px 0px, rgb(0, 0, 0) -2.94502px -0.571704px 0px, rgb(0, 0, 0) -2.59586px -1.50383px 0px, rgb(0, 0, 0) -1.96093px -2.27041px 0px, rgb(0, 0, 0) -1.11013px -2.78704px 0px, rgb(0, 0, 0) -0.137119px -2.99686px 0px, rgb(0, 0, 0) 0.850987px -2.87677px 0px, rgb(0, 0, 0) 1.74541px -2.43999px 0px, rgb(0, 0, 0) 2.44769px -1.73459px 0px, rgb(0, 0, 0) 2.88051px -0.838247px 0px;
 
-.calendarHeader {
+}
+.aside {
+  grid-area: aside;  
+  background-color: #007b83;
+  width: 100%;}
+
+.calendar__header {
   display: flex;
-  justify-content: space-between;
+justify-content: center;
   align-items: center;
-  grid-area: Header; 
+  grid-area: header; 
   background-color: hsl(0, 0%, 50%, 0.5);
 }
-.Header{grid-area: Header; background-color: #9e69af;}
 
 .calendar__weekDays{
-  margin-bottom: 0;
-  
+ margin-bottom: 0;  
   display: grid;
   list-style: none;
-  width: 87%;
-  padding: 3%;
+  width: 97%; 
   padding-bottom: 0%;
   background-color: transparent;
   grid-template-columns: repeat(7, 1fr);
@@ -60,43 +95,34 @@ p{
   justify-content: center;
   user-select: none;
   border: 1px solid hsl(0, 0%, 50%);
- 
+ .main {grid-area: Main;} 
 
 }
-.calendarDisplay {
-  background: #007b83;
-  border:  3px solid gray;
-  background-color:yellow;
+.calendar__days {
+  min-height: 100%;
+
   display: grid;
-  padding: 3%;
-  height: 90%;
-  width: 87%;
-  margin-top: 0;
-  padding-top: 0%;
-  list-style: none;
+  width: 97%;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
 }
 
 .day, .paddingDay{
 
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
-  display: grid;
 
+   display: grid;
+border: red 1px solid;
 }
 
-.calendarDisplay p { text-align: center;
+.calendar__days p { text-align: center;
   font-size: 1.5em;
   user-select: none;
 }
 .day__number{ height: 50%}
 .today  {
- 
+ background-color: #ef6c00;
 }
-.paddingDay {
-  opacity: 0.7;
-}
+
 
 /* Events */
 .event{
@@ -142,9 +168,19 @@ p{
   background-color: #9e69af;
 }
 
+.holiday:hover {
+  width: 50vw;
+}
 .holiday {
   background-color: #039be5;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  
+ 
 }
+
 
 .error-message {
   color: rgb(154, 1, 1);
@@ -170,13 +206,17 @@ p{
 }
 .app{overflow-y: hidden;}
 
-.button {
+
+
+.addEvent__btn {
   --main-focus: #2d8cf0;
   --font-color: #323232;
   --bg-color-sub: #dedede;
   --bg-color: #eee;
   --main-color: #323232;
-  position: relative;
+  position: fixed;
+  top: 5%;
+  left: 12%;
   width: 150px;
   height: 40px;
   cursor: pointer;
@@ -189,17 +229,17 @@ p{
   overflow: hidden;
 }
 
-.button, .button__icon, .button__text {
+.addEvent__btn, .addEvent__btn__icon, .addEvent__btn__text {
   transition: all 0.3s;
 }
 
-.button .button__text {
+.addEvent__btn .addEvent__btn__text {
   transform: translateX(22px);
   color: var(--font-color);
   font-weight: 600;
 }
 
-.button .button__icon {
+.addEvent__btn .addEvent__btn__icon {
   position: absolute;
   transform: translateX(109px);
   height: 100%;
@@ -210,25 +250,32 @@ p{
   justify-content: center;
 }
 
-.button .svg {
+.addEvent__btn .svg {
   width: 20px;
   fill: var(--main-color);
 }
 
-.button:hover {
+.addEvent__btn:hover {
   background: var(--bg-color);
 }
 
-.button:hover .button__text {
+.addEvent__btn:hover .addEvent__btn__text {
   color: transparent;
 }
 
-.button:hover .button__icon {
+.addEvent__btn:hover .addEvent__btn__icon {
   width: 148px;
   transform: translateX(0);
 }
 
-.button:active {
+.addEvent__btn:active {
   transform: translate(3px, 3px);
   box-shadow: 0px 0px var(--main-color);
 }
+
+
+
+
+              /*   ////////////////// MODAL THEME ////////////////// */
+
+              

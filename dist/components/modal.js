@@ -7,12 +7,6 @@ export function initializeModalLogic() {
         clearFields();
         newEventHandler();
     });
-    const toastEl = new bootstrap.Toast(document.getElementById('eventToast'));
-    toastEl.show();
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl);
-    });
     const eventLabelSelect = document.querySelector('#eventLabel');
     eventLabelSelect.addEventListener('change', (event) => {
         if (eventLabelSelect.value === 'addNew') {
@@ -53,7 +47,6 @@ eventLabelSelect.addEventListener('change', (event) => {
             const newLabelColor = document.querySelector('#newLabelColor').value;
             if (newLabel) {
                 saveNewLabelToLocalStorage(newLabel, newLabelColor);
-                addNewLabelToDropdown(newLabel, newLabelColor);
             }
         });
     }

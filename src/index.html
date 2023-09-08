@@ -17,27 +17,36 @@
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
     <link rel="stylesheet" href="style.css" type="text/css"/>
   </head>
   <body>
     <div class="app">
     
 
-      <div class="calendar container">
-          <div class="calendar Header">
-            <i  id="prev"><img width="48" height="48" src="https://img.icons8.com/badges/48/back.png" alt="back"/></i>
-              <h3 class="calendar__month-title"></h3><i d="next"><img width="48" height="48" src="https://img.icons8.com/badges/48/chevron-right.png" alt="chevron-right"/></i>
-              <button
+      <div class="calendar">
+        <button
               id="newEventBtn"
-              type="button"
-              class="btn btn-primary"
+              class="addEvent__btn"
+             type= "button"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
-            >Create New Event</button>
+            ><span class="addEvent__btn__text">Add Item</span>
+            <span class="addEvent__btn__icon"><svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg></span></button>
+          <div class="calendar__header">
+            <i  id="prev"><img width="48" height="48" src="https://img.icons8.com/badges/48/back.png" alt="back"/></i><i id="next"><img width="48" height="48" src="https://img.icons8.com/badges/48/chevron-right.png" alt="chevron-right"/></i>
+         
+                           <div class="calendar__month-title" id="currentMonth">March 2023</div>
+           
+        
+              
             </div>
             
      <div class="aside"> aside</div>
-        <div class="Main">
+        <div class="main">
           <nav class="calendar__weekDays">
             <li>Mon</li>
             <li>Tue</li>
@@ -155,9 +164,6 @@
           </div>
         </div>
       </div>
-      
-      <footer class="footer"></footer>
-    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script
