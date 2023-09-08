@@ -1,13 +1,22 @@
 import { populateCalendar } from "../components/calendar";
+import { uuidv4 } from './uuidv4';
 
 export interface Label {
+    id: string;
     name: string;
-    color: string;
+    color?: string;
+
 }
 document.getElementById('labelFilter')!.addEventListener('change', (e) => {
     const selectedLabel = (e.target as HTMLSelectElement).value;
-    const label = selectedLabel
-    populateCalendar(currentDate, label);
+   const name = selectedLabel
+   const id = uuidv4()
+
+   const newLabel: Label = {
+    
+
+
+   }
 });
 
 
