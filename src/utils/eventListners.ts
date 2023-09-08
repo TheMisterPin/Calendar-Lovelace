@@ -1,7 +1,7 @@
 export function nextMonth(currentDate: Date, callback: (date: Date) => void): void {
   currentDate.setMonth(currentDate.getMonth() + 1);
   callback(new Date(currentDate));
-  triggerAnimation(); 
+  triggerAnimation(); // Trigger the animation
 }
 
 export function previousMonth(currentDate: Date, callback: (date: Date) => void): void {
@@ -9,16 +9,17 @@ export function previousMonth(currentDate: Date, callback: (date: Date) => void)
   callback(new Date(currentDate));
   triggerAnimation(); 
 }
-  function triggerAnimation() {
-    const calendarDays = document.querySelector<HTMLElement>('.calendar__days');
 
-    if (calendarDays) {
-      calendarDays.style.animation = 'flipV 1s linear';
-    
-      setTimeout(() => {
-        calendarDays.style.animation = '';
-      }, 500); 
-    }}
+function triggerAnimation() {
+  const calendarDays = document.querySelector<HTMLElement>('.calendar__days');
+
+  if (calendarDays) {
+    calendarDays.style.animation = 'flipV 1s linear';
+  
+    setTimeout(() => {
+      calendarDays.style.animation = '';
+    }, 1000); 
+  }}
 
 export function setupNavigationListeners(currentDate: Date, callback: (date: Date) => void): void {
   const prevButton: HTMLElement = document.querySelector("#prev")!;
