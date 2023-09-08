@@ -86,7 +86,7 @@ function processHolidays(holidays) {
         }
     }
 }
-export function populateCalendar(currentDate) {
+export function populateCalendar(currentDate, label) {
     clearCalendar();
     updateMonthHeader(currentDate);
     populateDays(currentDate);
