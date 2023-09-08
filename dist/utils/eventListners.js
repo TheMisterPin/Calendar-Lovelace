@@ -14,7 +14,7 @@ function triggerAnimation() {
         calendarDays.style.animation = 'flipV 1s linear';
         setTimeout(() => {
             calendarDays.style.animation = '';
-        }, 500);
+        }, 1000);
     }
 }
 export function setupNavigationListeners(currentDate, callback) {

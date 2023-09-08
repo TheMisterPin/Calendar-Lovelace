@@ -110,14 +110,11 @@ justify-content: center;
 
 @keyframes flipV{
   50%{
-    transform: rotate(180deg);
-  } to {
-    transform: rotate(360deg);
+    transform: rotateY(-90deg);
   }
 }
 
 .day, .paddingDay{
-
 
    display: grid;
 border: red 1px solid;

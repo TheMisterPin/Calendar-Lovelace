@@ -17,7 +17,7 @@ export function previousMonth(currentDate: Date, callback: (date: Date) => void)
     
       setTimeout(() => {
         calendarDays.style.animation = '';
-      }, 500); 
+      }, 1000); 
     }}
 
 export function setupNavigationListeners(currentDate: Date, callback: (date: Date) => void): void {
