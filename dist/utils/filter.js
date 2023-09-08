@@ -2,7 +2,7 @@ import { populateCalendar } from "../components/calendar";
 document.getElementById('labelFilter').addEventListener('change', (e) => {
     const selectedLabel = e.target.value;
     const label = selectedLabel;
-    populateCalendar(currentDate, label);
+    populateCalendar(currentDate);
 });
 export function populateLabelFilter() {
     const labels = JSON.parse(localStorage.getItem('eventLabels') || '[]');

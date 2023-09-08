@@ -9,11 +9,6 @@ export function initializeModalLogic() {
       
     });
     
-    
-    
-   
-
-
     const eventLabelSelect = document.querySelector<HTMLSelectElement>('#eventLabel');
     eventLabelSelect!.addEventListener('change', (event) => {
         if (eventLabelSelect!.value === 'addNew') {
@@ -74,7 +69,7 @@ function saveNewLabelToLocalStorage(label: string, color: string) {
     labels.push({ name: label, color: color });
     localStorage.setItem('eventLabels', JSON.stringify(labels));    
     addNewLabelToDropdown(label, color);
-    populateLabelFilter();
+    
 }
 
 function addNewLabelToDropdown(label: string, color: string) {

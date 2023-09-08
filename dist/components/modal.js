@@ -55,7 +55,6 @@ eventLabelSelect.addEventListener('change', (event) => {
         labels.push({ name: label, color: color });
         localStorage.setItem('eventLabels', JSON.stringify(labels));
         addNewLabelToDropdown(label, color);
-        populateLabelFilter();
     }
     function addNewLabelToDropdown(label, color) {
         const eventLabelSelect = document.querySelector('#eventLabel');

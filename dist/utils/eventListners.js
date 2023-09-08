@@ -1,10 +1,21 @@
 export function nextMonth(currentDate, callback) {
     currentDate.setMonth(currentDate.getMonth() + 1);
     callback(new Date(currentDate));
+    triggerAnimation();
 }
 export function previousMonth(currentDate, callback) {
     currentDate.setMonth(currentDate.getMonth() - 1);
     callback(new Date(currentDate));
+    triggerAnimation();
+}
+function triggerAnimation() {
+    const calendarDays = document.querySelector('.calendar__days');
+    if (calendarDays) {
+        calendarDays.style.animation = 'flipV 1s linear';
+        setTimeout(() => {
+            calendarDays.style.animation = '';
+        }, 500);
+    }
 }
 export function setupNavigationListeners(currentDate, callback) {
     const prevButton = document.querySelector("#prev");

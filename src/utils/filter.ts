@@ -7,7 +7,7 @@ export interface Label {
 document.getElementById('labelFilter')!.addEventListener('change', (e) => {
     const selectedLabel = (e.target as HTMLSelectElement).value;
     const label = selectedLabel
-    populateCalendar(currentDate, label);
+    populateCalendar(currentDate);
 });
 
 
