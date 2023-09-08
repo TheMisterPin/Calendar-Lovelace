@@ -1,16 +1,18 @@
 import { formatDate } from "./formatDate.js"
 import { populateCalendar } from "../components/calendar.js";
 import { uuidv4 } from "./uuidv4.js";
-import { validateDateInput, validateTimeInput, validateTitleInput, validateEventLabel } from "./validation.js";
+import { validateDateInput, validateTimeInput, validateTitleInput, validateEventLabel, validateEndDateInput } from "./validation.js";
 
 const newEventDateInput: HTMLInputElement = document.querySelector('#newEventDate')!;
 const newEventTitleInput : HTMLInputElement= document.querySelector('#newEventTitle')!;
 const newEventTxtInput: HTMLInputElement = document.querySelector('#newEventText')!; 
 const newEventTimeInput: HTMLInputElement = document.querySelector('#newEventTime')!;
 const newEventReminder: HTMLInputElement = document.querySelector('#newEventReminder')!;
+const newEventEndDateInput: HTMLInputElement = document.querySelector('#newEventEndDate')!;
 const labelSelector: HTMLSelectElement = document.querySelector('#eventLabel')!;
 const saveBtn: HTMLButtonElement = document.querySelector('#saveBtn')!;
 const dateError: HTMLDivElement = document.createElement('div')!;
+const endDateError: HTMLDivElement = document.createElement('div')!;
 const timeError:HTMLDivElement = document.createElement('div')!;
 const titleError: HTMLDivElement = document.createElement('div')!;
 const labelError: HTMLDivElement = document.createElement('div')!;
@@ -22,6 +24,7 @@ const currentTime = new Date().toISOString().slice(11,16)
 newEventTimeInput.value=(currentTime);
 
 newEventDateInput.parentElement?.append(dateError);
+newEventEndDateInput.parentElement?.append(endDateError)
 newEventTimeInput.parentElement?.append(timeError);
 newEventTitleInput.parentElement?.append(titleError);
 labelSelector.parentElement?.append(labelError);
@@ -47,6 +50,10 @@ newEventDateInput.addEventListener('blur', () => {
     validateDateInput(newEventDateInput, dateError);
 });
 
+newEventEndDateInput.addEventListener('blur', () => {
+    validateEndDateInput(newEventEndDateInput, endDateError, newEventDateInput);
+});
+
 newEventTimeInput.addEventListener('blur', () => {
     validateTimeInput(newEventTimeInput, timeError)
 })
@@ -63,6 +70,12 @@ newEventDateInput.addEventListener('focus', () => {
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
     dateError.classList.remove('error-message');
+});
+
+newEventEndDateInput.addEventListener('focus', () => {
+    endDateError.textContent = '';
+    newEventEndDateInput.classList.remove('is-invalid');
+    endDateError.classList.remove('error-message');
 });
 
 newEventTimeInput.addEventListener('focus', () => {
@@ -85,7 +98,7 @@ labelSelector.addEventListener('focus', () => {
 
 let currentDate: Date = new Date();
 saveBtn.addEventListener('click', () => {
-    if (validateDateInput(newEventDateInput, dateError) && validateTitleInput(newEventTitleInput, titleError) && validateEventLabel(labelSelector, labelError) && validateTimeInput(newEventTimeInput, timeError)) {
+    if (validateDateInput(newEventDateInput, dateError) && validateTitleInput(newEventTitleInput, titleError) && validateEventLabel(labelSelector, labelError) && validateTimeInput(newEventTimeInput, timeError) && validateEndDateInput(newEventEndDateInput,endDateError,newEventDateInput)) {
         const newEvent = newEventHandler();
         saveEventToLocalStorage(newEvent);
         populateCalendar(currentDate)
@@ -97,7 +110,6 @@ saveBtn.addEventListener('click', () => {
 
 export function newEventHandler(): Event {
 
-    
     const id = uuidv4()
     const title = newEventTitleInput.value;
     const date = formatDate(newEventDateInput.value);

@@ -1,16 +1,18 @@
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 import { formatDate } from "./formatDate.js";
 import { populateCalendar } from "../components/calendar.js";
 import { uuidv4 } from "./uuidv4.js";
-import { validateDateInput, validateTimeInput, validateTitleInput, validateEventLabel } from "./validation.js";
+import { validateDateInput, validateTimeInput, validateTitleInput, validateEventLabel, validateEndDateInput } from "./validation.js";
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
 const newEventTxtInput = document.querySelector('#newEventText');
 const newEventTimeInput = document.querySelector('#newEventTime');
 const newEventReminder = document.querySelector('#newEventReminder');
+const newEventEndDateInput = document.querySelector('#newEventEndDate');
 const labelSelector = document.querySelector('#eventLabel');
 const saveBtn = document.querySelector('#saveBtn');
 const dateError = document.createElement('div');
+const endDateError = document.createElement('div');
 const timeError = document.createElement('div');
 const titleError = document.createElement('div');
 const labelError = document.createElement('div');
@@ -19,9 +21,10 @@ newEventDateInput.value = (today);
 const currentTime = new Date().toISOString().slice(11, 16);
 newEventTimeInput.value = (currentTime);
 (_a = newEventDateInput.parentElement) === null || _a === void 0 ? void 0 : _a.append(dateError);
-(_b = newEventTimeInput.parentElement) === null || _b === void 0 ? void 0 : _b.append(timeError);
-(_c = newEventTitleInput.parentElement) === null || _c === void 0 ? void 0 : _c.append(titleError);
-(_d = labelSelector.parentElement) === null || _d === void 0 ? void 0 : _d.append(labelError);
+(_b = newEventEndDateInput.parentElement) === null || _b === void 0 ? void 0 : _b.append(endDateError);
+(_c = newEventTimeInput.parentElement) === null || _c === void 0 ? void 0 : _c.append(timeError);
+(_d = newEventTitleInput.parentElement) === null || _d === void 0 ? void 0 : _d.append(titleError);
+(_e = labelSelector.parentElement) === null || _e === void 0 ? void 0 : _e.append(labelError);
 export function saveEventToLocalStorage(event) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     localEvents.push(event);
@@ -29,6 +32,9 @@ export function saveEventToLocalStorage(event) {
 }
 newEventDateInput.addEventListener('blur', () => {
     validateDateInput(newEventDateInput, dateError);
+});
+newEventEndDateInput.addEventListener('blur', () => {
+    validateEndDateInput(newEventEndDateInput, endDateError, newEventDateInput);
 });
 newEventTimeInput.addEventListener('blur', () => {
     validateTimeInput(newEventTimeInput, timeError);
@@ -43,6 +49,11 @@ newEventDateInput.addEventListener('focus', () => {
     dateError.textContent = '';
     newEventDateInput.classList.remove('is-invalid');
     dateError.classList.remove('error-message');
+});
+newEventEndDateInput.addEventListener('focus', () => {
+    endDateError.textContent = '';
+    newEventEndDateInput.classList.remove('is-invalid');
+    endDateError.classList.remove('error-message');
 });
 newEventTimeInput.addEventListener('focus', () => {
     timeError.textContent = '';
@@ -61,7 +72,7 @@ labelSelector.addEventListener('focus', () => {
 });
 let currentDate = new Date();
 saveBtn.addEventListener('click', () => {
-    if (validateDateInput(newEventDateInput, dateError) && validateTitleInput(newEventTitleInput, titleError) && validateEventLabel(labelSelector, labelError) && validateTimeInput(newEventTimeInput, timeError)) {
+    if (validateDateInput(newEventDateInput, dateError) && validateTitleInput(newEventTitleInput, titleError) && validateEventLabel(labelSelector, labelError) && validateTimeInput(newEventTimeInput, timeError) && validateEndDateInput(newEventEndDateInput, endDateError, newEventDateInput)) {
         const newEvent = newEventHandler();
         saveEventToLocalStorage(newEvent);
         populateCalendar(currentDate);

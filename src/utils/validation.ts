@@ -18,6 +18,51 @@ export function validateDateInput(newEventDateInput: HTMLInputElement, dateError
     return true;
 }
 
+export function validateEndDateInput(
+    newEventEndDateInput: HTMLInputElement,
+    endDateError: HTMLDivElement,
+    newEventDateInput: HTMLInputElement
+): boolean {
+    const startDateValue = newEventDateInput.value;
+    const endDateValue = newEventEndDateInput.value;
+    const startDate = new Date(startDateValue);
+    let endDate = new Date(endDateValue);
+
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+
+    const hasEndDateCheckbox: HTMLInputElement = document.querySelector('#hasEndDate')!;
+    const initialCheckboxState = hasEndDateCheckbox.checked;
+
+    if (!endDateValue && initialCheckboxState) {
+        endDateError.textContent = 'Please, enter an end date.';
+        newEventEndDateInput.classList.add('is-invalid');
+        endDateError.classList.add('error-message');
+
+        // Always restore the checkbox state after showing the error message
+        hasEndDateCheckbox.checked = true;
+
+        return false;
+    }
+
+    if (endDate < startDate) {
+        endDateError.textContent = 'End date must be older than the start date.';
+        newEventEndDateInput.classList.add('is-invalid');
+        endDateError.classList.add('error-message');
+
+        // Always restore the checkbox state after showing the error message
+        hasEndDateCheckbox.checked = true;
+
+        return false;
+    }
+
+    endDateError.textContent = '';
+    newEventEndDateInput.classList.remove('is-invalid');
+    endDateError.classList.remove('error-message');
+    return true;
+}
+
+
 export function validateTimeInput(newEventTimeInput: HTMLInputElement, timeError: HTMLDivElement): boolean {
     const timeValue = newEventTimeInput.value;
     if (!timeValue) {
