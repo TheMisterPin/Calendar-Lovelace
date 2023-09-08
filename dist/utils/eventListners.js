@@ -1,10 +1,10 @@
 export function nextMonth(currentDate, callback) {
     currentDate.setMonth(currentDate.getMonth() + 1);
-    callback(new Date(currentDate)); // Using a new Date object to avoid reference issues
+    callback(new Date(currentDate));
 }
 export function previousMonth(currentDate, callback) {
     currentDate.setMonth(currentDate.getMonth() - 1);
-    callback(new Date(currentDate)); // Using a new Date object to avoid reference issues
+    callback(new Date(currentDate));
 }
 export function setupNavigationListeners(currentDate, callback) {
     const prevButton = document.querySelector("#prev");
