@@ -1,3 +1,4 @@
+node_modules/*
 node_modules/@popperjs/core/dist/cjs/enums.js
 node_modules/@popperjs/core/dist/cjs/enums.js.flow
 node_modules/@popperjs/core/dist/cjs/enums.js.map
@@ -1346,3 +1347,4 @@ node_modules/animate.css/source/zooming_exits/zoomOutLeft.css
 node_modules/animate.css/source/zooming_exits/zoomOutRight.css
 node_modules/animate.css/source/zooming_exits/zoomOutUp.css
 node_modules/.package-lock.json
+.eslintrc.json

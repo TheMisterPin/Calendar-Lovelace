@@ -38,14 +38,14 @@ export function setupMouseWheelNavigation(currentDate: Date, callback: (date: Da
   const calendarContainer = document.querySelector(".calendar__days")! as HTMLElement;
 
   calendarContainer.addEventListener("wheel", function (event) {
-      // Prevent the default scroll behavior
+
       event.preventDefault();
 
       if (event.deltaY > 0) {
-          // Scrolling down, go to next month
+         
           nextMonth(currentDate, callback);
       } else if (event.deltaY < 0) {
-          // Scrolling up, go to previous month
+        
           previousMonth(currentDate, callback);
       }
   });
