@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lexend+Mega:wght@600&family=Public+Sans:wght@600&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Preahvihear&family=Rubik&display=swap');
 /* FONTS IMPORTED 
 font-family: 'Archivo Black', sans-serif;
 font-family: 'Lexend Mega', sans-serif;
@@ -19,6 +20,10 @@ font-family: 'Public Sans', sans-serif; */
   --yellow:#ffff00 ;
 
   /* You can add more variables for different parts of your calendar */
+}
+
+body {
+  background-color: #fffaef;
 }
 
 .app {
@@ -47,7 +52,7 @@ max-height: 97%;
     / 16% 1fr auto;
   gap: 8px;
   
-font-family: 'Archivo Black', sans-serif;
+font-family: 'Rubik', sans-serif;
 /* font-family: 'Lexend Mega', sans-serif;
 font-family: 'Public Sans', sans-serif; */
 }
@@ -56,17 +61,12 @@ font-family: 'Public Sans', sans-serif; */
 padding:  0 5%;
 width: 45%;
   text-align: center;
-  color:#fefefe;
+  color:#314a72;
   font-size: 2.9em;
-  background-color: #039be5;
-  border: var(--border-color) 1px solid;
-  font-family: 'Lexend Mega', sans-serif;
-  text-shadow: rgb(0, 0, 0) 6px -3px 0px, rgb(0, 0, 0) 2.83487px 0.981584px 0px, rgb(0, 0, 0) 2.35766px 1.85511px 0px, rgb(0, 0, 0) 1.62091px 2.52441px 0px, rgb(0, 0, 0) 0.705713px 2.91581px 0px, rgb(0, 0, 0) -0.287171px 2.98622px 0px, rgb(0, 0, 0) -1.24844px 2.72789px 0px, rgb(0, 0, 0) -2.07227px 2.16926px 0px, rgb(0, 0, 0) -2.66798px 1.37182px 0px, rgb(0, 0, 0) -2.96998px 0.42336px 0px, rgb(0, 0, 0) -2.94502px -0.571704px 0px, rgb(0, 0, 0) -2.59586px -1.50383px 0px, rgb(0, 0, 0) -1.96093px -2.27041px 0px, rgb(0, 0, 0) -1.11013px -2.78704px 0px, rgb(0, 0, 0) -0.137119px -2.99686px 0px, rgb(0, 0, 0) 0.850987px -2.87677px 0px, rgb(0, 0, 0) 1.74541px -2.43999px 0px, rgb(0, 0, 0) 2.44769px -1.73459px 0px, rgb(0, 0, 0) 2.88051px -0.838247px 0px;
-
+  font-family: 'Rubik', sans-serif;
 }
 .aside {
   grid-area: aside;  
-  background-color: #007b83;
   width: 100%;}
 
 .calendar__header {
@@ -74,7 +74,6 @@ width: 45%;
 justify-content: center;
   align-items: center;
   grid-area: header; 
-  background-color: hsl(0, 0%, 50%, 0.5);
 }
 
 .calendar__weekDays{
@@ -94,7 +93,7 @@ justify-content: center;
   align-items: center;
   justify-content: center;
   user-select: none;
-  border: 1px solid hsl(0, 0%, 50%);
+  border: 1px solid hsl(0, 0%, 86%);
  .main {grid-area: Main;} 
 
 }
@@ -117,7 +116,7 @@ justify-content: center;
 .day, .paddingDay{
 
    display: grid;
-border: red 1px solid;
+border: rgb(114, 0, 0) 1px solid;
 }
 
 .calendar__days p { text-align: center;
@@ -183,10 +182,16 @@ border: red 1px solid;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  justify-content: flex-start;
+  text-align: left;
+  color: rgb(240, 255, 254);
+  border-radius: 7px;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-right: 40px;
+  margin-bottom: 10px;
+
 }
-
-
-
 
 .error-message {
   color: rgb(154, 1, 1);
@@ -212,13 +217,11 @@ border: red 1px solid;
 }
 .app{overflow-y: hidden;}
 
-
-
 .addEvent__btn {
   --main-focus: #2d8cf0;
   --font-color: #323232;
-  --bg-color-sub: #dedede;
-  --bg-color: #eee;
+  --bg-color-sub: #b8ddd9;
+  --bg-color: #ffffff;
   --main-color: #323232;
   position: fixed;
   top: 5%;
@@ -228,11 +231,11 @@ border: red 1px solid;
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: 2px solid var(--main-color);
-  box-shadow: 4px 4px var(--main-color);
   background-color: var(--bg-color);
   border-radius: 10px;
   overflow: hidden;
+  border: white;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
 .addEvent__btn, .addEvent__btn__icon, .addEvent__btn__text {
@@ -280,7 +283,7 @@ border: red 1px solid;
 }
 
 .mini-calendar {
-  background-color: #f5f5f5;
+  background-color: #e0fffd;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 15px;
@@ -308,7 +311,7 @@ border: red 1px solid;
   cursor: pointer;
   border: 1px solid #ddd;
   padding: 5px;
-  background-color: #f5f5f5;
+  background-color: #b8fff2;
 }
 
 .mini-calendar-day:hover {
@@ -323,7 +326,7 @@ border: red 1px solid;
   cursor: pointer;
   border: 1px solid #ddd;
   padding: 5px;
-  background-color: #f5f5f5;
+  background-color: #79ffc9;
 }
 
 .mini-calendar-padding-day:hover {
