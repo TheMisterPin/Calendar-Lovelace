@@ -63,38 +63,38 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
         container.appendChild(day);
     }
 }
-async function loadHolidaysAsync(year) {
-    try {
-        const holidays = await loadHolidays(year);
-        if (holidays) {
-            processHolidays(holidays);
-        }
-    }
-    catch (error) {
-        console.error('Error fetching holidays:', error);
-    }
-}
-function processHolidays(holidays) {
-    for (const holiday of holidays) {
-        const holidayDate = new Date(holiday.date);
-        if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
-            const day = holidayDate.getDate() + 4;
-            const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
-            if (dayHolidayEventsEl) {
-                const holidayEvent = document.createElement('li');
-                holidayEvent.classList.add('holiday');
-                holidayEvent.textContent = holiday.name;
-                dayHolidayEventsEl.prepend(holidayEvent);
-            }
-        }
-    }
-}
 export function populateCalendar(currentDate, label) {
     clearCalendar();
     updateMonthHeader(currentDate);
     populateDays(currentDate);
     loadHolidaysAsync(currentDate.getFullYear());
     getEventExpiration();
+    async function loadHolidaysAsync(year) {
+        try {
+            const holidays = await loadHolidays(year);
+            if (holidays) {
+                processHolidays(holidays);
+            }
+        }
+        catch (error) {
+            console.error('Error fetching holidays:', error);
+        }
+    }
+    function processHolidays(holidays) {
+        for (const holiday of holidays) {
+            const holidayDate = new Date(holiday.date);
+            if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
+                const day = holidayDate.getDate() + 4;
+                const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
+                if (dayHolidayEventsEl) {
+                    const holidayEvent = document.createElement('li');
+                    holidayEvent.classList.add('holiday');
+                    holidayEvent.textContent = holiday.name;
+                    dayHolidayEventsEl.prepend(holidayEvent);
+                }
+            }
+        }
+    }
 }
 let miniCalendarDate = new Date(currentDate);
 updateMiniCalendar(miniCalendarDate);
