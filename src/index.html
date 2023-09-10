@@ -21,7 +21,19 @@
   </head>
   <body>
     <div class="app">
-    
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <i class="fa-solid fa-bell fa"></i>
+      <strong class="me-auto">Notification</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" id="toastBody">
+    </div>
+  </div>
+</div>
+
 
       <div class="calendarContainer">
       
@@ -122,10 +134,10 @@
               <div class=" mb-3 form-floating"><label  class="form-check-label" for="hasReminder">REMIND ME</label>
                 <input type="checkbox"  class="form-check-input" id="hasReminder" />
                 <select class="form-select" id="newEventReminder"  style="display: none">
-                  <option value="5min">5min</option>
-                  <option value="10min">10min</option>
-                  <option value="15min">15min</option>
-                  <option value="20min">20min</option>
+                  <option value="5">5min</option>
+                  <option value="10">10min</option>
+                  <option value="15">15min</option>
+                  <option value="20">20min</option>
                 </select>
                 
               </div>

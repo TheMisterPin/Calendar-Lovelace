@@ -2,7 +2,8 @@ import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
-import { getEventExpiration } from '../utils/expiration.js';
+import { Event } from "../utils/newEventHandler.js"
+
 
 let currentDate: Date = new Date();
 export function clearCalendar(): void {
@@ -18,18 +19,111 @@ export function updateMonthHeader(currentDate: Date): void {
     }
 }
 
+function updateExpiredEvents(eventsArray:Event[], currentMiliseconds:number){
+  
+    eventsArray.forEach(event=>{
+      if(event.miliseconds < currentMiliseconds) event.expired = true
+    })
+    localStorage.setItem('events', JSON.stringify(eventsArray))
+    
+    const eventExpirationDetails = getEventExpirationTimeout(eventsArray)
+    eventExpirationDetails.nextEventsArray.forEach(toExpEvent => {
+      setTimeout(()=>{
+        const eventEl = document.querySelector(`[data-event-id="${toExpEvent.id}"]`)
+        eventEl?.classList.add('expired-event')
+        updateExpiredEvents(eventsArray, currentMiliseconds)
+      }, eventExpirationDetails.timeout)
+    } )
+  }
+
+function addNotifications(eventsArray:Event[]){
+  const eventNotificationDetails = getEventNotificationTimeout(eventsArray)
+  console.log(eventNotificationDetails)
+  eventNotificationDetails.nextEventsArray.forEach(toNotEvent => {
+    setTimeout(()=>{
+      renderToast(toNotEvent)
+      playNotificationSound('../media/sounds/notification_guitar.wav')
+      addNotifications(eventsArray)
+    }, eventNotificationDetails.timeout)
+  })
+}
+
+function playNotificationSound(url:string){
+  console.log('init')
+  const notificationSound = new Audio(url)
+  notificationSound.play()
+}
+
+function renderToast(event:Event){
+  const toastBodyEl = document.querySelector('#toastBody') 
+  toastBodyEl!.textContent = `${event.reminder} minutes to ${event.title}`
+  const notificationToastEl = document.querySelector('#notificationToast')!
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(notificationToastEl)
+  toastBootstrap.show()
+}
+
+
+function getEventNotificationTimeout(eventsArray:Event[]){
+  const currentMiliseconds =  Date.now()
+
+  const futureEventsArray = eventsArray.filter(localEvent => {
+    return localEvent.timeToReminder! > currentMiliseconds
+  })
+
+  const nextTimeWithEvents = futureEventsArray.map(localEvent => {
+    return localEvent.timeToReminder
+  }).sort()[0]
+
+  const nextEventsArray = futureEventsArray.filter(localEvent => {
+    return localEvent.timeToReminder === nextTimeWithEvents
+  })
+  
+  const timeout = nextTimeWithEvents! - currentMiliseconds
+
+  return {timeout, nextEventsArray}
+
+}
+
+
+function getEventExpirationTimeout(eventsArray:Event[]){
+  const currentMiliseconds =  Date.now()
+
+  const futureEventsArray = eventsArray.filter(localEvent => {
+    return localEvent.miliseconds > currentMiliseconds
+  })
+
+  const nextTimeWithEvents = futureEventsArray.map(localEvent => {
+    return localEvent.miliseconds 
+  }).sort()[0]
+
+  const nextEventsArray = futureEventsArray.filter(localEvent => {
+    return localEvent.miliseconds === nextTimeWithEvents
+  })
+  
+  const timeout = nextTimeWithEvents - currentMiliseconds
+
+  return {timeout, nextEventsArray}
+}
+
 function populateDays(currentDate: Date): void {
-  const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+  let localEvents = JSON.parse(localStorage.getItem('events') || '[]')
+  const currentMiliseconds = Date.now()
+  updateExpiredEvents(localEvents, currentMiliseconds)
+  addNotifications(localEvents)
+
+
+  
   const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
   const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
 
-  const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
-  const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
+  const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; 
+  const adjustedLastDayOfWeek = lastDayOfWeek; 
 
   appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
-  appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
+  appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay, currentMiliseconds);
   appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
 }
+
 
 function appendPaddingDays(count: number, start: number, container: HTMLElement, isPrevMonth: boolean) {
   let value = isPrevMonth ? (start - count + 1) : 1;
@@ -41,14 +135,14 @@ function appendPaddingDays(count: number, start: number, container: HTMLElement,
   }
 }
 
-function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement) {
+function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement, currentMiliseconds:number) {
+
     for (let i = 1; i <= monthLength; i++) {
         const day: HTMLDivElement = document.createElement('div');
         day.classList.add('day');
         day.setAttribute('data-day-number', i.toString());
         day.addEventListener('click', (event) => {
             const clickedDay = event.currentTarget as HTMLElement;
-            console.log(clickedDay.getAttribute('data-day-number'));
         });
 
         const dayNumber: HTMLParagraphElement = document.createElement("p");
@@ -65,7 +159,6 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
         if (localEvents) {
             const dayEvents = getDayEvents(localEvents, i, currentDate);
             if (dayEvents) {
-                const currentMiliseconds = Date.now()
                 renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
             }
         }
@@ -106,7 +199,6 @@ export function populateCalendar(currentDate: Date): void {
   updateMonthHeader(currentDate);
   populateDays(currentDate);
   loadHolidaysAsync(currentDate.getFullYear());
-  getEventExpiration()
 }
 
 

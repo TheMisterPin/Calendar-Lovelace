@@ -85,6 +85,20 @@ p{
   cursor: pointer;
   position: relative;
   padding-left: 15px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.event__delete-btn{
+  background: none;
+  border: none;
+  color: red;
+  display: none;
+}
+
+.event:hover .event__delete-btn{
+  display: block;
 }
 
 .event::before{

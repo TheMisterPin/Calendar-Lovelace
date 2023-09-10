@@ -7,19 +7,30 @@ export function getDayEvents(eventsArray, day, currentDate) {
     return eventsArray.filter((event) => event.date === fullDate);
 }
 export function renderDayEvents(dayEvents, eventsContainer, dayContainer, miliseconds) {
-    const eventsToRender = [...dayEvents];
+    const eventsToRender = [...dayEvents].sort((a, b) => {
+        return a.miliseconds - b.miliseconds;
+    });
     if (dayEvents.length > 3) {
         eventsToRender.splice(3);
     }
     eventsToRender.forEach((event) => {
-        const eventNameEl = document.createElement('li');
-        eventNameEl.classList.add('event', event.label);
+        const eventItemEl = document.createElement('li');
+        eventItemEl.classList.add('event', event.label);
+        const eventNameEl = document.createElement('p');
         eventNameEl.innerText = `${event.time} ${event.title}`;
-        console.log(event.miliseconds);
-        if (event.miliseconds < miliseconds)
-            eventNameEl.classList.add('expired-event');
-        eventNameEl.dataset.eventId = event.id;
-        eventsContainer.appendChild(eventNameEl);
+        eventItemEl.append(eventNameEl);
+        const deleteEventBtn = document.createElement('button');
+        deleteEventBtn.dataset.type = 'deleteBtn';
+        deleteEventBtn.classList.add('event__delete-btn');
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('fa', 'fa-solid', 'fa-delete-left');
+        deleteEventBtn.append(deleteIcon);
+        eventItemEl.append(deleteEventBtn);
+        deleteEventBtn.addEventListener('click', () => deleteEvent(event, eventItemEl));
+        if (event.expired)
+            eventItemEl.classList.add('expired-event');
+        eventItemEl.dataset.eventId = event.id;
+        eventsContainer.appendChild(eventItemEl);
         const eventDetailsTemplateOutter = `<div class="eventDetails">innerTemplate</div>`;
         let eventDetailsInnerTemplate = `<p>Date: ${event.date}</p>
         <p>Time: ${event.time}</p>
@@ -46,28 +57,44 @@ export function renderDayEvents(dayEvents, eventsContainer, dayContainer, milise
         viewDayEventsBtn.dataset.type = "view-day-events-btn";
         /* Add Offset */
         dayContainer.appendChild(viewDayEventsBtn);
-        setTimeout(() => {
-            const popoverTriggerEl = document.querySelector('[data-type="view-day-events-btn"]:not([data-trigger="popover"])');
-            popoverTriggerEl.dataset.trigger = 'popover';
-            let popoverTemplate = "<ul>templateInner</ul>";
-            let popoverTemplateInner = "";
-            dayEvents.forEach(event => {
-                popoverTemplateInner += `<li data-event-id="${event.id}" class="event ${event.label}">${event.time} ${event.title}</li>`;
-            });
-            popoverTemplate = popoverTemplate.replace('templateInner', popoverTemplateInner);
-            const dayEventsPopover = new bootstrap.Popover(popoverTriggerEl, {
-                html: true,
-                title: `${dayEvents[0].date}`,
-                content: popoverTemplate,
-                placement: "left",
-                customClass: "dayPopover"
-            });
-            popoverTriggerEl === null || popoverTriggerEl === void 0 ? void 0 : popoverTriggerEl.addEventListener('inserted.bs.popover', () => {
-                setPopoverEventsIds(dayEvents);
-                addClosePopoverBtn(popoverTriggerEl);
-            });
-        }, 500); // Test changing the timeout with async await promise
+        updatePopoverContent(dayEvents);
     }
+}
+function deleteEvent(event, eventEl) {
+    eventEl.remove();
+    const eventsList = JSON.parse(localStorage.getItem('events'));
+    console.log(eventsList);
+    const indexOfEvent = eventsList.findIndex(e => e.id === event.id);
+    console.log(indexOfEvent);
+    eventsList.splice(indexOfEvent, 1);
+    localStorage.setItem('events', JSON.stringify(eventsList));
+}
+function updatePopoverContent(dayEvents) {
+    setTimeout(() => {
+        const popoverTriggerEl = document.querySelector('[data-type="view-day-events-btn"]:not([data-trigger="popover"])');
+        popoverTriggerEl.dataset.trigger = 'popover';
+        let popoverTemplate = "<ul>templateInner</ul>";
+        let popoverTemplateInner = "";
+        const orderedEvents = dayEvents.sort((a, b) => {
+            return a.miliseconds - b.miliseconds;
+        });
+        orderedEvents.forEach(event => {
+            const eventExpired = event.expired ? "expired-event" : "";
+            popoverTemplateInner += `<li data-event-id="${event.id}" class="event ${event.label} ${eventExpired}">${event.time} ${event.title}</li>`;
+        });
+        popoverTemplate = popoverTemplate.replace('templateInner', popoverTemplateInner);
+        const dayEventsPopover = new bootstrap.Popover(popoverTriggerEl, {
+            html: true,
+            title: `${dayEvents[0].date}`,
+            content: popoverTemplate,
+            placement: "left",
+            customClass: "dayPopover"
+        });
+        popoverTriggerEl === null || popoverTriggerEl === void 0 ? void 0 : popoverTriggerEl.addEventListener('inserted.bs.popover', () => {
+            setPopoverEventsIds(dayEvents);
+            addClosePopoverBtn(popoverTriggerEl);
+        });
+    }, 500);
 }
 function addClosePopoverBtn(popoverTriggerEl) {
     const popoverHeader = document.querySelector('.popover-header');

@@ -2,7 +2,6 @@ import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
 import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
-import { getEventExpiration } from '../utils/expiration.js';
 let currentDate = new Date();
 export function clearCalendar() {
     const daysDisplay = document.querySelector(".calendarDisplay");
@@ -15,14 +14,83 @@ export function updateMonthHeader(currentDate) {
         monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
     }
 }
+function updateExpiredEvents(eventsArray, currentMiliseconds) {
+    eventsArray.forEach(event => {
+        if (event.miliseconds < currentMiliseconds)
+            event.expired = true;
+    });
+    localStorage.setItem('events', JSON.stringify(eventsArray));
+    const eventExpirationDetails = getEventExpirationTimeout(eventsArray);
+    eventExpirationDetails.nextEventsArray.forEach(toExpEvent => {
+        setTimeout(() => {
+            const eventEl = document.querySelector(`[data-event-id="${toExpEvent.id}"]`);
+            eventEl === null || eventEl === void 0 ? void 0 : eventEl.classList.add('expired-event');
+            updateExpiredEvents(eventsArray, currentMiliseconds);
+        }, eventExpirationDetails.timeout);
+    });
+}
+function addNotifications(eventsArray) {
+    const eventNotificationDetails = getEventNotificationTimeout(eventsArray);
+    console.log(eventNotificationDetails);
+    eventNotificationDetails.nextEventsArray.forEach(toNotEvent => {
+        setTimeout(() => {
+            renderToast(toNotEvent);
+            playNotificationSound('../media/sounds/notification_guitar.wav');
+            addNotifications(eventsArray);
+        }, eventNotificationDetails.timeout);
+    });
+}
+function playNotificationSound(url) {
+    console.log('init');
+    const notificationSound = new Audio(url);
+    notificationSound.play();
+}
+function renderToast(event) {
+    const toastBodyEl = document.querySelector('#toastBody');
+    toastBodyEl.textContent = `${event.reminder} minutes to ${event.title}`;
+    const notificationToastEl = document.querySelector('#notificationToast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(notificationToastEl);
+    toastBootstrap.show();
+}
+function getEventNotificationTimeout(eventsArray) {
+    const currentMiliseconds = Date.now();
+    const futureEventsArray = eventsArray.filter(localEvent => {
+        return localEvent.timeToReminder > currentMiliseconds;
+    });
+    const nextTimeWithEvents = futureEventsArray.map(localEvent => {
+        return localEvent.timeToReminder;
+    }).sort()[0];
+    const nextEventsArray = futureEventsArray.filter(localEvent => {
+        return localEvent.timeToReminder === nextTimeWithEvents;
+    });
+    const timeout = nextTimeWithEvents - currentMiliseconds;
+    return { timeout, nextEventsArray };
+}
+function getEventExpirationTimeout(eventsArray) {
+    const currentMiliseconds = Date.now();
+    const futureEventsArray = eventsArray.filter(localEvent => {
+        return localEvent.miliseconds > currentMiliseconds;
+    });
+    const nextTimeWithEvents = futureEventsArray.map(localEvent => {
+        return localEvent.miliseconds;
+    }).sort()[0];
+    const nextEventsArray = futureEventsArray.filter(localEvent => {
+        return localEvent.miliseconds === nextTimeWithEvents;
+    });
+    const timeout = nextTimeWithEvents - currentMiliseconds;
+    return { timeout, nextEventsArray };
+}
 function populateDays(currentDate) {
-    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+    let localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+    const currentMiliseconds = Date.now();
+    updateExpiredEvents(localEvents, currentMiliseconds);
+    addNotifications(localEvents);
     const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
     const daysDisplay = document.querySelector(".calendarDisplay");
-    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
-    const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
+    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+    const adjustedLastDayOfWeek = lastDayOfWeek;
     appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
-    appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
+    appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay, currentMiliseconds);
     appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
 }
 function appendPaddingDays(count, start, container, isPrevMonth) {
@@ -34,14 +102,13 @@ function appendPaddingDays(count, start, container, isPrevMonth) {
         container.appendChild(day);
     }
 }
-function appendCurrentMonthDays(localEvents, currentDate, monthLength, container) {
+function appendCurrentMonthDays(localEvents, currentDate, monthLength, container, currentMiliseconds) {
     for (let i = 1; i <= monthLength; i++) {
         const day = document.createElement('div');
         day.classList.add('day');
         day.setAttribute('data-day-number', i.toString());
         day.addEventListener('click', (event) => {
             const clickedDay = event.currentTarget;
-            console.log(clickedDay.getAttribute('data-day-number'));
         });
         const dayNumber = document.createElement("p");
         dayNumber.innerText = `${i}`;
@@ -55,7 +122,6 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
         if (localEvents) {
             const dayEvents = getDayEvents(localEvents, i, currentDate);
             if (dayEvents) {
-                const currentMiliseconds = Date.now();
                 renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
             }
         }
@@ -93,5 +159,4 @@ export function populateCalendar(currentDate) {
     updateMonthHeader(currentDate);
     populateDays(currentDate);
     loadHolidaysAsync(currentDate.getFullYear());
-    getEventExpiration();
 }
