@@ -4,38 +4,37 @@ import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 import { getEventExpiration } from '../utils/expiration.js';
 import { updateMiniCalendar } from './minicalendar.js';
-let currentDate = new Date();
+const currentDate = new Date();
 export function clearCalendar() {
-    const daysDisplay = document.querySelector(".calendar__days");
+    const daysDisplay = document.querySelector('.calendar__days');
     daysDisplay.innerHTML = '';
 }
 export function updateMonthHeader(currentDate) {
     const currentMonthInfo = months[currentDate.getMonth()];
-    const monthHeader = document.querySelector(".calendar__month-title");
+    const monthHeader = document.querySelector('.calendar__month-title');
     if (monthHeader) {
         monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
     }
 }
-function populateDays(currentDate) {
-    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+function populateDays(currentDate, eventsToDisplay) {
     const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
-    const daysDisplay = document.querySelector(".calendar__days");
+    const daysDisplay = document.querySelector('.calendar__days');
     const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
     const adjustedLastDayOfWeek = lastDayOfWeek;
     appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
-    appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
+    appendCurrentMonthDays(eventsToDisplay, currentDate, monthLength, daysDisplay);
     appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
 }
 function appendPaddingDays(count, start, container, isPrevMonth) {
     let value = isPrevMonth ? (start - count + 1) : 1;
     for (let i = 0; i < count; i++) {
-        const day = document.createElement("p");
+        const day = document.createElement('p');
         day.innerText = `${value++}`;
         day.classList.add('paddingDay');
         container.appendChild(day);
     }
 }
-function appendCurrentMonthDays(localEvents, currentDate, monthLength, container) {
+function appendCurrentMonthDays(eventsToDisplay, currentDate, monthLength, container) {
     for (let i = 1; i <= monthLength; i++) {
         const day = document.createElement('div');
         day.classList.add('day');
@@ -44,7 +43,7 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
             const clickedDay = event.currentTarget;
             console.log(clickedDay.getAttribute('data-day-number'));
         });
-        const dayNumber = document.createElement("p");
+        const dayNumber = document.createElement('p');
         dayNumber.innerText = `${i}`;
         dayNumber.classList.add('day__number');
         const dayEventsEl = document.createElement('ul');
@@ -53,12 +52,10 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
         if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
             dayNumber.classList.add('today');
         }
-        if (localEvents) {
-            const dayEvents = getDayEvents(localEvents, i, currentDate);
-            if (dayEvents) {
-                const currentMiliseconds = Date.now();
-                renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
-            }
+        const dayEvents = getDayEvents(eventsToDisplay, i, currentDate);
+        if (dayEvents) {
+            const currentMiliseconds = Date.now();
+            renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
         }
         container.appendChild(day);
     }
@@ -89,12 +86,12 @@ function processHolidays(holidays) {
         }
     }
 }
-export function populateCalendar(currentDate, label) {
+export function populateCalendar(currentDate, eventsToDisplay = JSON.parse(localStorage.getItem('events') || '[]')) {
     clearCalendar();
     updateMonthHeader(currentDate);
-    populateDays(currentDate);
+    populateDays(currentDate, eventsToDisplay);
     loadHolidaysAsync(currentDate.getFullYear());
     getEventExpiration();
 }
-let miniCalendarDate = new Date(currentDate);
+const miniCalendarDate = new Date(currentDate);
 updateMiniCalendar(miniCalendarDate);

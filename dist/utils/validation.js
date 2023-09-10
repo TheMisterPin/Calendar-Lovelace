@@ -19,7 +19,7 @@ export function validateEndDateInput(newEventEndDateInput, endDateError, newEven
     const startDateValue = newEventDateInput.value;
     const endDateValue = newEventEndDateInput.value;
     const startDate = new Date(startDateValue);
-    let endDate = new Date(endDateValue);
+    const endDate = new Date(endDateValue);
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(0, 0, 0, 0);
     const hasEndDateCheckbox = document.querySelector('#hasEndDate');

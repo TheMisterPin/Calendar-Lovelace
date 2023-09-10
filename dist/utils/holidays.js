@@ -3,7 +3,7 @@ export async function loadHolidays(year) {
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) {
-            throw new Error("Error");
+            throw new Error('Error');
         }
         const data = await response.json();
         const holidays = data.map((holiday) => ({

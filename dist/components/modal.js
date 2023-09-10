@@ -7,13 +7,6 @@ export function initializeModalLogic() {
         clearFields();
         newEventHandler();
     });
-    const eventLabelSelect = document.querySelector('#eventLabel');
-    eventLabelSelect.addEventListener('change', (event) => {
-        if (eventLabelSelect.value === 'addNew') {
-            const newLabel = document.querySelector('#newLabelInput').value;
-            const newLabelColor = document.querySelector('#newLabelColor').value;
-        }
-    });
 }
 function clearFields() {
     document.querySelector('#newEventTitle').value = '';
@@ -39,28 +32,3 @@ function setupCheckboxLogic(checkboxSelector, inputSelector) {
         });
     }
 }
-const eventLabelSelect = document.querySelector('#eventLabel');
-eventLabelSelect.addEventListener('change', (event) => {
-    if (eventLabelSelect.value === 'addNew') {
-        $('#eventLabel').on('hidden.bs.popover', function () {
-            const newLabel = document.querySelector('#newLabelInput').value;
-            const newLabelColor = document.querySelector('#newLabelColor').value;
-            if (newLabel) {
-                saveNewLabelToLocalStorage(newLabel, newLabelColor);
-            }
-        });
-    }
-    function saveNewLabelToLocalStorage(label, color) {
-        const labels = JSON.parse(localStorage.getItem('eventLabels') || '[]');
-        labels.push({ name: label, color: color });
-        localStorage.setItem('eventLabels', JSON.stringify(labels));
-        addNewLabelToDropdown(label, color);
-    }
-    function addNewLabelToDropdown(label, color) {
-        const eventLabelSelect = document.querySelector('#eventLabel');
-        const option = document.createElement('option');
-        option.value = label;
-        option.textContent = label;
-        option.style.color = color;
-    }
-});

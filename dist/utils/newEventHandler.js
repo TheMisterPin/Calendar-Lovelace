@@ -1,8 +1,8 @@
 var _a, _b, _c, _d, _e;
-import { formatDate } from "./formatDate.js";
-import { populateCalendar } from "../components/calendar.js";
-import { uuidv4 } from "./uuidv4.js";
-import { validateDateInput, validateTimeInput, validateTitleInput, validateEventLabel, validateEndDateInput } from "./validation.js";
+import { formatDate } from './formatDate.js';
+import { populateCalendar } from '../components/calendar.js';
+import { uuidv4 } from './uuidv4.js';
+import { validateDateInput, validateTimeInput, validateTitleInput, validateEventLabel, validateEndDateInput } from './validation.js';
 const newEventDateInput = document.querySelector('#newEventDate');
 const newEventTitleInput = document.querySelector('#newEventTitle');
 const newEventTxtInput = document.querySelector('#newEventText');
@@ -70,7 +70,7 @@ labelSelector.addEventListener('focus', () => {
     labelSelector.classList.remove('is-invalid');
     labelError.classList.remove('error-message');
 });
-let currentDate = new Date();
+const currentDate = new Date();
 saveBtn.addEventListener('click', () => {
     if (validateDateInput(newEventDateInput, dateError) && validateTitleInput(newEventTitleInput, titleError) && validateEventLabel(labelSelector, labelError) && validateTimeInput(newEventTimeInput, timeError) && validateEndDateInput(newEventEndDateInput, endDateError, newEventDateInput)) {
         const newEvent = newEventHandler();
@@ -91,7 +91,7 @@ export function newEventHandler() {
     const reminder = newEventReminder.value;
     const hasEndDateCheckbox = document.querySelector('#hasEndDate');
     let endDate = undefined;
-    const miliseconds = getEventTimeArray(date, time);
+    const milliseconds = getEventTimeArray(date, time);
     if (hasEndDateCheckbox.checked) {
         const newEventEndDateInput = document.querySelector('#newEventEndDate');
         endDate = newEventEndDateInput.value;
@@ -105,7 +105,7 @@ export function newEventHandler() {
         label,
         endDate,
         reminder,
-        miliseconds
+        milliseconds: milliseconds
     };
     return newEvent;
 }
