@@ -1,7 +1,7 @@
 export function nextMonth(currentDate, callback) {
     currentDate.setMonth(currentDate.getMonth() + 1);
     callback(new Date(currentDate));
-    triggerAnimation(); // Trigger the animation
+    triggerAnimation();
 }
 export function previousMonth(currentDate, callback) {
     currentDate.setMonth(currentDate.getMonth() - 1);
@@ -33,9 +33,11 @@ export function setupMouseWheelNavigation(currentDate, callback) {
         // Prevent the default scroll behavior
         event.preventDefault();
         if (event.deltaY > 0) {
+            // Scrolling down, go to next month
             nextMonth(currentDate, callback);
         }
         else if (event.deltaY < 0) {
+            // Scrolling up, go to previous month
             previousMonth(currentDate, callback);
         }
     });
