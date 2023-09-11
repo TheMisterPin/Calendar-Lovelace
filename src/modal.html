@@ -1,45 +1,40 @@
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAside" aria-controls="offcanvasAside">Toggle Offcanvas</button>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="modal.css">
+    <title>modal</title>
+  </head>
+  <body>
+    
 
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasAside" aria-labelledby="offcanvasAsideLabel">
-  <div class="offcanvas-header">
-    <h5 id="offcanvasAsideLabel">Sidebar</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+    
+
+    <div class="wrapper">
+      <div class="flip-card__inner">
+          <div class="flip-card__front">
+              <div class="title">New Event</div>
+              <form class="flip-card__form" action="">
+                  <input id="event-name" class="flip-card__input" name="eventname" type="text" placeholder="Event Name">
+                  <input id="event-date" class="flip-card__input" name="eventdate" type="date">
+                  <select id="event-type" class="flip-card__input dropdown" name="eventtype">
+                      <option value="meeting">Meeting</option>
+                      <option value="party">Party</option>
+                      <option value="workshop">Workshop</option>
+                      <!-- Add more options as needed -->
+                  </select>
+                  <button class="flip-card__btn">Create Event</button>
+              </form>
+          </div>
+      </div>
   </div>
-  <div class="offcanvas-body">
-   
 
-    <!-- Mini Calendar -->
-    <section class="miniCalendar" id="miniCalendar">
-        <i class="fas fa-angle-left" id="miniPrev"></i>
-        <span class="mini-calendar-month-year"></span>
-        <i class="fas fa-angle-right" id="miniNext"></i>
-    </div>
-    <ul class="mini-calendar-weekdays">
-        <li>M</li>
-        <li>T</li>
-        <li>W</li>
-        <li>Th</li>
-        <li>F</li>
-        <li>Sa</li>
-        <li>Su</li>
-    </ul>
-    <ul class="mini-calendar-body"></ul>
-  </section> <div class="mini-calendar-header">
 
-    <!-- Filter Section -->
-    <div class="filter-section">
-        <div class="filter-section">
-            <h3>Filter by Label</h3>
-            <div class="checkboxes"></div>
-        </div>
-    </div>
 
-    <!-- Upcoming Events Section -->
-    <div class="upcoming-events-section">
-        <h3>Upcoming Events</h3>
-        <ul class="upcoming-events-list"></ul>
-    </div>
 
-  </div>
-</div>
 
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

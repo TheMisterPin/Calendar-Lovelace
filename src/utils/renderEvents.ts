@@ -107,7 +107,7 @@ function setPopoverEventsIds(dayEvents:Event[]){
 
 function addEventDetailsPopover(event:Event){
 	const popoverTriggerEl= document.querySelector('.popover-body [data-event-id]:not([data-trigger="popover"])') as HTMLLIElement
-	popoverTriggerEl.dataset.trigger = 'popover'
+	popoverTriggerEl.dataset.trigger ='popover'
 	const eventDetailsTemplateOutter = 
         '<div class="eventDetails">innerTemplate</div>'
 	let eventDetailsInnerTemplate = 

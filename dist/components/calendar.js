@@ -28,8 +28,14 @@ function populateDays(currentDate, eventsToDisplay) {
 function appendPaddingDays(count, start, container, isPrevMonth) {
     let value = isPrevMonth ? (start - count + 1) : 1;
     for (let i = 0; i < count; i++) {
-        const day = document.createElement('p');
-        day.innerText = `${value++}`;
+        const day = document.createElement('div');
+        day.classList.add('day');
+        const dayNumber = document.createElement('p');
+        dayNumber.innerText = `${value++}`;
+        dayNumber.classList.add('day__number');
+        const dayEventsEl = document.createElement('ul');
+        dayEventsEl.classList.add('day__events-list');
+        day.append(dayNumber, dayEventsEl);
         day.classList.add('paddingDay');
         container.appendChild(day);
     }
@@ -48,7 +54,8 @@ function appendCurrentMonthDays(eventsToDisplay, currentDate, monthLength, conta
         dayNumber.classList.add('day__number');
         const dayEventsEl = document.createElement('ul');
         dayEventsEl.classList.add('day__events-list');
-        day.append(dayNumber, dayEventsEl);
+        day.prepend(dayNumber);
+        day.append(dayEventsEl);
         if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
             dayNumber.classList.add('today');
         }
