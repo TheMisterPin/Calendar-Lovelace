@@ -62,7 +62,6 @@ function handleViewMoreClick(event) {
 function getShortDay(currentDate) {
     const dateArray = currentDate.split('/');
     const date = new Date(`${dateArray[1]}, ${dateArray[0]}, ${dateArray[2]}`).toString().split(' ');
-    console.log(date);
     return `${date[0]} ${dateArray[0]}`;
 }
 function renderDayPopover(eventTargetEl, currentDay, dayEvents) {
@@ -172,11 +171,8 @@ function movePopover(eventTargetEl, popoverEl) {
 function getEventDetails(trigger) {
     const eventEl = trigger.closest('[data-event-id]');
     const eventId = eventEl.dataset.eventId;
-    console.log(eventEl);
     let localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     const currentEvent = localEvents === null || localEvents === void 0 ? void 0 : localEvents.find((localEvent) => localEvent.id === eventId);
-    console.log(eventId);
-    console.log(localEvents);
     return currentEvent;
 }
 function closePopover(event) {

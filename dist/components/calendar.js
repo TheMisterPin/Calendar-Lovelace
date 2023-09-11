@@ -3,7 +3,6 @@ import { getDateInfo } from '../utils/dateInfo.js';
 import { getDay, getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 import { updateMiniCalendar } from './minicalendar.js';
-import { formatDate } from '../utils/formatDate.js';
 const currentDate = new Date();
 export function clearCalendar() {
     const daysDisplay = document.querySelector('.calendar__days');
@@ -107,15 +106,44 @@ function createAddEventButton(dayElement, currentDay) {
     const addEventButton = document.createElement('button');
     addEventButton.innerText = 'Add Event';
     addEventButton.classList.add('add-event-button');
+    addEventButton.dataset.type = "addEventBtn";
     addEventButton.addEventListener('click', () => {
         console.log('Clicked Day:', currentDay);
         const modal = new bootstrap.Modal(document.querySelector('#staticBackdrop'));
-        const dateInput = document.querySelector('#newEventDate');
-        const formattedDate = formatDate(currentDay);
-        dateInput.value = formattedDate;
+        currentDay;
+        const formattedDate = formatDateForInput(currentDay);
+        handleNewEventOpenModal(formattedDate);
         modal.show();
     });
     dayElement.appendChild(addEventButton);
+}
+function formatDateForInput(date) {
+    const dayArray = date.split('/');
+    const formattedNumbersArray = dayArray.map(dayNumber => {
+        if (dayNumber.length < 2) {
+            return `0${dayNumber}`;
+        }
+        else {
+            return dayNumber;
+        }
+    });
+    return `${formattedNumbersArray[2]}-${formattedNumbersArray[1]}-${formattedNumbersArray[0]}`;
+}
+function handleNewEventOpenModal(formattedDate) {
+    const modal = document.querySelector('#staticBackdrop');
+    modal === null || modal === void 0 ? void 0 : modal.addEventListener('show.bs.modal', () => {
+        setModalDate(event, formattedDate);
+    });
+}
+function setModalDate(event, formattedDate) {
+    const target = event.relatedTarget;
+    if (!target) {
+        console.log('magic button');
+        const dateInput = document.querySelector('#newEventDate');
+        console.log(dateInput);
+        console.log(formattedDate);
+        dateInput.value = formattedDate;
+    }
 }
 function appendCurrentMonthDays(localEvents, currentDate, monthLength, container, currentMiliseconds) {
     for (let i = 1; i <= monthLength; i++) {

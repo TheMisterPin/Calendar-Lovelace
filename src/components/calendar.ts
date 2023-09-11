@@ -136,16 +136,48 @@ function createAddEventButton(dayElement: HTMLElement, currentDay:string): void 
   const addEventButton = document.createElement('button');
   addEventButton.innerText = 'Add Event';
   addEventButton.classList.add('add-event-button');
+  addEventButton.dataset.type="addEventBtn"
   addEventButton.addEventListener('click', () => {
-      console.log('Clicked Day:', currentDay)
       const modal = new bootstrap.Modal(document.querySelector('#staticBackdrop')!);
-      const dateInput = document.querySelector('#newEventDate') as HTMLInputElement;
-      const formattedDate = formatDate(currentDay);
-      dateInput.value = formattedDate;
+      currentDay
+
+     
+      const formattedDate = formatDateForInput(currentDay)
+
+      handleNewEventOpenModal(formattedDate)
+
+      
       modal.show();
   });
 
   dayElement.appendChild(addEventButton);
+}
+
+function formatDateForInput(date:string){
+  const dayArray = date.split('/')
+  const formattedNumbersArray = dayArray.map(dayNumber=>{
+    if(dayNumber.length<2){
+      return `0${dayNumber}`
+    }else{
+      return dayNumber
+    }
+  })
+  return `${formattedNumbersArray[2]}-${formattedNumbersArray[1]}-${formattedNumbersArray[0]}`
+}
+
+function handleNewEventOpenModal(formattedDate:string){
+  const modal = document.querySelector('#staticBackdrop')
+  modal?.addEventListener('show.bs.modal', ()=>{
+    setModalDate(event!, formattedDate)
+  })
+}
+
+function setModalDate(event:Event, formattedDate:string){
+  const target = event.relatedTarget as HTMLButtonElement
+  if(!target){
+    const dateInput = document.querySelector('#newEventDate') as HTMLInputElement;
+    dateInput.value = formattedDate;
+  }
 }
 
 function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement, currentMiliseconds:number) {
@@ -198,7 +230,6 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
   
 
 export function populateCalendar(currentDate: Date, eventsToDisplay: CalendarEvent[] = JSON.parse(localStorage.getItem('events') || '[]')): void {
-  console.log('init')
   clearCalendar();
   updateMonthHeader(currentDate);
   populateDays(currentDate, eventsToDisplay);

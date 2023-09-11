@@ -75,7 +75,6 @@ function handleViewMoreClick(event:Event){
 function getShortDay(currentDate:string){
     const dateArray = currentDate.split('/')
     const date = new Date(`${dateArray[1]}, ${dateArray[0]}, ${dateArray[2]}`).toString().split(' ')
-    console.log(date)
     return `${date[0]} ${dateArray[0]}`
 }
 
@@ -216,12 +215,9 @@ function movePopover(eventTargetEl:HTMLButtonElement, popoverEl:HTMLDivElement){
 function getEventDetails(trigger:HTMLElement){
     const eventEl = trigger.closest('[data-event-id]')! as HTMLDivElement
     const eventId = eventEl.dataset.eventId
-    console.log(eventEl)
     let localEvents = JSON.parse(localStorage.getItem('events') || '[]')
 
     const currentEvent = localEvents?.find((localEvent:CalendarEvent) => localEvent.id === eventId)
-    console.log(eventId)
-    console.log(localEvents)
     return currentEvent
 }
 
