@@ -131,7 +131,6 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
     }
 }
 export function populateCalendar(currentDate, eventsToDisplay = JSON.parse(localStorage.getItem('events') || '[]')) {
-    console.log('init');
     clearCalendar();
     updateMonthHeader(currentDate);
     populateDays(currentDate, eventsToDisplay);
@@ -175,4 +174,3 @@ export function populateCalendar(currentDate, eventsToDisplay = JSON.parse(local
 }
 const miniCalendarDate = new Date(currentDate);
 updateMiniCalendar(miniCalendarDate);
-localStorage.clear();

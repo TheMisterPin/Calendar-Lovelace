@@ -211,5 +211,3 @@ darkModeToggle.addEventListener("change", function() {
 const miniCalendarDate: Date = new Date(currentDate)
 
 updateMiniCalendar(miniCalendarDate) 
-
-localStorage.clear()
