@@ -576,7 +576,8 @@ ul.day__events-list {
               /*   ////////////////// MODAL THEME ////////////////// */
 
 .dark-mode .modal-content{
-  color: var(--text-color-light);
+  color: var(--text-color-dark);;
+  background-color: var(--background-color-dark)
 }
 
 .dark-mode #offcanvasAside{
@@ -758,4 +759,8 @@ margin-bottom: 0;
 
 .dark-mode .event:hover {
   background-color: rgb(32, 28, 54)
+}
+
+.custom_label {
+  margin-left: .25em;
 }

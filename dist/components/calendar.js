@@ -108,7 +108,6 @@ function createAddEventButton(dayElement, currentDay) {
     addEventButton.classList.add('add-event-button');
     addEventButton.dataset.type = "addEventBtn";
     addEventButton.addEventListener('click', () => {
-        console.log('Clicked Day:', currentDay);
         const modal = new bootstrap.Modal(document.querySelector('#staticBackdrop'));
         currentDay;
         const formattedDate = formatDateForInput(currentDay);
@@ -138,10 +137,7 @@ function handleNewEventOpenModal(formattedDate) {
 function setModalDate(event, formattedDate) {
     const target = event.relatedTarget;
     if (!target) {
-        console.log('magic button');
         const dateInput = document.querySelector('#newEventDate');
-        console.log(dateInput);
-        console.log(formattedDate);
         dateInput.value = formattedDate;
     }
 }

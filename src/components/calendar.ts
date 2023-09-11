@@ -4,7 +4,6 @@ import { getDay, getDayEvents, renderDayEvents } from '../utils/renderEvents.js'
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js'
 import { updateMiniCalendar } from './minicalendar.js'
 import { CalendarEvent } from '../utils/newEventHandler.js'
-import { formatDate } from '../utils/formatDate.js'
 
 const currentDate: Date = new Date()
 export function clearCalendar(): void {
@@ -172,7 +171,7 @@ function handleNewEventOpenModal(formattedDate:string){
   })
 }
 
-function setModalDate(event:Event, formattedDate:string){
+function setModalDate(event:any, formattedDate:string){
   const target = event.relatedTarget as HTMLButtonElement
   if(!target){
     const dateInput = document.querySelector('#newEventDate') as HTMLInputElement;

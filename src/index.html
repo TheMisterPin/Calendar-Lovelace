@@ -1,186 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
-</head>
-<body>
+    <link rel="stylesheet" href="stylesheets/reset.css" type="text/css" />
+    <link rel="stylesheet" href="stylesheets/style.css" type="text/css" />
+    
+  </head>
+  <body>
     <div class="app">
-<div class="popovers__container" id="popoversContainer"></div>
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <i class="fa-solid fa-bell fa"></i>
-      <strong class="me-auto">Notification</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body" id="toastBody">
-    </div>
-  </div>
-</div>
-      <div class="calendarContainer">
-      
-        <div class="calendar">
-            <button id="newEventBtn" class="addEvent__btn" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <span class="addEvent__btn__text">Add Item</span>
-                <span class="addEvent__btn__icon"><svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg></span>
-            </button>
-            <div class="calendar__header">
-                <i id="prev"><img width="48" height="48" src="icons/anterior.png" alt="back" /></i>
-                <i id="next"><img width="48" height="48" src="icons/proximo.png" alt="chevron-right" /></i>
-                <div class="calendar__month-title" id="currentMonth">March 2023</div>
-                <label class="switch-container">
-                  <input type="checkbox" id="darkModeToggle">
-                  <span class="slider"></span>
-                </label>
-            </div>
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAside" aria-controls="offcanvasAside" id="aside-btn">Filter Events</button>
-            
-            <div class="main">
-                <nav class="calendar__weekDays">
-                    <li>Mon</li>
-                    <li>Tue</li>
-                    <li>Wed</li>
-                    <li>Thu</li>
-                    <li>Fri</li>
-                    <li>Sat</li>
-                    <li>Sun</li>
-                </nav>
-                <section class="calendar__days"></section>
-            </div>
+      <div class="popovers__container" id="popoversContainer"></div>
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <i class="fa-solid fa-bell fa"></i>
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body" id="toastBody"></div>
         </div>
-        
-
-
+      </div>
+      <div class="calendarContainer">
+        <div class="calendar">
+          <button id="newEventBtn" class="addEvent__btn" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <span class="addEvent__btn__text">Add Item</span>
+            <span class="addEvent__btn__icon">
+              <svg class="svg" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <line x1="12" x2="12" y1="5" y2="19"></line>
+                <line x1="5" x2="19" y1="12" y2="12"></line>
+              </svg>
+            </span>
+          </button>
+          <header class="calendar__header">
+            <i id="prev">
+              <img width="48" height="48" src="icons/anterior.png" alt="back" />
+            </i>
+            <i id="next">
+              <img width="48" height="48" src="icons/proximo.png" alt="chevron-right" />
+            </i>
+            <div class="calendar__month-title" id="currentMonth">March 2023</div>
+            <label class="switch-container">
+              <input type="checkbox" id="darkModeToggle">
+              <span class="slider"></span>
+            </label>
+          </header>
+          <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAside" aria-controls="offcanvasAside" id="aside-btn">Filter Events</button>
+          <div class="main">
+            <nav class="calendar__weekDays">
+              <li>Mon</li>
+              <li>Tue</li>
+              <li>Wed</li>
+              <li>Thu</li>
+              <li>Fri</li>
+              <li>Sat</li>
+              <li>Sun</li>
+            </nav>
+            <section class="calendar__days"></section>
+          </div>
+        </div>
         <!-- NEW EVENT MODAL -->
-        
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">New Event</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 form-floating">
-                            <input type="date" class="form-control" id="newEventDate" />
-                            <label for="newEventDate" class="form-label">Date:</label>
-                        </div>
-                        <div class="mb-3 form-floating">
-                            <input type="time" class="form-control" id="newEventTime" />
-                            <label for="newEventTime" class="form-label">Time:</label>
-                        </div>
-                        <div class="mb-3 form-floating">
-                            <label class="form-check-label" for="hasEndDate">Has End Date</label>
-                            <input class="form-check-input" type="checkbox" id="hasEndDate" />
-                            <input type="date" class="form-control" id="newEventEndDate" style="display: none" />
-                        </div>
-                        <div class="mb-3 form-floating">
-                            <input type="text" class="form-control" id="newEventTitle" placeholder="Enter event title" />
-                            <label for="newEventTitle" class="form-label">Title:</label>
-                        </div>
-                        <div class="mb-3 form-floating">
-                            <input type="text" class="form-control" id="newEventText" placeholder="Enter event title" />
-                            <label for="newEventText" class="form-label">Description:</label>
-                        </div>
-                        <div class="mb-3 form-floating">
-                            <label class="form-check-label" for="hasReminder">REMIND ME</label>
-                            <input type="checkbox" class="form-check-input" id="hasReminder" />
-                            <select class="form-select" id="newEventReminder" style="display: none">
-                                <option value="">...</option>
-                                <option value="5">5min</option>
-                                <option value="10">10min</option>
-                                <option value="15">15min</option>
-                                <option value="20">20min</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 form-floating">
-                            <select class="form-select" id="eventLabel">
-                                <option value="">...</option>
-                            </select>
-                            <label for="eventLabel" class="form-label">Label:</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-                        <button id="saveBtn" class="btn btn-primary">Save</button>
-                    </div>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">New Event</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3 form-floating">
+                  <input type="date" class="form-control" id="newEventDate" />
+                  <label for="newEventDate" class="form-label">Date:</label>
                 </div>
+                <div class="mb-3 form-floating">
+                  <input type="time" class="form-control" id="newEventTime" />
+                  <label for="newEventTime" class="form-label">Time:</label>
+                </div>
+                <div class="mb-3 form-floating">
+                  <input class="form-check-input" type="checkbox" id="hasEndDate" aria-label="Has end date" />
+                  <span class="custom_label">Has end date</span>
+                  <input type="date" class="form-control" id="newEventEndDate" style="display: none" />
+                </div>
+                <div class="mb-3 form-floating">
+                  <input type="text" class="form-control" id="newEventTitle" placeholder="Enter event title" />
+                  <label for="newEventTitle" class="form-label">Title:</label>
+                </div>
+                <div class="mb-3 form-floating">
+                  <input type="text" class="form-control" id="newEventText" placeholder="Enter event title" />
+                  <label for="newEventText" class="form-label">Description:</label>
+                </div>
+                <div class="mb-3 form-floating">
+                  <input type="checkbox" class="form-check-input" id="hasReminder" aria-label="Remind me" />
+                  <span class="custom_label">Remind me</span>
+                  <select class="form-select" id="newEventReminder" style="display: none">
+                    <option value="">...</option>
+                    <option value="5">5min</option>
+                    <option value="10">10min</option>
+                    <option value="15">15min</option>
+                    <option value="20">20min</option>
+                  </select>
+                </div>
+                <div class="mb-3 form-floating">
+                  <select class="form-select" id="eventLabel">
+                    <option value="">...</option>
+                  </select>
+                  <label for="eventLabel" class="form-label">Label:</label>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button id="saveBtn" class="btn btn-primary">Save</button>
+              </div>
             </div>
-            
-            <template id="eventPopoverTemplate">
-              <div class="event_popover popover is-hidden" id="eventPopover" data-type="popover">
-                <div class="event_popover__header popover__header">
-                  <div class="popover__menu">
-                    <button aria-label="Delete event" type="button" role="button" class="delete_element_btn" id="deleteEventBtn" data-bs-toggle="modal" data-bs-target="#deleteEventModal"><i class="fa-solid fa-trash fa"></i></button>
-                    <button class="event_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn"><i class="fa-solid fa-x fa" ></i></button>
-                  </div>
-                  <p class="event popover__title" id="eventPopoverTitle">Event Title</p>
+          </div>
+          <template id="eventPopoverTemplate">
+            <div class="event_popover popover is-hidden" id="eventPopover" data-type="popover">
+              <div class="event_popover__header popover__header">
+                <div class="popover__menu">
+                  <button aria-label="Delete event" type="button" role="button" class="delete_element_btn" id="deleteEventBtn" data-bs-toggle="modal" data-bs-target="#deleteEventModal">
+                    <i class="fa-solid fa-trash fa"></i>
+                  </button>
+                  <button class="event_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn">
+                    <i class="fa-solid fa-x fa"></i>
+                  </button>
                 </div>
-                <div class="event_popover__body">
-                  <div class="event_popover__event_details">
-                    <p class="event_popover__event_date" id="popoverDate">Date: 9/9/2023</p>
-                    <p class="event_popover__event_time" id="popoverTime">Time: 16:17</p>
-                    <p class="event_popover__event_details" id="popoverDetails">Details: Detalles</p>
-                    <p class="event_popover__event_label" id="popoverLabel">Label: hobby</p>
-                    <p class="event_popover__event_reminder" id="popoverReminder">Reminder: 20</p>
-                  </div>
+                <p class="event popover__title" id="eventPopoverTitle">Event Title</p>
+              </div>
+              <div class="event_popover__body">
+                <div class="event_popover__event_details">
+                  <p class="event_popover__event_date" id="popoverDate">Date: 9/9/2023</p>
+                  <p class="event_popover__event_time" id="popoverTime">Time: 16:17</p>
+                  <p class="event_popover__event_details" id="popoverDetails">Details: Detalles</p>
+                  <p class="event_popover__event_label" id="popoverLabel">Label: hobby</p>
+                  <p class="event_popover__event_reminder" id="popoverReminder">Reminder: 20</p>
                 </div>
               </div>
-            </template>
-      
-            <template id="dayPopoverTemplate">
-              <div class="day_popover popover id-hidden" id="dayPopover" data-type="popover">
-                <div class="day_popover__header popover__header">
-                  <p class="day work day_popover__day_title" id="dayPopoverTitle"></p>
-                  <button class="day_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn"><i class="fa-solid fa-x fa"></i></button>
-                </div>
-                <div class="day_popover__body" id="popoverEventsList">
-                  <ul class="day_popover__events"></ul>
-                </div>
+            </div>
+          </template>
+          <template id="dayPopoverTemplate">
+            <div class="day_popover popover id-hidden" id="dayPopover" data-type="popover">
+              <div class="day_popover__header popover__header">
+                <p class="day work day_popover__day_title" id="dayPopoverTitle"></p>
+                <button class="day_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn">
+                  <i class="fa-solid fa-x fa"></i>
+                </button>
               </div>
-            </template>
-      
+              <div class="day_popover__body" id="popoverEventsList">
+                <ul class="day_popover__events"></ul>
+              </div>
+            </div>
+          </template>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
         <script type="module" src="../dist/app.js"></script>
-        
-
         <!--Delete Event Modal-->
         <!-- Button trigger modal -->
-
-<!-- Modal -->
-<div class="modal fade" id="deleteEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Event</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete this event?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="modalEventDeleteBtn" data-bs-dismiss="modal">Delete</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-    </body>
-
+        <!-- Modal -->
+        <div class="modal fade" id="deleteEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Delete Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want to delete this event?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="modalEventDeleteBtn" data-bs-dismiss="modal">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </body>
 </html>
-
 <!-- sidebar -->
-
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasAside" aria-labelledby="offcanvasAsideLabel">
   <div class="offcanvas-header">
     <h5 id="offcanvasAsideLabel">Sidebar</h5>
@@ -189,10 +189,10 @@
   <div class="offcanvas-body">
     <!-- Mini Calendar -->
     <section class="miniCalendar" id="miniCalendar">
-        <i class="fas fa-angle-left" id="miniPrev"></i>
-        <span class="mini-calendar-month-year"></span>
-        <i class="fas fa-angle-right" id="miniNext"></i>
-    <ul class="mini-calendar-weekdays">
+      <i class="fas fa-angle-left" id="miniPrev"></i>
+      <span class="mini-calendar-month-year"></span>
+      <i class="fas fa-angle-right" id="miniNext"></i>
+      <ul class="mini-calendar-weekdays">
         <li>M</li>
         <li>T</li>
         <li>W</li>
@@ -200,24 +200,22 @@
         <li>F</li>
         <li>Sa</li>
         <li>Su</li>
-    </ul>
-    <ul class="mini-calendar-body"></ul>
-  </section> <div class="mini-calendar-header">
-
-    <!-- Filter Section -->
-    <div class="filter-section">
+      </ul>
+      <ul class="mini-calendar-body"></ul>
+    </section>
+    <div class="mini-calendar-header">
+      <!-- Filter Section -->
+      <div class="filter-section">
         <div class="filter-section">
-            <h3>Filter by Label</h3>
-            <div class="checkboxes"></div>
+          <h3>Filter by Label</h3>
+          <div class="checkboxes"></div>
         </div>
-    </div>
-
-    <!-- Upcoming Events Section -->
-    <div class="upcoming-events-section">
+      </div>
+      <!-- Upcoming Events Section -->
+      <div class="upcoming-events-section">
         <h3>Upcoming Events</h3>
         <ul class="upcoming-events-list"></ul>
+      </div>
     </div>
   </div>
-  </div>
 </div>
-
