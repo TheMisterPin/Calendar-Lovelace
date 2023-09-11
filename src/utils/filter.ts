@@ -65,20 +65,20 @@ export function populateUpcomingEvents() {
 	const upcomingEventsList: HTMLElement | null = document.querySelector('.upcoming-events-list')
 	if (!upcomingEventsList) return
 
-	// Clear the list
+
 	upcomingEventsList.innerHTML = ''
 
-	// Fetch events from local storage
+
 	const allEvents: CalendarEvent[] = JSON.parse(localStorage.getItem('events') || '[]')
 
-	// Sort events by date
+
 	allEvents.sort((a, b) => {
 		const dateA = new Date(a.date)
 		const dateB = new Date(b.date)
 		return dateA.getTime() - dateB.getTime()
 	})
 
-	// Group events by date
+
 	const groupedEvents: { [key: string]: CalendarEvent[] } = {}
 	allEvents.forEach(event => {
 		if (!groupedEvents[event.date]) {
@@ -87,11 +87,11 @@ export function populateUpcomingEvents() {
 		groupedEvents[event.date].push(event)
 	})
 
-	// Populate the upcoming events list
+	
 	for (const date in groupedEvents) {
 		const dateItem = document.createElement('li')
 		dateItem.classList.add('date-item')
-		dateItem.textContent = date  // Display the date
+		dateItem.textContent = date 
 
 		const eventsForDate = groupedEvents[date]
 		const eventsList = document.createElement('ul')
@@ -99,7 +99,7 @@ export function populateUpcomingEvents() {
 
 		eventsForDate.forEach(event => {
 			const eventItem = document.createElement('li')
-			eventItem.textContent = event.title  // Display the event title
+			eventItem.textContent = event.title  
 			eventsList.appendChild(eventItem)
 		})
 
