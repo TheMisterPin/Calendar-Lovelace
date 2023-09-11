@@ -91,7 +91,13 @@ export function newEventHandler() {
     const reminder = newEventReminder.value;
     const hasEndDateCheckbox = document.querySelector('#hasEndDate');
     let endDate = undefined;
+<<<<<<< HEAD
     const milliseconds = getEventTimeArray(date, time);
+=======
+    const miliseconds = getEventTimeArray(date, time);
+    const timeToReminder = getTimeToReminder(miliseconds, reminder);
+    let expired = false;
+>>>>>>> customPopovers
     if (hasEndDateCheckbox.checked) {
         const newEventEndDateInput = document.querySelector('#newEventEndDate');
         endDate = newEventEndDateInput.value;
@@ -105,7 +111,13 @@ export function newEventHandler() {
         label,
         endDate,
         reminder,
+<<<<<<< HEAD
         milliseconds: milliseconds
+=======
+        miliseconds,
+        timeToReminder,
+        expired
+>>>>>>> customPopovers
     };
     return newEvent;
 }
@@ -120,4 +132,8 @@ function getEventTimeArray(date, time) {
     const timeString = `${month},${day},${year},${hours}:${mins}`;
     const eventDate = new Date(timeString);
     return eventDate.getTime();
+}
+function getTimeToReminder(miliseconds, reminder) {
+    const reminderAnticipationInMiliseconds = parseInt(reminder) * 60000;
+    return miliseconds - reminderAnticipationInMiliseconds;
 }

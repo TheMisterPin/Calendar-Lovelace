@@ -29,7 +29,7 @@ newEventTimeInput.parentElement?.append(timeError)
 newEventTitleInput.parentElement?.append(titleError)
 labelSelector.parentElement?.append(labelError)
 
-export interface Event {
+export interface CalendarEvent {
     id: string;
     title: string;
     date: string;
@@ -39,13 +39,14 @@ export interface Event {
     milliseconds: number; 
     endDate?: string; 
     reminder?: string;
-    
+    timeToReminder?: number;
+    expired: boolean
 }
 
-export function saveEventToLocalStorage(event: Event): void {
-	const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
-	localEvents.push(event)
-	localStorage.setItem('events', JSON.stringify(localEvents))
+function saveEventToLocalStorage(event: CalendarEvent): void {
+    const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
+    localEvents.push(event)
+    localStorage.setItem('events', JSON.stringify(localEvents))
 }
 
 newEventDateInput.addEventListener('blur', () => {
@@ -110,35 +111,38 @@ saveBtn.addEventListener('click', () => {
 	}
 }) 
 
-export function newEventHandler(): Event {
-
-	const id = uuidv4()
-	const title = newEventTitleInput.value
-	const date = formatDate(newEventDateInput.value)
-	const time = newEventTimeInput.value
-	const txt = newEventTxtInput.value    
-	const label = labelSelector.value
-	const reminder = newEventReminder.value
-	const hasEndDateCheckbox: HTMLInputElement = document.querySelector('#hasEndDate')!
-	let endDate: string | undefined = undefined
-	const milliseconds = getEventTimeArray(date, time)
+export function newEventHandler(): CalendarEvent {
+    const id = uuidv4()
+    const title = newEventTitleInput.value;
+    const date = formatDate(newEventDateInput.value);
+    const time = newEventTimeInput.value;
+    const txt = newEventTxtInput.value;    
+    const label = labelSelector.value;
+    const reminder = newEventReminder.value;
+    const hasEndDateCheckbox: HTMLInputElement = document.querySelector('#hasEndDate')!;
+    let endDate: string | undefined = undefined;
+    const miliseconds = getEventTimeArray(date, time)
+    const timeToReminder = getTimeToReminder(miliseconds, reminder)
+    let expired = false
 
 	if (hasEndDateCheckbox.checked) {
 		const newEventEndDateInput: HTMLInputElement = document.querySelector('#newEventEndDate')!
 		endDate = newEventEndDateInput.value
 	}
 
-	const newEvent: Event = {
-		id,
-		title,
-		date,
-		time,
-		txt,
-		label,
-		endDate,
-		reminder,
-		milliseconds: milliseconds
-	}
+    const newEvent: CalendarEvent = {
+        id,
+        title,
+        date,
+        time,
+        txt,
+        label,
+        endDate,
+        reminder,
+        miliseconds,
+        timeToReminder,
+        expired
+    }
 
 	return newEvent
 }
@@ -157,4 +161,9 @@ function getEventTimeArray(date:string, time:string):number{
 
 	const eventDate = new Date(timeString)
 	return eventDate.getTime()
+}
+
+function getTimeToReminder(miliseconds:number, reminder:string){
+    const reminderAnticipationInMiliseconds = parseInt(reminder)*60000
+    return miliseconds - reminderAnticipationInMiliseconds
 }
