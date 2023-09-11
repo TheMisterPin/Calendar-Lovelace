@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lexend+Mega:wght@600&family=Public+Sans:wght@600&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Preahvihear&family=Rubik&display=swap');
 /* FONTS IMPORTED 
 font-family: 'Archivo Black', sans-serif;
 font-family: 'Lexend Mega', sans-serif;
@@ -17,14 +18,8 @@ font-family: 'Public Sans', sans-serif; */
   --purple: #3300ff;
   --orange: #ff4911 ;
   --yellow:#ffff00 ;
-}
 
-body {
-  background-color: #fffbf4;
-  margin: 0.5%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  /* You can add more variables for different parts of your calendar */
 }
 
 body {
@@ -45,11 +40,31 @@ width: 100vw;
   grid-area: main;
    display: flex;
 flex-wrap: wrap;
-align-items: center;
-justify-content: center;
-height: 97%;}
 
+height: 100%;}
 
+#prev {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  outline: none;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  margin-right: 10px;
+}
+
+#next {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  outline: none;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
 
 .calendar {
 min-height: 97%;
@@ -62,7 +77,6 @@ max-height: 97%;
   gap: 8px;
   
 font-family: 'Rubik', sans-serif;
-font-family: 'Rubik', sans-serif;
 /* font-family: 'Lexend Mega', sans-serif;
 font-family: 'Public Sans', sans-serif; */
 }
@@ -70,14 +84,12 @@ font-family: 'Public Sans', sans-serif; */
 .calendar__month-title{
 padding:  0 5%;
 width: 45%;
-  text-align: center;
-  color:#fefefe;
-  font-size: 2.9em;
-  background-color: #039be5;
-  border: var(--border-color) 1px solid;
-  font-family: 'Lexend Mega', sans-serif;
-  text-shadow: rgb(0, 0, 0) 6px -3px 0px, rgb(0, 0, 0) 2.83487px 0.981584px 0px, rgb(0, 0, 0) 2.35766px 1.85511px 0px, rgb(0, 0, 0) 1.62091px 2.52441px 0px, rgb(0, 0, 0) 0.705713px 2.91581px 0px, rgb(0, 0, 0) -0.287171px 2.98622px 0px, rgb(0, 0, 0) -1.24844px 2.72789px 0px, rgb(0, 0, 0) -2.07227px 2.16926px 0px, rgb(0, 0, 0) -2.66798px 1.37182px 0px, rgb(0, 0, 0) -2.96998px 0.42336px 0px, rgb(0, 0, 0) -2.94502px -0.571704px 0px, rgb(0, 0, 0) -2.59586px -1.50383px 0px, rgb(0, 0, 0) -1.96093px -2.27041px 0px, rgb(0, 0, 0) -1.11013px -2.78704px 0px, rgb(0, 0, 0) -0.137119px -2.99686px 0px, rgb(0, 0, 0) 0.850987px -2.87677px 0px, rgb(0, 0, 0) 1.74541px -2.43999px 0px, rgb(0, 0, 0) 2.44769px -1.73459px 0px, rgb(0, 0, 0) 2.88051px -0.838247px 0px;
-
+text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+text-align: center;
+color:#314a72;
+font-size: 4em;
+font-family: 'Rubik', sans-serif;
+  
 }
 .aside {
   grid-area: aside;  
@@ -86,10 +98,8 @@ width: 45%;
 .calendar__header {
   display: flex;
   justify-content: center;
-  justify-content: center;
   align-items: center;
   grid-area: header; 
-  gap: 4px;
   gap: 4px;
 }
 
@@ -101,6 +111,7 @@ width: 45%;
   padding-bottom: 0%;
   background-color: transparent;
   grid-template-columns: repeat(7, 1fr);
+  color:#314a72;
  
 }
 
@@ -129,10 +140,18 @@ width: 45%;
   }
 }
 
-.day, .paddingDay{
+.day {
+  display: grid;
+  border: rgb(98, 67, 67) 1px solid;
+  margin-bottom: 0;
+  
+}
 
-   display: grid;
-border: red 1px solid;
+.paddingDay{
+  display: grid;
+  border: rgb(114, 0, 0) 1px solid;
+  margin-bottom: 0;
+  color: rgb(180, 180, 180);
 }
 
 .calendar__days p { text-align: center;
@@ -141,7 +160,11 @@ border: red 1px solid;
 }
 .day__number{ height: 50%}
 .today  {
- background-color: #ef6c00;
+ background-color: #ffb77c;
+}
+
+p .day__number.today{
+  background-color: #ffb77c;
 }
 
 
@@ -189,16 +212,31 @@ border: red 1px solid;
 .hobby::before{
   background-color: #9e69af;
 }
+ul.day__events-list {
+  list-style-type: none; 
+  padding: 2px;
+}
 
 .holiday:hover {
   display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #007b83;
+  color: white;
 }
+
 .holiday {
   background-color: #039be5;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  color: rgb(240, 255, 254);
+  border-radius: 7px;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-bottom: 2px;
+  text-align: center;
 }
 
 .error-message {
@@ -228,8 +266,8 @@ border: red 1px solid;
 .addEvent__btn {
   --main-focus: #2d8cf0;
   --font-color: #323232;
-  --bg-color-sub: #dedede;
-  --bg-color: #eee;
+  --bg-color-sub: #b8ddd9;
+  --bg-color: #ffffff;
   --main-color: #323232;
   position: fixed;
   top: 5%;
@@ -242,6 +280,8 @@ border: red 1px solid;
   background-color: var(--bg-color);
   border-radius: 10px;
   overflow: hidden;
+  border: white;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
 .addEvent__btn, .addEvent__btn__icon, .addEvent__btn__text {
@@ -290,7 +330,6 @@ border: red 1px solid;
 
 .mini-calendar {
   background-color: #e0fffd;
-  background-color: #e0fffd;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 15px;
@@ -319,7 +358,6 @@ border: red 1px solid;
   border: 1px solid #ddd;
   padding: 5px;
   background-color: #dbfff8;
-  background-color: #dbfff8;
 }
 
 .mini-calendar-day:hover {
@@ -334,7 +372,6 @@ border: red 1px solid;
   cursor: pointer;
   border: 1px solid #ddd;
   padding: 5px;
-  background-color: #cfffec;
   background-color: #cfffec;
 }
 
@@ -355,8 +392,30 @@ border: red 1px solid;
   background-color: transparent;
 }
 
+.switch {
+  --main-focus: #2d8cf0;
+  --font-color: #323232;
+  --bg-color-sub: #b8ddd9;
+  --bg-color: #ffffff;
+  --main-color: #323232;
+  text-align: center;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+  border: white;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  margin-bottom: 0.5%;
+}
 
-
+.switch:hover{
+  background-color: var(--bg-color-sub);
+}
               /*   ////////////////// MODAL THEME ////////////////// */
       /*   ////////////////// DARK MODE ////////////////// */
 
@@ -561,6 +620,31 @@ margin-bottom: 0;
   box-shadow: 0px 0px var(--main-color);
 }
 
-              
+.dark-mode .switch {
+  --main-focus: #2d8cf0;
+  --font-color: #323232;
+  --bg-color-sub: #2d1171;
+  --bg-color:  #2d1171;
+  --main-color: #323232;
+  text-align: center;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+  border: white;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  margin-bottom: 0.5%;
+  color: whitesmoke;
+  box-shadow: 2px 2px 5px 0px rgba(255, 229, 31, 0.5);
+}
+
+.dark-mode .switch:hover{
+  background-color: rgb(84, 0, 201)
+}
 
 .dark-mode .event:hover {background-color: rgb(32, 28, 54)}
