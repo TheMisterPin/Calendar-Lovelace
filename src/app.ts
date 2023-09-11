@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	populateCalendar(currentDate)
 	setupNavigationListeners(currentDate, populateCalendar)
 	initializeModalLogic()
-	setupMouseWheelNavigation(currentDate, populateCalendar)
 	filterEventsByLabel()
 	populateUpcomingEvents()
 

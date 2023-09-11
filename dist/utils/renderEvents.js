@@ -17,7 +17,7 @@ function renderEvent(calendarEvent, eventContainer) {
     eventNameEl.innerText = `${calendarEvent.time} ${calendarEvent.title}`;
     eventItemEl.append(eventNameEl);
     if (calendarEvent.expired)
-        eventItemEl.classList.add('expired-event');
+        eventItemEl.classList.add('is-expired');
     eventNameEl.addEventListener('click', handleEventClick);
     eventItemEl.dataset.eventId = calendarEvent.id;
     eventContainer.appendChild(eventItemEl);

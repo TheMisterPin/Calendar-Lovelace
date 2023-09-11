@@ -18,6 +18,7 @@ font-family: 'Public Sans', sans-serif; */
   --orange: #ff4911 ;
   --yellow:#ffff00 ;
 /* Utility */
+
 .is-hidden{
   opacity: 0;
 }
@@ -228,7 +229,6 @@ border: red 1px solid;
 .is-invalid {
   border-color: red;
 }
-.app{overflow-y: hidden;}
 
 
 
@@ -487,6 +487,10 @@ border: red 1px solid;
 
 .fa{
   color: rgb(95,99,104);
+}
+
+.is-expired p{
+  opacity: .5;
 }
 
 

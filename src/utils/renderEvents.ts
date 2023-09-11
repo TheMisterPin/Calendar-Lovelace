@@ -22,7 +22,7 @@ function renderEvent(calendarEvent:CalendarEvent, eventContainer: HTMLElement){
     eventNameEl.innerText = `${calendarEvent.time} ${calendarEvent.title}`
     eventItemEl.append(eventNameEl)
 
-    if(calendarEvent.expired) eventItemEl.classList.add('expired-event')
+    if(calendarEvent.expired) eventItemEl.classList.add('is-expired')
         
     eventNameEl.addEventListener('click', handleEventClick)
 
