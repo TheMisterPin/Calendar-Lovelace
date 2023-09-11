@@ -1,5 +1,5 @@
 import { populateCalendar } from '../components/calendar.js'
-import { Event } from './newEventHandler.js'
+import { CalendarEvent } from './newEventHandler.js'
 
 const currentDate: Date = new Date()
 const labelDropdown: HTMLSelectElement | null = document.querySelector('#eventLabel')
@@ -53,7 +53,7 @@ export function filterEventsByLabel() {
 	if (checkedLabels.length === 0) {
 		filteredEvents = allEvents
 	} else {
-		filteredEvents = allEvents.filter((event: Event) => checkedLabels.includes(event.label))
+		filteredEvents = allEvents.filter((event: CalendarEvent) => checkedLabels.includes(event.label))
 	}
 
 	populateCalendar(currentDate, filteredEvents)
@@ -69,7 +69,7 @@ export function populateUpcomingEvents() {
 	upcomingEventsList.innerHTML = ''
 
 	// Fetch events from local storage
-	const allEvents: Event[] = JSON.parse(localStorage.getItem('events') || '[]')
+	const allEvents: CalendarEvent[] = JSON.parse(localStorage.getItem('events') || '[]')
 
 	// Sort events by date
 	allEvents.sort((a, b) => {
@@ -79,7 +79,7 @@ export function populateUpcomingEvents() {
 	})
 
 	// Group events by date
-	const groupedEvents: { [key: string]: Event[] } = {}
+	const groupedEvents: { [key: string]: CalendarEvent[] } = {}
 	allEvents.forEach(event => {
 		if (!groupedEvents[event.date]) {
 			groupedEvents[event.date] = []
