@@ -34,9 +34,12 @@
                 <i id="prev"><img width="48" height="48" src="icons/anterior.png" alt="back" /></i>
                 <i id="next"><img width="48" height="48" src="icons/proximo.png" alt="chevron-right" /></i>
                 <div class="calendar__month-title" id="currentMonth">March 2023</div>
-                <button class="switch" id="switch"></button>
+                <label class="switch-container">
+                  <input type="checkbox" id="darkModeToggle">
+                  <span class="slider"></span>
+                </label>
             </div>
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAside" aria-controls="offcanvasAside">Toggle Offcanvas</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAside" aria-controls="offcanvasAside" id="aside-btn">Filter Events</button>
             
             <div class="main">
                 <nav class="calendar__weekDays">
@@ -147,21 +150,17 @@
 </html>
 <!-- sidebar -->
 
-
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasAside" aria-labelledby="offcanvasAsideLabel">
   <div class="offcanvas-header">
     <h5 id="offcanvasAsideLabel">Sidebar</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-   
-
     <!-- Mini Calendar -->
     <section class="miniCalendar" id="miniCalendar">
         <i class="fas fa-angle-left" id="miniPrev"></i>
         <span class="mini-calendar-month-year"></span>
         <i class="fas fa-angle-right" id="miniNext"></i>
-    </div>
     <ul class="mini-calendar-weekdays">
         <li>M</li>
         <li>T</li>
@@ -187,7 +186,7 @@
         <h3>Upcoming Events</h3>
         <ul class="upcoming-events-list"></ul>
     </div>
-
+  </div>
   </div>
 </div>
 

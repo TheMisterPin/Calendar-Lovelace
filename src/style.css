@@ -18,8 +18,13 @@ font-family: 'Public Sans', sans-serif; */
   --purple: #3300ff;
   --orange: #ff4911 ;
   --yellow:#ffff00 ;
-
-  /* You can add more variables for different parts of your calendar */
+  --background-color-light: #fffbf4;
+  --background-color-dark: #2a1b36;
+  --text-color-light: #314a72;
+  --text-color-dark: #c68432;
+  --button-color-light: cadetblue;
+  --button-color-dark: #004d53;
+  --bg-color-sub: #b8ddd9;
 }
 
 body {
@@ -40,7 +45,6 @@ width: 100vw;
   grid-area: main;
    display: flex;
 flex-wrap: wrap;
-
 height: 100%;}
 
 #prev {
@@ -73,12 +77,10 @@ max-height: 97%;
   grid:
     "header header header" 15%
     "aside main main" 83%
-    / 16% 1fr auto;
-  gap: 8px;
+    / 5% 1fr auto;
+  gap: 5px;
   
 font-family: 'Rubik', sans-serif;
-/* font-family: 'Lexend Mega', sans-serif;
-font-family: 'Public Sans', sans-serif; */
 }
 
 .calendar__month-title{
@@ -131,7 +133,7 @@ font-family: 'Rubik', sans-serif;
   width: 97%;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
-  background-color: rgba(255, 255, 251, 0.883);;
+  background-color: rgba(255, 255, 251, 0.883);
 }
 
 @keyframes flipV{
@@ -175,6 +177,7 @@ p .day__number.today{
   position: relative;
   padding-left: 10px;
   margin-left: 10px;
+  font-size: 0.7em;
 }
 
 .event::before{
@@ -416,7 +419,37 @@ ul.day__events-list {
 .switch:hover{
   background-color: var(--bg-color-sub);
 }
+
+#aside-btn {
+  color: var(--text-color-light);
+  width: 80%;
+  background-color: #b8ddd9;
+  padding: 10px;
+  border: none;
+  text-orientation: upright;
+  writing-mode:vertical-rl;
+}
+
+.dark-mode #aside-btn {
+  color: var(--text-color-dark);
+  width: 80%;
+  background-color: var(--button-color-dark);
+  padding: 10px;
+  border: none;
+  text-orientation: upright;
+  writing-mode:vertical-rl;
+}
+
               /*   ////////////////// MODAL THEME ////////////////// */
+
+.dark-mode .modal-content{
+  color: var(--text-color-light);
+}
+
+.dark-mode #offcanvasAside{
+  color: var(--text-color-dark);
+  background-color: var(--background-color-dark);
+}
       /*   ////////////////// DARK MODE ////////////////// */
 
 body.dark-mode {
@@ -425,8 +458,6 @@ color: whitesmoke
 }
 
 .dark-mode #prev {
-  background-image: url("icons/flecha-izquierda.png");
-  color: black;
   box-shadow: 2px 2px 5px 0px rgba(255, 229, 31, 0.5);
   width: 48px;
   height: 48px;
@@ -439,8 +470,6 @@ color: whitesmoke
 }
 
 .dark-mode #next {
-  background-image: url("icons/siguiente.png");
-  color: black;
   box-shadow: 2px 2px 5px 0px rgba(255, 229, 31, 0.5);
   width: 48px;
   height: 48px;
@@ -458,12 +487,7 @@ color: whitesmoke
 }
 
 .dark-mode .calendar__month-title{
-  padding:  0 5%;
-  width: 45%;
-  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.297);
-  text-align: center;
   color:#c68432;
-  font-size: 4em;
   font-family: 'Rubik', sans-serif;
   }
 
@@ -486,25 +510,10 @@ color: whitesmoke
 
 .dark-mode .holiday {
   background-color: #004d53;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  color: rgb(240, 255, 254);
-  border-radius: 7px;
-  padding-left: 2px;
-  padding-right: 2px;
-  margin-bottom: 2px;
-  text-align: center;
 }
 
 .dark-mode .mini-calendar-day {
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.2em;
-  cursor: pointer;
   border: 1px solid #00475a;
-  padding: 5px;
   background-color: #845226;
   color: rgb(220, 220, 220)
 }
@@ -525,10 +534,6 @@ color: whitesmoke
 }
 
 .dark-mode .calendar__days {
-  min-height: 100%;
-  display: grid;
-  width: 97%;
-  grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
   background-color: rgba(22, 0, 42, 0.883);;
 }
@@ -545,39 +550,18 @@ margin-bottom: 0;
 }
 
 .dark-mode .calendar__weekDays li{
-  font-size: 2em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
   border: 1px solid hsl(0, 0%, 34%);
- .main {grid-area: Main;} 
 }
 
 .dark-mode .addEvent__btn {
   --main-focus: #2d8cf0;
-  --font-color: #323232;
   --bg-color-sub: #2d1171;
   --bg-color: #2a009e;
   --main-color: #323232;
-  position: fixed;
-  top: 5%;
-  left: 12%;
-  width: 150px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
   background-color: var(--bg-color);
-  border-radius: 10px;
-  overflow: hidden;
   border: white;
   color: whitesmoke;
   box-shadow: 2px 2px 5px 0px rgba(255, 229, 31, 0.5);
-}
-
-.addEvent__btn, .addEvent__btn__icon, .addEvent__btn__text {
-  transition: all 0.3s;
 }
 
 .dark-mode .addEvent__btn .addEvent__btn__text {
@@ -586,65 +570,55 @@ margin-bottom: 0;
   font-weight: 600;
 }
 
-.addEvent__btn .addEvent__btn__icon {
+.dark-mode .event:hover {background-color: rgb(32, 28, 54)}
+
+.switch-container {
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+.switch-container input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-container .slider {
+  --background: linear-gradient(to right, #090613ef, #18151f);
   position: absolute;
-  transform: translateX(109px);
-  height: 100%;
-  width: 39px;
-  background-color: var(--bg-color-sub);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.addEvent__btn .svg {
-  width: 20px;
-  fill: var(--main-color);
-}
-
-.addEvent__btn:hover {
-  background: var(--bg-color);
-}
-
-.addEvent__btn:hover .addEvent__btn__text {
-  color: transparent;
-}
-
-.addEvent__btn:hover .addEvent__btn__icon {
-  width: 148px;
-  transform: translateX(0);
-}
-
-.addEvent__btn:active {
-  transform: translate(3px, 3px);
-  box-shadow: 0px 0px var(--main-color);
-}
-
-.dark-mode .switch {
-  --main-focus: #2d8cf0;
-  --font-color: #323232;
-  --bg-color-sub: #2d1171;
-  --bg-color:  #2d1171;
-  --main-color: #323232;
-  text-align: center;
-  width: 150px;
-  height: 40px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  background-color: var(--bg-color);
-  border-radius: 10px;
-  overflow: hidden;
-  border: white;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: cadetblue;
+  transition: background-color 0.5s;
+  border-radius: 30px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  margin-bottom: 0.5%;
-  color: whitesmoke;
+}
+
+.switch-container .slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 50%;
+  left: 10%;
+  bottom: 15%;
+  box-shadow: inset 15px -4px 0px 15px #f8ea27;
+  background: var(--background);
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.switch-container input:checked + .slider {
+  background-color: #004d53;
   box-shadow: 2px 2px 5px 0px rgba(255, 229, 31, 0.5);
 }
 
-.dark-mode .switch:hover{
-  background-color: rgb(84, 0, 201)
+.switch-container input:checked + .slider:before {
+  transform: translateX(100%);
+  box-shadow: inset 8px -4px 0px 0px #f8f8f4;
+  background-color: #004d53;
 }
-
-.dark-mode .event:hover {background-color: rgb(32, 28, 54)}

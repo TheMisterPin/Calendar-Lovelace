@@ -162,6 +162,17 @@ export function populateCalendar(currentDate, eventsToDisplay = JSON.parse(local
             }
         }
     }
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const body = document.body;
+    darkModeToggle.addEventListener("change", function () {
+        if (this.checked) {
+            body.classList.add("dark-mode");
+        }
+        else {
+            body.classList.remove("dark-mode");
+        }
+    });
 }
 const miniCalendarDate = new Date(currentDate);
 updateMiniCalendar(miniCalendarDate);
+localStorage.clear();

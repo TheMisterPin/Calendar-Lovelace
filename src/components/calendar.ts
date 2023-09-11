@@ -164,7 +164,6 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
   }
 }
   
-
 export function populateCalendar(currentDate: Date, eventsToDisplay: CalendarEvent[] = JSON.parse(localStorage.getItem('events') || '[]')): void {
   console.log('init')
   clearCalendar();
@@ -197,10 +196,21 @@ export function populateCalendar(currentDate: Date, eventsToDisplay: CalendarEve
       }
     }
   }
+
+const darkModeToggle = document.getElementById("darkModeToggle") as HTMLInputElement;
+const body = document.body;
+
+darkModeToggle.addEventListener("change", function() {
+  if (this.checked) {
+    body.classList.add("dark-mode");
+  } else {
+    body.classList.remove("dark-mode");
+  }
+});
 }
-
-
 
 const miniCalendarDate: Date = new Date(currentDate)
 
 updateMiniCalendar(miniCalendarDate) 
+
+localStorage.clear()
