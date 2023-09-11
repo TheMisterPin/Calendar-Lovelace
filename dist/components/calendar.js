@@ -3,6 +3,7 @@ import { getDateInfo } from '../utils/dateInfo.js';
 import { getDay, getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 import { updateMiniCalendar } from './minicalendar.js';
+import { formatDate } from '../utils/formatDate.js';
 const currentDate = new Date();
 export function clearCalendar() {
     const daysDisplay = document.querySelector('.calendar__days');
@@ -102,6 +103,20 @@ function appendPaddingDays(count, start, container, isPrevMonth) {
         container.appendChild(day);
     }
 }
+function createAddEventButton(dayElement, currentDay) {
+    const addEventButton = document.createElement('button');
+    addEventButton.innerText = 'Add Event';
+    addEventButton.classList.add('add-event-button');
+    addEventButton.addEventListener('click', () => {
+        console.log('Clicked Day:', currentDay);
+        const modal = new bootstrap.Modal(document.querySelector('#staticBackdrop'));
+        const dateInput = document.querySelector('#newEventDate');
+        const formattedDate = formatDate(currentDay);
+        dateInput.value = formattedDate;
+        modal.show();
+    });
+    dayElement.appendChild(addEventButton);
+}
 function appendCurrentMonthDays(localEvents, currentDate, monthLength, container, currentMiliseconds) {
     for (let i = 1; i <= monthLength; i++) {
         const currentDay = getDay(i, currentDate);
@@ -111,6 +126,15 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
         day.setAttribute('data-day-number', i.toString());
         day.addEventListener('click', (event) => {
             const clickedDay = event.currentTarget;
+        });
+        day.addEventListener('mouseenter', () => {
+            createAddEventButton(day, currentDay);
+        });
+        day.addEventListener('mouseleave', () => {
+            const addEventButton = day.querySelector('.add-event-button');
+            if (addEventButton) {
+                addEventButton.remove();
+            }
         });
         const dayNumber = document.createElement("p");
         dayNumber.innerText = `${i}`;
