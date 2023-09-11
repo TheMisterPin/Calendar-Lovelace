@@ -54,7 +54,11 @@
                 <section class="calendar__days"></section>
             </div>
         </div>
+        
+
+
         <!-- NEW EVENT MODAL -->
+        
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -108,11 +112,12 @@
                     </div>
                 </div>
             </div>
+            
             <template id="eventPopoverTemplate">
               <div class="event_popover popover is-hidden" id="eventPopover" data-type="popover">
                 <div class="event_popover__header popover__header">
                   <div class="popover__menu">
-                    <button aria-label="Delete event" type="button" role="button" class="delete_element_btn" id="deleteEventBtn"><i class="fa-solid fa-trash fa"></i></button>
+                    <button aria-label="Delete event" type="button" role="button" class="delete_element_btn" id="deleteEventBtn" data-bs-toggle="modal" data-bs-target="#deleteEventModal"><i class="fa-solid fa-trash fa"></i></button>
                     <button class="event_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn"><i class="fa-solid fa-x fa" ></i></button>
                   </div>
                   <p class="event popover__title" id="eventPopoverTitle">Event Title</p>
@@ -130,7 +135,7 @@
             </template>
       
             <template id="dayPopoverTemplate">
-              <div class="day_popover popover" id="dayPopover" data-type="popover">
+              <div class="day_popover popover id-hidden" id="dayPopover" data-type="popover">
                 <div class="day_popover__header popover__header">
                   <p class="day work day_popover__day_title" id="dayPopoverTitle"></p>
                   <button class="day_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn"><i class="fa-solid fa-x fa"></i></button>
@@ -146,8 +151,34 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
         <script type="module" src="../dist/app.js"></script>
+        
+
+        <!--Delete Event Modal-->
+        <!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="deleteEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this event?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="modalEventDeleteBtn" data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     </body>
+
 </html>
+
 <!-- sidebar -->
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasAside" aria-labelledby="offcanvasAsideLabel">

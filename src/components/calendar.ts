@@ -165,7 +165,6 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
 }
   
 export function populateCalendar(currentDate: Date, eventsToDisplay: CalendarEvent[] = JSON.parse(localStorage.getItem('events') || '[]')): void {
-  console.log('init')
   clearCalendar();
   updateMonthHeader(currentDate);
   populateDays(currentDate, eventsToDisplay);
