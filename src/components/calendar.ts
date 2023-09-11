@@ -4,6 +4,7 @@ import { getDay, getDayEvents, renderDayEvents } from '../utils/renderEvents.js'
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js'
 import { updateMiniCalendar } from './minicalendar.js'
 import { CalendarEvent } from '../utils/newEventHandler.js'
+import { formatDate } from '../utils/formatDate.js'
 
 const currentDate: Date = new Date()
 export function clearCalendar(): void {
@@ -131,18 +132,78 @@ function appendPaddingDays(count: number, start: number, container: HTMLElement,
 	}
 }
 
+function createAddEventButton(dayElement: HTMLElement, currentDay:string): void {
+  const addEventButton = document.createElement('button');
+  addEventButton.innerText = 'Add Event';
+  addEventButton.classList.add('add-event-button');
+  addEventButton.dataset.type="addEventBtn"
+  addEventButton.addEventListener('click', () => {
+      const modal = new bootstrap.Modal(document.querySelector('#staticBackdrop')!);
+      currentDay
+
+     
+      const formattedDate = formatDateForInput(currentDay)
+
+      handleNewEventOpenModal(formattedDate)
+
+      
+      modal.show();
+  });
+
+  dayElement.appendChild(addEventButton);
+}
+
+function formatDateForInput(date:string){
+  const dayArray = date.split('/')
+  const formattedNumbersArray = dayArray.map(dayNumber=>{
+    if(dayNumber.length<2){
+      return `0${dayNumber}`
+    }else{
+      return dayNumber
+    }
+  })
+  return `${formattedNumbersArray[2]}-${formattedNumbersArray[1]}-${formattedNumbersArray[0]}`
+}
+
+function handleNewEventOpenModal(formattedDate:string){
+  const modal = document.querySelector('#staticBackdrop')
+  modal?.addEventListener('show.bs.modal', ()=>{
+    setModalDate(event!, formattedDate)
+  })
+}
+
+function setModalDate(event:Event, formattedDate:string){
+  const target = event.relatedTarget as HTMLButtonElement
+  if(!target){
+    const dateInput = document.querySelector('#newEventDate') as HTMLInputElement;
+    dateInput.value = formattedDate;
+  }
+}
+
 function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement, currentMiliseconds:number) {
-   
+
   for (let i = 1; i <= monthLength; i++) {
       const currentDay = getDay(i, currentDate)
       const day: HTMLDivElement = document.createElement('div');
       day.dataset.date = currentDay
       day.classList.add('day');
       day.setAttribute('data-day-number', i.toString());
+      
       day.addEventListener('click', (event) => {
           const clickedDay = event.currentTarget as HTMLElement;
       });
 
+      day.addEventListener('mouseenter', () => {
+        createAddEventButton(day, currentDay);
+    });
+
+      day.addEventListener('mouseleave', () => {
+        const addEventButton = day.querySelector('.add-event-button');
+        if (addEventButton) {
+            
+            addEventButton.remove();
+        }
+      })  
       const dayNumber: HTMLParagraphElement = document.createElement("p");
       dayNumber.innerText = `${i}`;
       dayNumber.classList.add('day__number');
@@ -164,6 +225,10 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
   }
 }
   
+
+
+  
+
 export function populateCalendar(currentDate: Date, eventsToDisplay: CalendarEvent[] = JSON.parse(localStorage.getItem('events') || '[]')): void {
   clearCalendar();
   updateMonthHeader(currentDate);
