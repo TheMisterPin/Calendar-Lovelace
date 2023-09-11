@@ -106,15 +106,19 @@ function getEventExpirationTimeout(eventsArray:CalendarEvent[]){
 }
 
 function populateDays(currentDate: Date): void {
-  const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
-  const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
-  const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
+  let localEvents = JSON.parse(localStorage.getItem('events') || '[]')
+  const currentMiliseconds = Date.now()
+  updateExpiredEvents(localEvents, currentMiliseconds)
+  addNotifications(localEvents)
 
-  const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
-  const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
+  const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
+  const daysDisplay: HTMLElement = document.querySelector(".calendar__days")!;
+
+  const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; 
+  const adjustedLastDayOfWeek = lastDayOfWeek; 
 
   appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
-  appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
+  appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay, currentMiliseconds);
   appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
 }
 
@@ -129,35 +133,37 @@ function appendPaddingDays(count: number, start: number, container: HTMLElement,
 	}
 }
 
-function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement) {
-    for (let i = 1; i <= monthLength; i++) {
-        const day: HTMLDivElement = document.createElement('div');
-        day.classList.add('day');
-        day.setAttribute('data-day-number', i.toString());
-        day.addEventListener('click', (event) => {
-            const clickedDay = event.currentTarget as HTMLElement;
-            console.log(clickedDay.getAttribute('data-day-number'));
-        });
+function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement, currentMiliseconds:number) {
+   
+  for (let i = 1; i <= monthLength; i++) {
+      const currentDay = getDay(i, currentDate)
+      const day: HTMLDivElement = document.createElement('div');
+      day.dataset.date = currentDay
+      day.classList.add('day');
+      day.setAttribute('data-day-number', i.toString());
+      day.addEventListener('click', (event) => {
+          const clickedDay = event.currentTarget as HTMLElement;
+      });
 
-		const dayNumber: HTMLParagraphElement = document.createElement('p')
-		dayNumber.innerText = `${i}`
-		dayNumber.classList.add('day__number')
+      const dayNumber: HTMLParagraphElement = document.createElement("p");
+      dayNumber.innerText = `${i}`;
+      dayNumber.classList.add('day__number');
 
-		const dayEventsEl = document.createElement('ul')
-		dayEventsEl.classList.add('day__events-list')
-		day.append(dayNumber, dayEventsEl)
+      const dayEventsEl = document.createElement('ul');
+      dayEventsEl.classList.add('day__events-list');
+      day.append(dayNumber, dayEventsEl);
 
-        if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
-          dayNumber.classList.add('today');
-        }
-        if (localEvents) {
-            const dayEvents = getDayEvents(currentDay);
-            if (dayEvents) {
-                renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
-            }
-        }
-        container.appendChild(day);
-    }
+      if (i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth()) {
+        dayNumber.classList.add('today');
+      }
+      if (localEvents) {
+          const dayEvents = getDayEvents(currentDay);
+          if (dayEvents) {
+              renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
+          }
+      }
+      container.appendChild(day);
+  }
 }
   
 async function loadHolidaysAsync(year: number): Promise<void> {

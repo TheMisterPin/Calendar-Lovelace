@@ -36,7 +36,7 @@ export interface CalendarEvent {
     txt: string;
     time: string;
     label: string;
-    milliseconds: number; 
+    miliseconds: number; 
     endDate?: string; 
     reminder?: string;
     timeToReminder?: number;

@@ -1,6 +1,6 @@
 import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
-import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
+import { getDay, getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 import { updateMiniCalendar } from './minicalendar.js';
 const currentDate = new Date();
@@ -82,13 +82,16 @@ function getEventExpirationTimeout(eventsArray) {
     return { timeout, nextEventsArray };
 }
 function populateDays(currentDate) {
-    const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+    let localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+    const currentMiliseconds = Date.now();
+    updateExpiredEvents(localEvents, currentMiliseconds);
+    addNotifications(localEvents);
     const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
-    const daysDisplay = document.querySelector(".calendarDisplay");
-    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1; // Adjusting for Monday start
-    const adjustedLastDayOfWeek = lastDayOfWeek; // Since Sunday is the last day, no adjustment needed
+    const daysDisplay = document.querySelector(".calendar__days");
+    const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+    const adjustedLastDayOfWeek = lastDayOfWeek;
     appendPaddingDays(adjustedFirstDay, prevLastDay, daysDisplay, true);
-    appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay);
+    appendCurrentMonthDays(localEvents, currentDate, monthLength, daysDisplay, currentMiliseconds);
     appendPaddingDays(7 - adjustedLastDayOfWeek, 0, daysDisplay, false);
 }
 function appendPaddingDays(count, start, container, isPrevMonth) {
@@ -100,16 +103,17 @@ function appendPaddingDays(count, start, container, isPrevMonth) {
         container.appendChild(day);
     }
 }
-function appendCurrentMonthDays(localEvents, currentDate, monthLength, container) {
+function appendCurrentMonthDays(localEvents, currentDate, monthLength, container, currentMiliseconds) {
     for (let i = 1; i <= monthLength; i++) {
+        const currentDay = getDay(i, currentDate);
         const day = document.createElement('div');
+        day.dataset.date = currentDay;
         day.classList.add('day');
         day.setAttribute('data-day-number', i.toString());
         day.addEventListener('click', (event) => {
             const clickedDay = event.currentTarget;
-            console.log(clickedDay.getAttribute('data-day-number'));
         });
-        const dayNumber = document.createElement('p');
+        const dayNumber = document.createElement("p");
         dayNumber.innerText = `${i}`;
         dayNumber.classList.add('day__number');
         const dayEventsEl = document.createElement('ul');
