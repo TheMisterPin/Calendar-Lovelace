@@ -19,8 +19,8 @@ export function updateMonthHeader(currentDate: Date): void {
 	}
 }
 
-function updateExpiredEvents(eventsArray:CalendarEvent[], currentMiliseconds:number): void{
-  
+function updateExpiredEvents(currentMiliseconds:number): void{
+    const eventsArray = JSON.parse(localStorage.getItem('events') || '[]') as CalendarEvent[]
     eventsArray.forEach(event=>{
       if(event.miliseconds < currentMiliseconds) event.expired = true
     })
@@ -31,14 +31,13 @@ function updateExpiredEvents(eventsArray:CalendarEvent[], currentMiliseconds:num
       setTimeout(()=>{
         const eventEl = document.querySelector(`[data-event-id="${toExpEvent.id}"]`)
         eventEl?.classList.add('expired-event')
-        updateExpiredEvents(eventsArray, currentMiliseconds)
+        updateExpiredEvents(currentMiliseconds)
       }, eventExpirationDetails.timeout)
     } )
   }
 
 function addNotifications(eventsArray:CalendarEvent[]): void{
   const eventNotificationDetails = getEventNotificationTimeout(eventsArray)
-  console.log(eventNotificationDetails)
   eventNotificationDetails.nextEventsArray.forEach(toNotEvent => {
     setTimeout(()=>{
       renderToast(toNotEvent)
@@ -49,7 +48,6 @@ function addNotifications(eventsArray:CalendarEvent[]): void{
 }
 
 function playNotificationSound(url:string): void{
-  console.log('init')
   const notificationSound = new Audio(url)
   notificationSound.play()
 }
@@ -105,10 +103,10 @@ function getEventExpirationTimeout(eventsArray:CalendarEvent[]){
   return {timeout, nextEventsArray}
 }
 
-function populateDays(currentDate: Date): void {
-  let localEvents = JSON.parse(localStorage.getItem('events') || '[]')
+function populateDays(currentDate: Date, eventsToDisplay: CalendarEvent[]): void {
+  let localEvents = eventsToDisplay
   const currentMiliseconds = Date.now()
-  updateExpiredEvents(localEvents, currentMiliseconds)
+  updateExpiredEvents(currentMiliseconds)
   addNotifications(localEvents)
 
   const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
@@ -157,7 +155,7 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
         dayNumber.classList.add('today');
       }
       if (localEvents) {
-          const dayEvents = getDayEvents(currentDay);
+          const dayEvents = getDayEvents(currentDay, localEvents);
           if (dayEvents) {
               renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
           }
@@ -166,39 +164,41 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
   }
 }
   
-async function loadHolidaysAsync(year: number): Promise<void> {
-	try {
-		const holidays = await loadHolidays(year)
-		if (holidays) {
-			processHolidays(holidays)
-		}
-	} catch (error) {
-		console.error('Error fetching holidays:', error)
-	}
-}
 
-function processHolidays(holidays: HolidayInfo[]): void {
-	for (const holiday of holidays) {
-		const holidayDate = new Date(holiday.date)
-		if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
-			const day = holidayDate.getDate() + 4
-			const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`)
-			if (dayHolidayEventsEl) {
-				const holidayEvent = document.createElement('li')
-				holidayEvent.classList.add('holiday')
-				holidayEvent.textContent = holiday.name
-				dayHolidayEventsEl.prepend(holidayEvent)
-			}
-		}
-	}
-}
-
-export function populateCalendar(currentDate: Date): void {
+export function populateCalendar(currentDate: Date, eventsToDisplay: CalendarEvent[] = JSON.parse(localStorage.getItem('events') || '[]')): void {
+  console.log('init')
   clearCalendar();
   updateMonthHeader(currentDate);
-  populateDays(currentDate);
+  populateDays(currentDate, eventsToDisplay);
   loadHolidaysAsync(currentDate.getFullYear());
+  async function loadHolidaysAsync(year: number): Promise<void> {
+    try {
+      const holidays = await loadHolidays(year);
+      if (holidays) {
+        processHolidays(holidays);
+      }
+    } catch (error) {
+      console.error('Error fetching holidays:', error);
+    }
+  }
+
+  function processHolidays(holidays: HolidayInfo[]): void {
+    for (const holiday of holidays) {
+      const holidayDate = new Date(holiday.date);
+      if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
+        const day = holidayDate.getDate() + 4;
+        const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
+        if (dayHolidayEventsEl) {
+          const holidayEvent = document.createElement('li')
+          holidayEvent.classList.add('holiday')
+          holidayEvent.textContent = holiday.name
+          dayHolidayEventsEl.prepend(holidayEvent)
+        }
+      }
+    }
+  }
 }
+
 
 
 const miniCalendarDate: Date = new Date(currentDate)

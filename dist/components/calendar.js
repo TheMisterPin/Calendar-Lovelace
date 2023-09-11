@@ -15,7 +15,8 @@ export function updateMonthHeader(currentDate) {
         monthHeader.innerHTML = `${currentMonthInfo.name} ${currentDate.getFullYear()}`;
     }
 }
-function updateExpiredEvents(eventsArray, currentMiliseconds) {
+function updateExpiredEvents(currentMiliseconds) {
+    const eventsArray = JSON.parse(localStorage.getItem('events') || '[]');
     eventsArray.forEach(event => {
         if (event.miliseconds < currentMiliseconds)
             event.expired = true;
@@ -26,13 +27,12 @@ function updateExpiredEvents(eventsArray, currentMiliseconds) {
         setTimeout(() => {
             const eventEl = document.querySelector(`[data-event-id="${toExpEvent.id}"]`);
             eventEl === null || eventEl === void 0 ? void 0 : eventEl.classList.add('expired-event');
-            updateExpiredEvents(eventsArray, currentMiliseconds);
+            updateExpiredEvents(currentMiliseconds);
         }, eventExpirationDetails.timeout);
     });
 }
 function addNotifications(eventsArray) {
     const eventNotificationDetails = getEventNotificationTimeout(eventsArray);
-    console.log(eventNotificationDetails);
     eventNotificationDetails.nextEventsArray.forEach(toNotEvent => {
         setTimeout(() => {
             renderToast(toNotEvent);
@@ -42,7 +42,6 @@ function addNotifications(eventsArray) {
     });
 }
 function playNotificationSound(url) {
-    console.log('init');
     const notificationSound = new Audio(url);
     notificationSound.play();
 }
@@ -81,10 +80,10 @@ function getEventExpirationTimeout(eventsArray) {
     const timeout = nextTimeWithEvents - currentMiliseconds;
     return { timeout, nextEventsArray };
 }
-function populateDays(currentDate) {
-    let localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+function populateDays(currentDate, eventsToDisplay) {
+    let localEvents = eventsToDisplay;
     const currentMiliseconds = Date.now();
-    updateExpiredEvents(localEvents, currentMiliseconds);
+    updateExpiredEvents(currentMiliseconds);
     addNotifications(localEvents);
     const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
     const daysDisplay = document.querySelector(".calendar__days");
@@ -123,7 +122,7 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
             dayNumber.classList.add('today');
         }
         if (localEvents) {
-            const dayEvents = getDayEvents(currentDay);
+            const dayEvents = getDayEvents(currentDay, localEvents);
             if (dayEvents) {
                 renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
             }
@@ -131,37 +130,38 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
         container.appendChild(day);
     }
 }
-async function loadHolidaysAsync(year) {
-    try {
-        const holidays = await loadHolidays(year);
-        if (holidays) {
-            processHolidays(holidays);
+export function populateCalendar(currentDate, eventsToDisplay = JSON.parse(localStorage.getItem('events') || '[]')) {
+    console.log('init');
+    clearCalendar();
+    updateMonthHeader(currentDate);
+    populateDays(currentDate, eventsToDisplay);
+    loadHolidaysAsync(currentDate.getFullYear());
+    async function loadHolidaysAsync(year) {
+        try {
+            const holidays = await loadHolidays(year);
+            if (holidays) {
+                processHolidays(holidays);
+            }
+        }
+        catch (error) {
+            console.error('Error fetching holidays:', error);
         }
     }
-    catch (error) {
-        console.error('Error fetching holidays:', error);
-    }
-}
-function processHolidays(holidays) {
-    for (const holiday of holidays) {
-        const holidayDate = new Date(holiday.date);
-        if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
-            const day = holidayDate.getDate() + 4;
-            const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
-            if (dayHolidayEventsEl) {
-                const holidayEvent = document.createElement('li');
-                holidayEvent.classList.add('holiday');
-                holidayEvent.textContent = holiday.name;
-                dayHolidayEventsEl.prepend(holidayEvent);
+    function processHolidays(holidays) {
+        for (const holiday of holidays) {
+            const holidayDate = new Date(holiday.date);
+            if (holidayDate.getFullYear() === currentDate.getFullYear() && holidayDate.getMonth() === currentDate.getMonth()) {
+                const day = holidayDate.getDate() + 4;
+                const dayHolidayEventsEl = document.querySelector(`.day:nth-child(${day}) .day__events-list`);
+                if (dayHolidayEventsEl) {
+                    const holidayEvent = document.createElement('li');
+                    holidayEvent.classList.add('holiday');
+                    holidayEvent.textContent = holiday.name;
+                    dayHolidayEventsEl.prepend(holidayEvent);
+                }
             }
         }
     }
-}
-export function populateCalendar(currentDate) {
-    clearCalendar();
-    updateMonthHeader(currentDate);
-    populateDays(currentDate);
-    loadHolidaysAsync(currentDate.getFullYear());
 }
 const miniCalendarDate = new Date(currentDate);
 updateMiniCalendar(miniCalendarDate);

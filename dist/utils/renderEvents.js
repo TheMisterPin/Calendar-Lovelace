@@ -6,8 +6,7 @@ export function getDay(day, currentDate) {
     const currentDay = day;
     return formatDate(`${currentMonth} ${currentDay}, ${currentYear}`);
 }
-export function getDayEvents(day) {
-    let localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+export function getDayEvents(day, localEvents = JSON.parse(localStorage.getItem('events'))) {
     return localEvents.filter((calendarEvent) => calendarEvent.date === day);
 }
 function renderEvent(calendarEvent, eventContainer) {
