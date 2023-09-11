@@ -95,6 +95,12 @@ export function populateCalendar(currentDate, label) {
             }
         }
     }
+    const switchButton = document.getElementById('switch');
+    if (switchButton) {
+        switchButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+    }
 }
 let miniCalendarDate = new Date(currentDate);
 updateMiniCalendar(miniCalendarDate);

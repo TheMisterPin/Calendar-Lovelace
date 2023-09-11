@@ -107,6 +107,13 @@ export function populateCalendar(currentDate: Date, label?:Label): void {
       }
     }
   }
+
+  const switchButton = document.getElementById('switch') as HTMLButtonElement | null;
+if (switchButton) {
+  switchButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+  });
+}
 }
 
 let miniCalendarDate: Date = new Date(currentDate);

@@ -23,7 +23,11 @@ font-family: 'Public Sans', sans-serif; */
 }
 
 body {
-  background-color: #fffaef;
+  background-color: #fffbf4;
+  margin: 0.5%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .app {
@@ -36,11 +40,31 @@ width: 100vw;
   grid-area: main;
    display: flex;
 flex-wrap: wrap;
-align-items: center;
-justify-content: center;
-height: 97%;}
 
+height: 100%;}
 
+#prev {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  outline: none;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  margin-right: 10px;
+}
+
+#next {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  outline: none;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
 
 .calendar {
 min-height: 97%;
@@ -60,10 +84,12 @@ font-family: 'Public Sans', sans-serif; */
 .calendar__month-title{
 padding:  0 5%;
 width: 45%;
-  text-align: center;
-  color:#314a72;
-  font-size: 2.9em;
-  font-family: 'Rubik', sans-serif;
+text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+text-align: center;
+color:#314a72;
+font-size: 4em;
+font-family: 'Rubik', sans-serif;
+  
 }
 .aside {
   grid-area: aside;  
@@ -71,9 +97,10 @@ width: 45%;
 
 .calendar__header {
   display: flex;
-justify-content: center;
+  justify-content: center;
   align-items: center;
   grid-area: header; 
+  gap: 4px;
 }
 
 .calendar__weekDays{
@@ -84,6 +111,7 @@ justify-content: center;
   padding-bottom: 0%;
   background-color: transparent;
   grid-template-columns: repeat(7, 1fr);
+  color:#314a72;
  
 }
 
@@ -103,6 +131,7 @@ justify-content: center;
   width: 97%;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(7, 1fr);
+  background-color: rgba(255, 255, 251, 0.883);;
   /* animation: flipV 1s linear;
   perspective: 500px; */
 }
@@ -117,6 +146,7 @@ justify-content: center;
 
    display: grid;
 border: rgb(114, 0, 0) 1px solid;
+margin-bottom: 0;
 }
 
 .calendar__days p { text-align: center;
@@ -125,7 +155,7 @@ border: rgb(114, 0, 0) 1px solid;
 }
 .day__number{ height: 50%}
 .today  {
- background-color: #ef6c00;
+ background-color: #ffb77c;
 }
 
 
@@ -134,7 +164,8 @@ border: rgb(114, 0, 0) 1px solid;
   user-select: none;
   cursor: pointer;
   position: relative;
-  padding-left: 15px;
+  padding-left: 10px;
+  margin-left: 10px;
 }
 
 .event::before{
@@ -172,25 +203,31 @@ border: rgb(114, 0, 0) 1px solid;
 .hobby::before{
   background-color: #9e69af;
 }
+ul.day__events-list {
+  list-style-type: none; 
+  padding: 2px;
+}
 
 .holiday:hover {
   display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #007b83;
+  color: white;
 }
+
 .holiday {
   background-color: #039be5;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  justify-content: flex-start;
-  text-align: left;
   color: rgb(240, 255, 254);
   border-radius: 7px;
   padding-left: 2px;
   padding-right: 2px;
-  margin-right: 40px;
-  margin-bottom: 10px;
-
+  margin-bottom: 2px;
+  text-align: center;
 }
 
 .error-message {
@@ -311,7 +348,7 @@ border: rgb(114, 0, 0) 1px solid;
   cursor: pointer;
   border: 1px solid #ddd;
   padding: 5px;
-  background-color: #b8fff2;
+  background-color: #dbfff8;
 }
 
 .mini-calendar-day:hover {
@@ -326,7 +363,7 @@ border: rgb(114, 0, 0) 1px solid;
   cursor: pointer;
   border: 1px solid #ddd;
   padding: 5px;
-  background-color: #79ffc9;
+  background-color: #cfffec;
 }
 
 .mini-calendar-padding-day:hover {
@@ -346,8 +383,39 @@ border: rgb(114, 0, 0) 1px solid;
   background-color: transparent;
 }
 
+.switch {
+  --main-focus: #2d8cf0;
+  --font-color: #323232;
+  --bg-color-sub: #b8ddd9;
+  --bg-color: #ffffff;
+  --main-color: #323232;
+  text-align: center;
+  top: 5%;
+  left: 12%;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+  border: white;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  margin-top: 2%;
+}
 
-
+.switch:hover{
+  background-color: var(--bg-color-sub);
+}
               /*   ////////////////// MODAL THEME ////////////////// */
 
-              
+body.dark-mode {
+--background-color: #000000;
+--text-color: #ffffff;
+--accent-color: #808080;
+--border-color: #333333;
+--hover-color: #222222;
+}
+
