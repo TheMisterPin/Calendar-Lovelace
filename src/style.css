@@ -1,3 +1,8 @@
+/* Utility */
+.is-hidden{
+  opacity: 0;
+}
+
 
 * {
   margin: 0;
@@ -167,4 +172,70 @@ p{
 .expired-event {
   color: red;
 }
+
+/* Event Popover Styles */
+.popover{
+  position: absolute;
+  background-color: white;
+  padding: 1em;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,.3), 0 4px 8px 3px rgba(60,64,67,.15);
+  z-index: 100;
+  pointer-events: all;
+  transition: left .5s ease-in-out, top .5s ease-in-out, opacity .25s linear;
+}
+
+.event_popover{
+  width: 250px;
+}
+
+.event_popover__header{
+  display: flex;
+}
+
+.popover__close_btn,
+.delete_element_btn
+{
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+}
+
+.popover__close_btn:hover,
+.delete_element_btn:hover
+{
+  background-color: rgb(241,243,244);
+}
+
+.popovers__container{
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.popover__header{
+  display: flex;
+  flex-direction: column;
+}
+
+.popover__menu{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.popover__title{
+  font-size: 28px;
+}
+
+.fa{
+  color: rgb(95,99,104);
+}
+
+
 

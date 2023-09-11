@@ -1,6 +1,6 @@
 import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
-import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
+import { getDay, getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays } from '../utils/holidays.js';
 let currentDate = new Date();
 export function clearCalendar() {
@@ -104,7 +104,9 @@ function appendPaddingDays(count, start, container, isPrevMonth) {
 }
 function appendCurrentMonthDays(localEvents, currentDate, monthLength, container, currentMiliseconds) {
     for (let i = 1; i <= monthLength; i++) {
+        const currentDay = getDay(i, currentDate);
         const day = document.createElement('div');
+        day.dataset.date = currentDay;
         day.classList.add('day');
         day.setAttribute('data-day-number', i.toString());
         day.addEventListener('click', (event) => {
@@ -120,7 +122,7 @@ function appendCurrentMonthDays(localEvents, currentDate, monthLength, container
             dayNumber.classList.add('today');
         }
         if (localEvents) {
-            const dayEvents = getDayEvents(localEvents, i, currentDate);
+            const dayEvents = getDayEvents(currentDay);
             if (dayEvents) {
                 renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
             }

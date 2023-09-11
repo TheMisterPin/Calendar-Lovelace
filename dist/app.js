@@ -7,14 +7,4 @@ document.addEventListener("DOMContentLoaded", () => {
     setupNavigationListeners(currentDate, populateCalendar);
     initializeModalLogic();
     loadLabelsFromLocalStorage();
-    // Temporary code for toast button 
-    const toastTrigger = document.getElementById('liveToastBtn');
-    const toastLiveExample = document.getElementById('notificationToast');
-    if (toastTrigger) {
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-        toastTrigger.addEventListener('click', () => {
-            toastBootstrap.show();
-        });
-    }
-    // End of temporary code for toast button
 });

@@ -1,8 +1,8 @@
 import { months } from '../utils/constants.js';
 import { getDateInfo } from '../utils/dateInfo.js';
-import { getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
+import { getDay, getDayEvents, renderDayEvents } from '../utils/renderEvents.js';
 import { loadHolidays, HolidayInfo } from '../utils/holidays.js';
-import { Event } from "../utils/newEventHandler.js"
+import { CalendarEvent } from "../utils/newEventHandler.js"
 
 
 let currentDate: Date = new Date();
@@ -19,7 +19,7 @@ export function updateMonthHeader(currentDate: Date): void {
     }
 }
 
-function updateExpiredEvents(eventsArray:Event[], currentMiliseconds:number){
+function updateExpiredEvents(eventsArray:CalendarEvent[], currentMiliseconds:number): void{
   
     eventsArray.forEach(event=>{
       if(event.miliseconds < currentMiliseconds) event.expired = true
@@ -36,7 +36,7 @@ function updateExpiredEvents(eventsArray:Event[], currentMiliseconds:number){
     } )
   }
 
-function addNotifications(eventsArray:Event[]){
+function addNotifications(eventsArray:CalendarEvent[]): void{
   const eventNotificationDetails = getEventNotificationTimeout(eventsArray)
   console.log(eventNotificationDetails)
   eventNotificationDetails.nextEventsArray.forEach(toNotEvent => {
@@ -48,13 +48,13 @@ function addNotifications(eventsArray:Event[]){
   })
 }
 
-function playNotificationSound(url:string){
+function playNotificationSound(url:string): void{
   console.log('init')
   const notificationSound = new Audio(url)
   notificationSound.play()
 }
 
-function renderToast(event:Event){
+function renderToast(event:CalendarEvent): void{
   const toastBodyEl = document.querySelector('#toastBody') 
   toastBodyEl!.textContent = `${event.reminder} minutes to ${event.title}`
   const notificationToastEl = document.querySelector('#notificationToast')!
@@ -63,7 +63,7 @@ function renderToast(event:Event){
 }
 
 
-function getEventNotificationTimeout(eventsArray:Event[]){
+function getEventNotificationTimeout(eventsArray:CalendarEvent[]){
   const currentMiliseconds =  Date.now()
 
   const futureEventsArray = eventsArray.filter(localEvent => {
@@ -85,7 +85,7 @@ function getEventNotificationTimeout(eventsArray:Event[]){
 }
 
 
-function getEventExpirationTimeout(eventsArray:Event[]){
+function getEventExpirationTimeout(eventsArray:CalendarEvent[]){
   const currentMiliseconds =  Date.now()
 
   const futureEventsArray = eventsArray.filter(localEvent => {
@@ -112,6 +112,8 @@ function populateDays(currentDate: Date): void {
   addNotifications(localEvents)
 
 
+
+
   
   const { firstDay, lastDayOfWeek, monthLength, prevLastDay } = getDateInfo(currentDate);
   const daysDisplay: HTMLElement = document.querySelector(".calendarDisplay")!;
@@ -136,9 +138,11 @@ function appendPaddingDays(count: number, start: number, container: HTMLElement,
 }
 
 function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLength: number, container: HTMLElement, currentMiliseconds:number) {
-
+   
     for (let i = 1; i <= monthLength; i++) {
+        const currentDay = getDay(i, currentDate)
         const day: HTMLDivElement = document.createElement('div');
+        day.dataset.date = currentDay
         day.classList.add('day');
         day.setAttribute('data-day-number', i.toString());
         day.addEventListener('click', (event) => {
@@ -157,7 +161,7 @@ function appendCurrentMonthDays(localEvents: any[], currentDate: Date, monthLeng
           dayNumber.classList.add('today');
         }
         if (localEvents) {
-            const dayEvents = getDayEvents(localEvents, i, currentDate);
+            const dayEvents = getDayEvents(currentDay);
             if (dayEvents) {
                 renderDayEvents(dayEvents, dayEventsEl, day, currentMiliseconds);
             }

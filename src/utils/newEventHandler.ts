@@ -25,7 +25,7 @@ newEventTimeInput.parentElement?.append(timeError);
 newEventTitleInput.parentElement?.append(titleError);
 labelSelector.parentElement?.append(labelError);
 
-export interface Event {
+export interface CalendarEvent {
     id: string;
     title: string;
     date: string;
@@ -39,7 +39,7 @@ export interface Event {
     expired: boolean
 }
 
-function saveEventToLocalStorage(event: Event): void {
+function saveEventToLocalStorage(event: CalendarEvent): void {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]')
     localEvents.push(event)
     localStorage.setItem('events', JSON.stringify(localEvents))
@@ -158,7 +158,7 @@ saveBtn.addEventListener('click', () => {
     }
 });
 
-export function newEventHandler(): Event {
+export function newEventHandler(): CalendarEvent {
     const id = uuidv4()
     const title = newEventTitleInput.value;
     const date = formatDate(newEventDateInput.value);
@@ -177,7 +177,7 @@ export function newEventHandler(): Event {
         endDate = newEventEndDateInput.value;
     }
 
-    const newEvent: Event = {
+    const newEvent: CalendarEvent = {
         id,
         title,
         date,

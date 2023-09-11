@@ -21,7 +21,7 @@
   </head>
   <body>
     <div class="app">
-
+<div class="popovers__container" id="popoversContainer"></div>
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
   <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
@@ -42,15 +42,17 @@
             <i class="fas fa-angle-left" id="prev"></i>
             <div class="date">
               <h3></h3>
+
               <button
               id="newEventBtn"
               type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
-            >Create New Event</button>
+            >Create New Event</button>            
             </div>
             <i class="fa fa-angle-right" id="next"></i>
+            
           </div>
           
           <ul class="weekDays">
@@ -62,8 +64,9 @@
             <li>Sat</li>
             <li>Sun</li>
           </ul>
-          <section class="calendarDisplay"></section>
-          
+          <div id="calendarDisplayContainer">
+            <section class="calendarDisplay"></section>
+          </div>
         </div>
       </div>
 
@@ -168,6 +171,42 @@
       </div>
       
       <footer class="footer"></footer>
+
+      <template id="eventPopoverTemplate">
+        <div class="event_popover popover is-hidden" id="eventPopover" data-type="popover">
+          <div class="event_popover__header popover__header">
+            <div class="popover__menu">
+              <button aria-label="Delete event" type="button" role="button" class="delete_element_btn" id="deleteEventBtn"><i class="fa-solid fa-trash fa"></i></button>
+              <button class="event_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn"><i class="fa-solid fa-x fa" ></i></button>
+            </div>
+            <p class="event popover__title" id="eventPopoverTitle">Event Title</p>
+          </div>
+          <div class="event_popover__body">
+            <div class="event_popover__event_details">
+              <p class="event_popover__event_date" id="popoverDate">Date: 9/9/2023</p>
+              <p class="event_popover__event_time" id="popoverTime">Time: 16:17</p>
+              <p class="event_popover__event_details" id="popoverDetails">Details: Detalles</p>
+              <p class="event_popover__event_label" id="popoverLabel">Label: hobby</p>
+              <p class="event_popover__event_reminder" id="popoverReminder">Reminder: 20</p>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template id="dayPopoverTemplate">
+        <div class="day_popover popover" id="dayPopover" data-type="popover">
+          <div class="day_popover__header popover__header">
+            <p class="day work day_popover__day_title" id="dayPopoverTitle"></p>
+            <button class="day_popover__close_btn popover__close_btn" aria-label="Close" id="popoverCloseBtn"><i class="fa-solid fa-x fa"></i></button>
+          </div>
+          <div class="day_popover__body" id="popoverEventsList">
+            <ul class="day_popover__events"></ul>
+          </div>
+        </div>
+      </template>
+
+
+          
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
