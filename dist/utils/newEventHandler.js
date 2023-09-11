@@ -25,7 +25,7 @@ newEventTimeInput.value = (currentTime);
 (_c = newEventTimeInput.parentElement) === null || _c === void 0 ? void 0 : _c.append(timeError);
 (_d = newEventTitleInput.parentElement) === null || _d === void 0 ? void 0 : _d.append(titleError);
 (_e = labelSelector.parentElement) === null || _e === void 0 ? void 0 : _e.append(labelError);
-export function saveEventToLocalStorage(event) {
+function saveEventToLocalStorage(event) {
     const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
     localEvents.push(event);
     localStorage.setItem('events', JSON.stringify(localEvents));
@@ -91,7 +91,9 @@ export function newEventHandler() {
     const reminder = newEventReminder.value;
     const hasEndDateCheckbox = document.querySelector('#hasEndDate');
     let endDate = undefined;
-    const milliseconds = getEventTimeArray(date, time);
+    const miliseconds = getEventTimeArray(date, time);
+    const timeToReminder = getTimeToReminder(miliseconds, reminder);
+    let expired = false;
     if (hasEndDateCheckbox.checked) {
         const newEventEndDateInput = document.querySelector('#newEventEndDate');
         endDate = newEventEndDateInput.value;
@@ -105,7 +107,9 @@ export function newEventHandler() {
         label,
         endDate,
         reminder,
-        milliseconds: milliseconds
+        miliseconds,
+        timeToReminder,
+        expired
     };
     return newEvent;
 }
@@ -120,4 +124,8 @@ function getEventTimeArray(date, time) {
     const timeString = `${month},${day},${year},${hours}:${mins}`;
     const eventDate = new Date(timeString);
     return eventDate.getTime();
+}
+function getTimeToReminder(miliseconds, reminder) {
+    const reminderAnticipationInMiliseconds = parseInt(reminder) * 60000;
+    return miliseconds - reminderAnticipationInMiliseconds;
 }
