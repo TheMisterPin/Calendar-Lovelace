@@ -392,6 +392,25 @@ ul.day__events-list {
   background-color: transparent;
 }
 
+/* Event Popover Styles */
+.popover{
+  position: absolute;
+  background-color: white;
+  padding: 1em;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px 0 rgba(60,64,67,.3), 0 4px 8px 3px rgba(60,64,67,.15);
+  z-index: 100;
+  pointer-events: all;
+  transition: left .5s ease-in-out, top .5s ease-in-out, opacity .25s linear;
+  width: 250px;
+
+}
+
+.event_popover__header{
+  
+}
+
+
 .switch {
   --main-focus: #2d8cf0;
   --font-color: #323232;
@@ -551,7 +570,6 @@ margin-bottom: 0;
   justify-content: center;
   user-select: none;
   border: 1px solid hsl(0, 0%, 34%);
- .main {grid-area: Main;} 
 }
 
 .dark-mode .addEvent__btn {
@@ -647,4 +665,7 @@ margin-bottom: 0;
   background-color: rgb(84, 0, 201)
 }
 
-.dark-mode .event:hover {background-color: rgb(32, 28, 54)}
+.dark-mode .event:hover {
+  background-color: rgb(32, 28, 54)
+}
+}

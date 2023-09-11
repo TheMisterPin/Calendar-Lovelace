@@ -53,6 +53,8 @@ export function renderDayEvents(dayEvents:CalendarEvent[], eventsContainer:HTMLE
 
 function deleteEvent(event:CalendarEvent):void{
     const eventElList = document.querySelectorAll(`[data-event-id="${event.id}"]`)
+    const eventPopover = document.querySelector('#eventPopover')
+    eventPopover?.remove()
     eventElList.forEach(eventEl=> eventEl.remove())
     const eventsList:CalendarEvent[] = JSON.parse(localStorage.getItem('events')!)
     const indexOfEvent = eventsList.findIndex(e=> e.id === event.id)
@@ -69,23 +71,26 @@ function handleViewMoreClick(event:Event){
     const dayEvents = getDayEvents(currentDay)
 
     if(!popoverEl) renderDayPopover(eventTargetEl, currentDay, dayEvents)
-    else switchDayPopover(eventTargetEl, popoverEl, dayEvents)
+    else switchDayPopover(eventTargetEl, popoverEl, dayEvents, currentDay)
 }
 
 function getShortDay(currentDate:string){
     const dateArray = currentDate.split('/')
     const date = new Date(`${dateArray[1]}, ${dateArray[0]}, ${dateArray[2]}`).toString().split(' ')
-    console.log(date)
     return `${date[0]} ${dateArray[0]}`
 }
 
 function renderDayPopover(eventTargetEl:HTMLButtonElement, currentDay:string, dayEvents:CalendarEvent[]){
+    const eventPopover = document.querySelector('#eventPopover')
+    if(eventPopover) eventPopover.remove()
+    
     const templateEl = document.querySelector('#dayPopoverTemplate') as HTMLTemplateElement
     const template = templateEl.content
 
     const popoverTemplateEl = template.querySelector('#dayPopover') as HTMLDivElement
 
     movePopover(eventTargetEl, popoverTemplateEl)
+    
 
     const templateClone = document.importNode(template, true)
     const popoversContainer = document.querySelector('#popoversContainer')
@@ -100,21 +105,44 @@ function renderDayPopover(eventTargetEl:HTMLButtonElement, currentDay:string, da
     const shortNameDay = getShortDay(currentDay)
     dayPopoverTitle!.textContent = shortNameDay
 
+    popoversContainer!.append(templateClone)
+
     orderedEvents.forEach((calendarEvent:CalendarEvent)=>{   
         renderEvent(calendarEvent, eventsListEl)
     })
     
 
-    popoversContainer!.append(templateClone)
+    
+
+   
 
     const popoverEl = document.querySelector('#dayPopover')
+    popoverEl!.classList.remove('is-hidden')
     const popoverCloseBtn = popoverEl!.querySelector('#popoverCloseBtn')
     popoverCloseBtn?.addEventListener('click', closePopover)
 }
 
-function switchDayPopover(eventTargetEl:HTMLButtonElement, popoverEl:HTMLDivElement, dayEvents:CalendarEvent[]){
-    
+function switchDayPopover(eventTargetEl:HTMLButtonElement, popoverEl:HTMLDivElement, dayEvents:CalendarEvent[], currentDay:string){
+    updateDayPopover(popoverEl, currentDay, dayEvents)
     movePopover(eventTargetEl, popoverEl)
+}
+
+function updateDayPopover(popoverEl:HTMLDivElement, currentDay:string, dayEvents:CalendarEvent[]){
+    const orderedEvents = [...dayEvents].sort((a,b) => {
+        return a.miliseconds - b.miliseconds
+    })
+
+    const eventsListEl = popoverEl.querySelector('#popoverEventsList') as HTMLLIElement
+    const dayPopoverTitle = popoverEl.querySelector('#dayPopoverTitle') as HTMLParagraphElement
+
+    eventsListEl.innerHTML = ""
+
+    const shortNameDay = getShortDay(currentDay)
+    dayPopoverTitle!.textContent = shortNameDay
+
+    orderedEvents.forEach((calendarEvent:CalendarEvent)=>{   
+        renderEvent(calendarEvent, eventsListEl)
+    })
 }
 
 function handleEventClick(event:Event){
@@ -131,16 +159,18 @@ function switchEventPopover(eventTargetEl:HTMLButtonElement, popoverEl:HTMLDivEl
 }
 
 
-
 function renderEventPopover(event:Event, eventTargetEl:HTMLButtonElement, currentEvent:CalendarEvent){
+    const dayPopover = document.querySelector('#dayPopover')
+    const thisDayPopover = eventTargetEl.closest('#dayPopover')
+
+    if(dayPopover && !thisDayPopover) dayPopover.remove()
+    
     const templateEl = document.querySelector('#eventPopoverTemplate') as HTMLTemplateElement
     const template = templateEl.content
 
     const popoverTemplateEl = template.querySelector('#eventPopover') as HTMLDivElement
 
-    
     updateEventPopoverDetails(currentEvent, popoverTemplateEl)
-
     const templateClone = document.importNode(template, true)
     const popoversContainer = document.querySelector('#popoversContainer')
         
@@ -151,11 +181,7 @@ function renderEventPopover(event:Event, eventTargetEl:HTMLButtonElement, curren
     popoverEl.classList.remove('is-hidden')
 
     const popoverCloseBtn = popoverEl!.querySelector('#popoverCloseBtn')
-    popoverCloseBtn?.addEventListener('click', closePopover)
-
-    const popoverDeleteBtn = popoverEl?.querySelector('#deleteEventBtn')
-    
-    popoverDeleteBtn?.addEventListener('click', ()=> deleteEvent(currentEvent))
+    popoverCloseBtn?.addEventListener('click', closePopover)    
 }
 
 function removeLabel(element:HTMLElement){
@@ -163,7 +189,6 @@ function removeLabel(element:HTMLElement){
     labelsArray.forEach(label=> {
         if(element.classList.contains(label)) element.classList.remove(label)
     })
-
 }
 
 function updateEventPopoverDetails(currentEvent:CalendarEvent, popoverEl:HTMLElement){
@@ -178,55 +203,72 @@ function updateEventPopoverDetails(currentEvent:CalendarEvent, popoverEl:HTMLEle
     if(currentEvent.label) popoverEl.querySelector('#popoverLabel')!.textContent = `Label: ${currentEvent.label}`
     if(currentEvent.reminder) popoverEl.querySelector('#popoverReminder')!.textContent = `Reminder: ${currentEvent.reminder}`
 
-    const oldPopoverDeleteBtn = popoverEl!.querySelector('#deleteEventBtn')
-    const popoverDeleteBtn = oldPopoverDeleteBtn!.cloneNode(true)
-    oldPopoverDeleteBtn?.parentNode?.replaceChild(popoverDeleteBtn, oldPopoverDeleteBtn)
-    popoverDeleteBtn?.removeEventListener('click', ()=> deleteEvent(currentEvent))
-    popoverDeleteBtn?.addEventListener('click', ()=> deleteEvent(currentEvent))
+    const oldDeleteEventModal = document.querySelector('#deleteEventModal')
+    const deleteEventModal = oldDeleteEventModal!.cloneNode(true)
+    oldDeleteEventModal?.parentNode?.replaceChild(deleteEventModal, oldDeleteEventModal)
 
+
+    deleteEventModal!.addEventListener('show.bs.modal', ()=>{
+        document.querySelector('#modalEventDeleteBtn')?.addEventListener('click', () => deleteEvent(currentEvent))
+    })
 }
 
 function movePopover(eventTargetEl:HTMLButtonElement, popoverEl:HTMLDivElement){
     const dayEl = eventTargetEl.closest('[data-date]')
+    const targetPositionDetails = eventTargetEl.getBoundingClientRect()
+    popoverEl!.style.position = "absolute"
+    const popoverDetails = popoverEl!.getBoundingClientRect()
+
+
     if(dayEl){
-        const targetPositionDetails = eventTargetEl.getBoundingClientRect()
-        const popoverDetails = popoverEl!.getBoundingClientRect()
         const dayElDetails = dayEl?.getBoundingClientRect()
-        popoverEl!.style.position = "absolute"
+        
         if(eventTargetEl.dataset.type === "view-day-events-btn"){
-        popoverEl!.style.top = `${dayElDetails.top - popoverDetails.height/2 + window.scrollY}px`
-        popoverEl!.style.left = `${dayElDetails.left + window.scrollX}px`
+            popoverEl!.style.top = `${dayElDetails.top + window.scrollY}px`
+            popoverEl!.style.left = `${dayElDetails.left + window.scrollX}px`
         }
         else{
-        const viewPortHorizontalCenter = window.innerWidth / 2
-        
-        const popoverLeft = dayElDetails!.left < viewPortHorizontalCenter ? 
-        dayElDetails!.left + popoverDetails.width :
-        dayElDetails!.left - popoverDetails.width 
-        
-        popoverEl!.style.top = `${targetPositionDetails.top - popoverDetails.height/2 + window.scrollY}px`
-        popoverEl!.style.left = `${popoverLeft + window.scrollX}px`
+            const viewPortHorizontalCenter = window.innerWidth / 2
+            
+            const popoverLeft = dayElDetails!.left < viewPortHorizontalCenter ? 
+            dayElDetails!.left + popoverDetails.width :
+            dayElDetails!.left - popoverDetails.width 
+            
+            popoverEl!.style.top = `${targetPositionDetails.top - popoverDetails.height/2 + window.scrollY}px`
+            popoverEl!.style.left = `${popoverLeft + window.scrollX}px`
         }
     }
     else{
-        
+        const dayPopoverEl = document.querySelector('#dayPopover')
+
+        const dayPopoverElDetails = dayPopoverEl?.getBoundingClientRect()
+
+        const viewPortHorizontalCenter = window.innerWidth / 2
+            
+            const popoverLeft = dayPopoverElDetails!.left < viewPortHorizontalCenter ? 
+            dayPopoverElDetails!.left + popoverDetails.width :
+            dayPopoverElDetails!.left - popoverDetails.width 
+            
+            popoverEl!.style.top = `${targetPositionDetails.top - popoverDetails.height/2 + window.scrollY}px`
+            popoverEl!.style.left = `${popoverLeft + window.scrollX}px`
     }
 }
 
 function getEventDetails(trigger:HTMLElement){
     const eventEl = trigger.closest('[data-event-id]')! as HTMLDivElement
     const eventId = eventEl.dataset.eventId
-    console.log(eventEl)
     let localEvents = JSON.parse(localStorage.getItem('events') || '[]')
 
     const currentEvent = localEvents?.find((localEvent:CalendarEvent) => localEvent.id === eventId)
-    console.log(eventId)
-    console.log(localEvents)
     return currentEvent
 }
 
 function closePopover(event:Event){
     const eventTargetEl = event.target as HTMLButtonElement
     const popoverEl = eventTargetEl.closest('[data-type="popover"]')
+    const eventPopoverEl = document.querySelector('#eventPopover')
+
+    if(popoverEl!.id === "dayPopover" && eventPopoverEl) eventPopoverEl.remove()
+    
     popoverEl!.remove()
 }
